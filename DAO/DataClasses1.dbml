@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Migraine" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=NOCTEM-PORTABLE\SQLEXPRESS;Initial Catalog=Migraine;Persist Security Info=True;User ID=Middleware;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MigraineConnectionString2" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.T_MEDECIN" Member="T_MEDECIN">
+    <Type Name="T_MEDECIN">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TelephoneCabinet" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="InfoComplementaire" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IdCompte" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="T_MEDECIN_T_COMPTE" Member="T_COMPTE" ThisKey="IdCompte" OtherKey="ID" Type="T_COMPTE" />
+      <Association Name="T_HORAIRE_T_MEDECIN" Member="T_HORAIRE" ThisKey="ID" OtherKey="IDMedecin" Type="T_HORAIRE" IsForeignKey="true" />
+      <Association Name="T_MEDECINPATIENT_T_MEDECIN" Member="T_MEDECINPATIENT" ThisKey="ID" OtherKey="IDMedecin" Type="T_MEDECINPATIENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_ADRESSE" Member="T_ADRESSE">
+    <Type Name="T_ADRESSE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdCompte" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Numero" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NomRue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CodePostal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ville" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="T_ADRESSE_T_COMPTE" Member="T_COMPTE" ThisKey="IdCompte" OtherKey="ID" Type="T_COMPTE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_COMPTE" Member="T_COMPTE">
+    <Type Name="T_COMPTE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Identifiant" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MotDePass" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Prenom" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreation" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DerniereModif" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreePar" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdressMail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Token" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="T_ADRESSE_T_COMPTE" Member="T_ADRESSE" ThisKey="ID" OtherKey="IdCompte" Type="T_ADRESSE" IsForeignKey="true" />
+      <Association Name="T_MEDECIN_T_COMPTE" Member="T_MEDECIN" ThisKey="ID" OtherKey="IdCompte" Type="T_MEDECIN" IsForeignKey="true" />
+      <Association Name="T_PATIENT_T_COMPTE" Member="T_PATIENT" ThisKey="ID" OtherKey="IdCompte" Type="T_PATIENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_HORAIRE" Member="T_HORAIRE">
+    <Type Name="T_HORAIRE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDMedecin" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDPlageHoraire" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDJour" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="T_HORAIRE_T_MEDECIN" Member="T_MEDECIN" ThisKey="IDMedecin" OtherKey="ID" Type="T_MEDECIN" />
+      <Association Name="T_PLAGEHORAIRE_T_HORAIRE" Member="T_PLAGEHORAIRE" ThisKey="IDPlageHoraire" OtherKey="ID" Type="T_PLAGEHORAIRE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_PLAGEHORAIRE" Member="T_PLAGEHORAIRE">
+    <Type Name="T_PLAGEHORAIRE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HeureDebut" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="HeureFin" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="T_PLAGEHORAIRE_T_HORAIRE" Member="T_HORAIRE" ThisKey="ID" OtherKey="IDPlageHoraire" Type="T_HORAIRE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_ORDONNANCE" Member="T_ORDONNANCE">
+    <Type Name="T_ORDONNANCE">
+      <Column Name="idPatient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idMedicament" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantité" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="T_ORDONNANCE_T_PATIENT" Member="T_PATIENT" ThisKey="idPatient" OtherKey="ID" Type="T_PATIENT" />
+      <Association Name="T_MEDICAMENT_T_ORDONNANCE" Member="T_MEDICAMENT" ThisKey="idMedicament" OtherKey="ID" Type="T_MEDICAMENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_MEDICAMENT" Member="T_MEDICAMENT">
+    <Type Name="T_MEDICAMENT">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodeCIS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Denominationmedicament" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Formepharmaceutique" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Voiesadministration" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Statutadministratif" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Typedeprocedureautorisation" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Etatcommercialisation" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateAMM" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StatutBdm" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Numeroautorisationeuropeenne" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Titulaire" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Surveillancerenforcee" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="T_MEDICAMENT_T_ORDONNANCE" Member="T_ORDONNANCE" ThisKey="ID" OtherKey="idMedicament" Type="T_ORDONNANCE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_FACTEURS" Member="T_FACTEURS">
+    <Type Name="T_FACTEURS">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPatient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDFacteur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="T_FACTEURS_T_PATIENT" Member="T_PATIENT" ThisKey="IdPatient" OtherKey="ID" Type="T_PATIENT" />
+      <Association Name="T_FACTEUR_T_FACTEURS" Member="T_FACTEUR" ThisKey="IDFacteur" OtherKey="ID" Type="T_FACTEUR" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_FACTEUR" Member="T_FACTEUR">
+    <Type Name="T_FACTEUR">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TypeFacteur" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="T_FACTEUR_T_FACTEURS" Member="T_FACTEURS" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_MEDECINPATIENT" Member="T_MEDECINPATIENT">
+    <Type Name="T_MEDECINPATIENT">
+      <Column Name="IDMedecin" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDPatient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="T_MEDECINPATIENT_T_MEDECIN" Member="T_MEDECIN" ThisKey="IDMedecin" OtherKey="ID" Type="T_MEDECIN" />
+      <Association Name="T_MEDECINPATIENT_T_PATIENT" Member="T_PATIENT" ThisKey="IDPatient" OtherKey="ID" Type="T_PATIENT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_PATIENT" Member="T_PATIENT">
+    <Type Name="T_PATIENT">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateNaissance" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IdCompte" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TelephonePortable" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TelephoneFixe" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Sexe" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="T_PATIENT_T_COMPTE" Member="T_COMPTE" ThisKey="IdCompte" OtherKey="ID" Type="T_COMPTE" />
+      <Association Name="T_MEDECINPATIENT_T_PATIENT" Member="T_MEDECINPATIENT" ThisKey="ID" OtherKey="IDPatient" Type="T_MEDECINPATIENT" IsForeignKey="true" />
+      <Association Name="T_FACTEURS_T_PATIENT" Member="T_FACTEURS" ThisKey="ID" OtherKey="IdPatient" Type="T_FACTEURS" IsForeignKey="true" />
+      <Association Name="T_ORDONNANCE_T_PATIENT" Member="T_ORDONNANCE" ThisKey="ID" OtherKey="idPatient" Type="T_ORDONNANCE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.AjoutTypeMedicament" Method="AjoutTypeMedicament">
+    <Parameter Name="type" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ListPatient" Method="ListPatient">
+    <ElementType Name="ListPatientResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Identifiant" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MotDePass" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Prenom" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreation" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DerniereModif" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreePar" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Token" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.AjoutMedicament" Method="AjoutMedicament">
+    <Parameter Name="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="idType" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutCompte" Method="AjoutCompte">
+    <Parameter Name="Identifiant" Parameter="identifiant" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="MotDePass" Parameter="motDePass" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DateCreation" Parameter="dateCreation" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="CreePar" Parameter="creePar" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutMedecin" Method="AjoutMedecin">
+    <Parameter Name="Identifiant" Parameter="identifiant" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="MotDePass" Parameter="motDePass" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DateCreation" Parameter="dateCreation" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="CreePar" Parameter="creePar" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="TelephoneCabinet" Parameter="telephoneCabinet" Type="System.String" DbType="NText" />
+    <Parameter Name="InfoComplementaire" Parameter="infoComplementaire" Type="System.String" DbType="NText" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ModifCompte" Method="ModifCompte">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Identifiant" Parameter="identifiant" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="MotDePass" Parameter="motDePass" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DateCreation" Parameter="dateCreation" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="CreePar" Parameter="creePar" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ModifMedecin" Method="ModifMedecin">
+    <Parameter Name="IDCompte" Parameter="iDCompte" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="IDMedecin" Parameter="iDMedecin" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TelephoneCabinet" Parameter="telephoneCabinet" Type="System.String" DbType="NText" />
+    <Parameter Name="InfoComplementaire" Parameter="infoComplementaire" Type="System.String" DbType="NText" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ModifCompteToken" Method="ModifCompteToken">
+    <Parameter Name="IDCompte" Parameter="iDCompte" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutHoraireOuvertureMedecin" Method="AjoutHoraireOuvertureMedecin">
+    <Parameter Name="IDMedecin" Parameter="iDMedecin" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDjour" Parameter="iDjour" Type="System.Int32" DbType="Int" />
+    <Parameter Name="HeureDebut" Parameter="heureDebut" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="HeureFin" Parameter="heureFin" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutAdresse" Method="AjoutAdresse">
+    <Parameter Name="IdCompte" Parameter="idCompte" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Numero" Parameter="numero" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NomRue" Parameter="nomRue" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="CodePostal" Parameter="codePostal" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Ville" Parameter="ville" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutPatient" Method="AjoutPatient">
+    <Parameter Name="Identifiant" Parameter="identifiant" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="MotDePass" Parameter="motDePass" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DateCreation" Parameter="dateCreation" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="CreePar" Parameter="creePar" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DateNaissance" Parameter="dateNaissance" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="TelephonePortable" Parameter="telephonePortable" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="TelephoneFixe" Parameter="telephoneFixe" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Sexe" Parameter="sexe" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ModifPatient" Method="ModifPatient">
+    <Parameter Name="IDCompte" Parameter="iDCompte" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Nom" Parameter="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Prenom" Parameter="prenom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="DerniereModif" Parameter="derniereModif" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="AdressMail" Parameter="adressMail" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Token" Parameter="token" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="IDPatient" Parameter="iDPatient" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DateNaissance" Parameter="dateNaissance" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="TelephonePortable" Parameter="telephonePortable" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="TelephoneFixe" Parameter="telephoneFixe" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Sexe" Parameter="sexe" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutMedecinPatient" Method="AjoutMedecinPatient">
+    <Parameter Name="IdMedecin" Parameter="idMedecin" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprMedecinPatient" Method="SupprMedecinPatient">
+    <Parameter Name="IdMedecin" Parameter="idMedecin" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

@@ -144,7 +144,7 @@ namespace MigraineCSMiddleware
 
         #region Medecin
 
-        [WebGet(UriTemplate = "/Medecin/VoirMedecin?Value={Value}",
+        [WebGet(UriTemplate = "/Medecin/Voir?Value={Value}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         UtilisateurWeb GetMedecin(string Value);
@@ -211,7 +211,7 @@ namespace MigraineCSMiddleware
 
         #region Patient
 
-        [WebGet(UriTemplate = "/Patient/VoirPatient?Value={Value}",
+        [WebGet(UriTemplate = "/Patient/Voir?Value={Value}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         UtilisateurWeb GetPatient(string Value);

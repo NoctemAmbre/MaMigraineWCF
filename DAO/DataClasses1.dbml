@@ -82,6 +82,7 @@
       <Column Name="Titulaire" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Surveillancerenforcee" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="T_MEDICAMENT_T_ORDONNANCE" Member="T_ORDONNANCE" ThisKey="ID" OtherKey="idMedicament" Type="T_ORDONNANCE" />
+      <Association Name="T_MEDICAMENT_T_MEDICAMENTS_MIGRAINE" Member="T_MEDICAMENTS_MIGRAINE" ThisKey="ID" OtherKey="IDMedicament" Type="T_MEDICAMENTS_MIGRAINE" />
     </Type>
   </Table>
   <Table Name="dbo.T_FACTEURS" Member="T_FACTEURS">
@@ -99,6 +100,7 @@
       <Column Name="TypeFacteur" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Nom" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="T_FACTEUR_T_FACTEURS" Member="T_FACTEURS" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS" />
+      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS_MIGRAINE" />
     </Type>
   </Table>
   <Table Name="dbo.T_MEDECINPATIENT" Member="T_MEDECINPATIENT">
@@ -121,6 +123,49 @@
       <Association Name="T_MEDECINPATIENT_T_PATIENT" Member="T_MEDECINPATIENT" ThisKey="ID" OtherKey="IDPatient" Type="T_MEDECINPATIENT" IsForeignKey="true" />
       <Association Name="T_FACTEURS_T_PATIENT" Member="T_FACTEURS" ThisKey="ID" OtherKey="IdPatient" Type="T_FACTEURS" IsForeignKey="true" />
       <Association Name="T_ORDONNANCE_T_PATIENT" Member="T_ORDONNANCE" ThisKey="ID" OtherKey="idPatient" Type="T_ORDONNANCE" IsForeignKey="true" />
+      <Association Name="T_MIGRAINES_PATIENT_T_PATIENT" Member="T_MIGRAINES_PATIENT" ThisKey="ID" OtherKey="IDPatient" Type="T_MIGRAINES_PATIENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_MIGRAINE" Member="T_MIGRAINE">
+    <Type Name="T_MIGRAINE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Intensite" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Debut" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Fin" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="IDPatient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDFacteursMigraine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IDMedicamentsMigraine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="T_MIGRAINE_T_MIGRAINES_PATIENT" Member="T_MIGRAINES_PATIENT" ThisKey="ID" OtherKey="IDMigraine" Type="T_MIGRAINES_PATIENT" />
+      <Association Name="T_MEDICAMENTS_MIGRAINE_T_MIGRAINE" Member="T_MEDICAMENTS_MIGRAINE" ThisKey="ID" OtherKey="IDMigraine" Type="T_MEDICAMENTS_MIGRAINE" IsForeignKey="true" />
+      <Association Name="T_FACTEURS_MIGRAINE_T_MIGRAINE" Member="T_FACTEURS_MIGRAINE" ThisKey="ID" OtherKey="IDMigraine" Type="T_FACTEURS_MIGRAINE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_MEDICAMENTS_MIGRAINE" Member="T_MEDICAMENTS_MIGRAINE">
+    <Type Name="T_MEDICAMENTS_MIGRAINE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDMigraine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDMedicament" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantité" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="T_MEDICAMENTS_MIGRAINE_T_MIGRAINE" Member="T_MIGRAINE" ThisKey="IDMigraine" OtherKey="ID" Type="T_MIGRAINE" />
+      <Association Name="T_MEDICAMENT_T_MEDICAMENTS_MIGRAINE" Member="T_MEDICAMENT" ThisKey="IDMedicament" OtherKey="ID" Type="T_MEDICAMENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE">
+    <Type Name="T_FACTEURS_MIGRAINE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDMigraine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDFacteur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantité" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="T_FACTEURS_MIGRAINE_T_MIGRAINE" Member="T_MIGRAINE" ThisKey="IDMigraine" OtherKey="ID" Type="T_MIGRAINE" />
+      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEUR" ThisKey="IDFacteur" OtherKey="ID" Type="T_FACTEUR" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_MIGRAINES_PATIENT" Member="T_MIGRAINES_PATIENT">
+    <Type Name="T_MIGRAINES_PATIENT">
+      <Column Name="IDPatient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDMigraine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="T_MIGRAINES_PATIENT_T_PATIENT" Member="T_PATIENT" ThisKey="IDPatient" OtherKey="ID" Type="T_PATIENT" />
+      <Association Name="T_MIGRAINE_T_MIGRAINES_PATIENT" Member="T_MIGRAINE" ThisKey="IDMigraine" OtherKey="ID" Type="T_MIGRAINE" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.AjoutTypeMedicament" Method="AjoutTypeMedicament">

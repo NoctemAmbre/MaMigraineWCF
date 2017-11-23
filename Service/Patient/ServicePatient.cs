@@ -49,9 +49,16 @@ namespace MigraineCSMiddleware.Service
             Patient patient = patientDAO.VoirPatient(IDpatient);
             if (patient.MesMedecin != null)
             {
-                patient.Erreur = "Il y a déjà un médecin attribué à ce Patient";
+                foreach (Medecin element in patient.MesMedecin)
+                {
+                    if (element.IDMedecin == IDMedecin)
+                    {
+                        patient.Erreur = "Le Médecin " + element.Nom + " " + element.Prenom + " fait déjà partit de vos médecin de référence";
+                        throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", patient);
+                    }
+                }
                 return patient;
-                //throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient");
+                
             }
 
             Medecin medecin = medecinDAO.VoirMedecinSimple(IDMedecin);

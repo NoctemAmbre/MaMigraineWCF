@@ -20,5 +20,6 @@ namespace MigraineCSMiddleware.Modele
         public string NumeroAutorisation { get; set; }
         public string Titulaire { get; set; }
         public string SurveillanceRenforcee { get; set; }
+        public int Quantite { get; set; }
     }
 }

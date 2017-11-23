@@ -163,7 +163,7 @@ namespace MigraineCSMiddleware.Service.Utilisateur
         }
 
 
-        private UtilisateurWeb Conversion(Patient patient)
+        public UtilisateurWeb Conversion(Patient patient)
         {
             if (patient == null) throw new CompteException("Une erreur est survenu sur le patient");
 
@@ -240,7 +240,7 @@ namespace MigraineCSMiddleware.Service.Utilisateur
         }
 
 
-        private UtilisateurWeb Conversion(Medecin medecin)
+        public UtilisateurWeb Conversion(Medecin medecin)
         {
             if (medecin == null) throw new CompteException("Une erreur est survenu sur le medecin");
 

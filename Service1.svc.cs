@@ -9,6 +9,7 @@ using System.Web;
 using System.ServiceModel.Activation;
 using System;
 using MigraineCSMiddleware.Service.Securite;
+using System.ServiceModel.Web;
 
 namespace MigraineCSMiddleware
 {
@@ -56,6 +57,11 @@ namespace MigraineCSMiddleware
             {
                 return new UtilisateurWeb() { Erreur = Exp.Message };
             }
+            catch (TokenExpireException Exp)
+            {
+                //return new UtilisateurWeb() { Erreur = Exp.Message };
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
             catch (CompteException Exp)
             {
                 return new UtilisateurWeb() { Erreur = Exp.Message };
@@ -72,6 +78,11 @@ namespace MigraineCSMiddleware
             catch (TokenInvalidException Exp)
             {
                 return new UtilisateurWeb() { Erreur = Exp.Message };
+            }
+            catch (TokenExpireException Exp)
+            {
+                //return new UtilisateurWeb() { Erreur = Exp.Message };
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (CompteException Exp)
             {
@@ -90,7 +101,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                return new UtilisateurWeb() { Erreur = Exp.Message };
+                //return new UtilisateurWeb() { Erreur = Exp.Message };
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (CompteException Exp)
             {
@@ -154,7 +166,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                return new UtilisateurWeb() { Erreur = Exp.Message };
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //return new UtilisateurWeb() { Erreur = Exp.Message };
             }
             catch (CompteException Exp)
             {
@@ -184,11 +197,11 @@ namespace MigraineCSMiddleware
             }
             catch (DejaMedecinAttribueException Exp)
             {
-                return null;
+                return new ServiceUtilisateursWeb().Conversion(Exp.Patient);
             }
             catch (TokenExpireException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -212,7 +225,7 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -233,7 +246,11 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
 
         }
@@ -250,9 +267,13 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
             }
-            
+            catch (TokenExpireException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+
         }
 
         //public List<Patient> GetListMesPatient(string idMedecin)
@@ -345,7 +366,11 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -375,9 +400,13 @@ namespace MigraineCSMiddleware
             {
                 return null;
             }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
             catch (TokenExpireException Exp)
             {
-                return null;
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 

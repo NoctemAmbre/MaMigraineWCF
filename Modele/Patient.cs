@@ -12,6 +12,9 @@ namespace MigraineCSMiddleware.Modele
         private List<Medecin> _MesMedecin;
         private string _TelephonePortable;
         private bool _Sexe;
+        public List<Facteur> MesFacteurs { get; set; }
+        public List<Migraine> MesMigraines { get; set; }
+        public List<Medicament> MesMedicaments { get; set; }
 
         public Patient()
         {

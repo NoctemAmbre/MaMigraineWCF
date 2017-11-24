@@ -16,6 +16,7 @@ namespace MigraineCSMiddleware.Modele
         private string _InfoComplementaire;
         private Horaire[] _HoraireOuverture;
         public List<UtilisateurWeb> _MesPatients;
+        private List<Migraine> _MesMigraines;
 
         public int IDWeb { get => _IDWeb; set => _IDWeb = value; }
         public bool Type { get => _Type; set => _Type = value; }
@@ -26,6 +27,7 @@ namespace MigraineCSMiddleware.Modele
         public string InfoComplementaire { get => _InfoComplementaire; set => _InfoComplementaire = value; }
         public Horaire[] HoraireOuverture { get => _HoraireOuverture; set => _HoraireOuverture = value; }
         public List<UtilisateurWeb> MesPatients { get => _MesPatients; set => _MesPatients = value; }
+        public List<Migraine> MesMigraines { get => _MesMigraines; set => _MesMigraines = value; }
     }
 
     // a détruire au plus vite

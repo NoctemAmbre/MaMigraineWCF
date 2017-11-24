@@ -48,9 +48,6 @@ namespace MigraineCSMiddleware.DAO
     partial void InsertT_PATIENT(T_PATIENT instance);
     partial void UpdateT_PATIENT(T_PATIENT instance);
     partial void DeleteT_PATIENT(T_PATIENT instance);
-    partial void InsertT_MIGRAINE(T_MIGRAINE instance);
-    partial void UpdateT_MIGRAINE(T_MIGRAINE instance);
-    partial void DeleteT_MIGRAINE(T_MIGRAINE instance);
     partial void InsertT_MEDICAMENTS_MIGRAINE(T_MEDICAMENTS_MIGRAINE instance);
     partial void UpdateT_MEDICAMENTS_MIGRAINE(T_MEDICAMENTS_MIGRAINE instance);
     partial void DeleteT_MEDICAMENTS_MIGRAINE(T_MEDICAMENTS_MIGRAINE instance);
@@ -145,22 +142,6 @@ namespace MigraineCSMiddleware.DAO
 			}
 		}
 		
-		public System.Data.Linq.Table<T_FACTEURS> T_FACTEURS
-		{
-			get
-			{
-				return this.GetTable<T_FACTEURS>();
-			}
-		}
-		
-		public System.Data.Linq.Table<T_FACTEUR> T_FACTEUR
-		{
-			get
-			{
-				return this.GetTable<T_FACTEUR>();
-			}
-		}
-		
 		public System.Data.Linq.Table<T_MEDECINPATIENT> T_MEDECINPATIENT
 		{
 			get
@@ -174,14 +155,6 @@ namespace MigraineCSMiddleware.DAO
 			get
 			{
 				return this.GetTable<T_PATIENT>();
-			}
-		}
-		
-		public System.Data.Linq.Table<T_MIGRAINE> T_MIGRAINE
-		{
-			get
-			{
-				return this.GetTable<T_MIGRAINE>();
 			}
 		}
 		
@@ -206,6 +179,30 @@ namespace MigraineCSMiddleware.DAO
 			get
 			{
 				return this.GetTable<T_MIGRAINES_PATIENT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_MIGRAINE> T_MIGRAINE
+		{
+			get
+			{
+				return this.GetTable<T_MIGRAINE>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_FACTEURS> T_FACTEURS
+		{
+			get
+			{
+				return this.GetTable<T_FACTEURS>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_FACTEUR> T_FACTEUR
+		{
+			get
+			{
+				return this.GetTable<T_FACTEUR>();
 			}
 		}
 		
@@ -1762,132 +1759,6 @@ namespace MigraineCSMiddleware.DAO
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEURS")]
-	public partial class T_FACTEURS
-	{
-		
-		private int _ID;
-		
-		private int _IdPatient;
-		
-		private int _IDFacteur;
-		
-		public T_FACTEURS()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPatient", DbType="Int NOT NULL")]
-		public int IdPatient
-		{
-			get
-			{
-				return this._IdPatient;
-			}
-			set
-			{
-				if ((this._IdPatient != value))
-				{
-					this._IdPatient = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteur", DbType="Int NOT NULL")]
-		public int IDFacteur
-		{
-			get
-			{
-				return this._IDFacteur;
-			}
-			set
-			{
-				if ((this._IDFacteur != value))
-				{
-					this._IDFacteur = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEUR")]
-	public partial class T_FACTEUR
-	{
-		
-		private int _ID;
-		
-		private bool _TypeFacteur;
-		
-		private string _Nom;
-		
-		public T_FACTEUR()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeFacteur", DbType="Bit NOT NULL")]
-		public bool TypeFacteur
-		{
-			get
-			{
-				return this._TypeFacteur;
-			}
-			set
-			{
-				if ((this._TypeFacteur != value))
-				{
-					this._TypeFacteur = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nom", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Nom
-		{
-			get
-			{
-				return this._Nom;
-			}
-			set
-			{
-				if ((this._Nom != value))
-				{
-					this._Nom = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECINPATIENT")]
 	public partial class T_MEDECINPATIENT
 	{
@@ -2143,290 +2014,6 @@ namespace MigraineCSMiddleware.DAO
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MIGRAINE")]
-	public partial class T_MIGRAINE : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<int> _Intensite;
-		
-		private string _Debut;
-		
-		private string _Fin;
-		
-		private int _IDPatient;
-		
-		private System.Nullable<int> _IDFacteursMigraine;
-		
-		private System.Nullable<int> _IDMedicamentsMigraine;
-		
-		private EntityRef<T_MEDICAMENTS_MIGRAINE> _T_MEDICAMENTS_MIGRAINE;
-		
-		private EntityRef<T_FACTEURS_MIGRAINE> _T_FACTEURS_MIGRAINE;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnIntensiteChanging(System.Nullable<int> value);
-    partial void OnIntensiteChanged();
-    partial void OnDebutChanging(string value);
-    partial void OnDebutChanged();
-    partial void OnFinChanging(string value);
-    partial void OnFinChanged();
-    partial void OnIDPatientChanging(int value);
-    partial void OnIDPatientChanged();
-    partial void OnIDFacteursMigraineChanging(System.Nullable<int> value);
-    partial void OnIDFacteursMigraineChanged();
-    partial void OnIDMedicamentsMigraineChanging(System.Nullable<int> value);
-    partial void OnIDMedicamentsMigraineChanged();
-    #endregion
-		
-		public T_MIGRAINE()
-		{
-			this._T_MEDICAMENTS_MIGRAINE = default(EntityRef<T_MEDICAMENTS_MIGRAINE>);
-			this._T_FACTEURS_MIGRAINE = default(EntityRef<T_FACTEURS_MIGRAINE>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					if ((this._T_MEDICAMENTS_MIGRAINE.HasLoadedOrAssignedValue || this._T_FACTEURS_MIGRAINE.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Intensite", DbType="Int")]
-		public System.Nullable<int> Intensite
-		{
-			get
-			{
-				return this._Intensite;
-			}
-			set
-			{
-				if ((this._Intensite != value))
-				{
-					this.OnIntensiteChanging(value);
-					this.SendPropertyChanging();
-					this._Intensite = value;
-					this.SendPropertyChanged("Intensite");
-					this.OnIntensiteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Debut", DbType="VarChar(MAX)")]
-		public string Debut
-		{
-			get
-			{
-				return this._Debut;
-			}
-			set
-			{
-				if ((this._Debut != value))
-				{
-					this.OnDebutChanging(value);
-					this.SendPropertyChanging();
-					this._Debut = value;
-					this.SendPropertyChanged("Debut");
-					this.OnDebutChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fin", DbType="VarChar(MAX)")]
-		public string Fin
-		{
-			get
-			{
-				return this._Fin;
-			}
-			set
-			{
-				if ((this._Fin != value))
-				{
-					this.OnFinChanging(value);
-					this.SendPropertyChanging();
-					this._Fin = value;
-					this.SendPropertyChanged("Fin");
-					this.OnFinChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
-		public int IDPatient
-		{
-			get
-			{
-				return this._IDPatient;
-			}
-			set
-			{
-				if ((this._IDPatient != value))
-				{
-					this.OnIDPatientChanging(value);
-					this.SendPropertyChanging();
-					this._IDPatient = value;
-					this.SendPropertyChanged("IDPatient");
-					this.OnIDPatientChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteursMigraine", DbType="Int")]
-		public System.Nullable<int> IDFacteursMigraine
-		{
-			get
-			{
-				return this._IDFacteursMigraine;
-			}
-			set
-			{
-				if ((this._IDFacteursMigraine != value))
-				{
-					this.OnIDFacteursMigraineChanging(value);
-					this.SendPropertyChanging();
-					this._IDFacteursMigraine = value;
-					this.SendPropertyChanged("IDFacteursMigraine");
-					this.OnIDFacteursMigraineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMedicamentsMigraine", DbType="Int")]
-		public System.Nullable<int> IDMedicamentsMigraine
-		{
-			get
-			{
-				return this._IDMedicamentsMigraine;
-			}
-			set
-			{
-				if ((this._IDMedicamentsMigraine != value))
-				{
-					this.OnIDMedicamentsMigraineChanging(value);
-					this.SendPropertyChanging();
-					this._IDMedicamentsMigraine = value;
-					this.SendPropertyChanged("IDMedicamentsMigraine");
-					this.OnIDMedicamentsMigraineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_MEDICAMENTS_MIGRAINE_T_MIGRAINE", Storage="_T_MEDICAMENTS_MIGRAINE", ThisKey="ID", OtherKey="IDMigraine", IsForeignKey=true)]
-		public T_MEDICAMENTS_MIGRAINE T_MEDICAMENTS_MIGRAINE
-		{
-			get
-			{
-				return this._T_MEDICAMENTS_MIGRAINE.Entity;
-			}
-			set
-			{
-				T_MEDICAMENTS_MIGRAINE previousValue = this._T_MEDICAMENTS_MIGRAINE.Entity;
-				if (((previousValue != value) 
-							|| (this._T_MEDICAMENTS_MIGRAINE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._T_MEDICAMENTS_MIGRAINE.Entity = null;
-						previousValue.T_MIGRAINE.Remove(this);
-					}
-					this._T_MEDICAMENTS_MIGRAINE.Entity = value;
-					if ((value != null))
-					{
-						value.T_MIGRAINE.Add(this);
-						this._ID = value.IDMigraine;
-					}
-					else
-					{
-						this._ID = default(int);
-					}
-					this.SendPropertyChanged("T_MEDICAMENTS_MIGRAINE");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_FACTEURS_MIGRAINE_T_MIGRAINE", Storage="_T_FACTEURS_MIGRAINE", ThisKey="ID", OtherKey="IDMigraine", IsForeignKey=true)]
-		public T_FACTEURS_MIGRAINE T_FACTEURS_MIGRAINE
-		{
-			get
-			{
-				return this._T_FACTEURS_MIGRAINE.Entity;
-			}
-			set
-			{
-				T_FACTEURS_MIGRAINE previousValue = this._T_FACTEURS_MIGRAINE.Entity;
-				if (((previousValue != value) 
-							|| (this._T_FACTEURS_MIGRAINE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._T_FACTEURS_MIGRAINE.Entity = null;
-						previousValue.T_MIGRAINE.Remove(this);
-					}
-					this._T_FACTEURS_MIGRAINE.Entity = value;
-					if ((value != null))
-					{
-						value.T_MIGRAINE.Add(this);
-						this._ID = value.IDMigraine;
-					}
-					else
-					{
-						this._ID = default(int);
-					}
-					this.SendPropertyChanged("T_FACTEURS_MIGRAINE");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDICAMENTS_MIGRAINE")]
 	public partial class T_MEDICAMENTS_MIGRAINE : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2440,8 +2027,6 @@ namespace MigraineCSMiddleware.DAO
 		private int _IDMedicament;
 		
 		private System.Nullable<int> _Quantité;
-		
-		private EntitySet<T_MIGRAINE> _T_MIGRAINE;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -2459,7 +2044,6 @@ namespace MigraineCSMiddleware.DAO
 		
 		public T_MEDICAMENTS_MIGRAINE()
 		{
-			this._T_MIGRAINE = new EntitySet<T_MIGRAINE>(new Action<T_MIGRAINE>(this.attach_T_MIGRAINE), new Action<T_MIGRAINE>(this.detach_T_MIGRAINE));
 			OnCreated();
 		}
 		
@@ -2543,19 +2127,6 @@ namespace MigraineCSMiddleware.DAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_MEDICAMENTS_MIGRAINE_T_MIGRAINE", Storage="_T_MIGRAINE", ThisKey="IDMigraine", OtherKey="ID")]
-		public EntitySet<T_MIGRAINE> T_MIGRAINE
-		{
-			get
-			{
-				return this._T_MIGRAINE;
-			}
-			set
-			{
-				this._T_MIGRAINE.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2575,18 +2146,6 @@ namespace MigraineCSMiddleware.DAO
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-		
-		private void attach_T_MIGRAINE(T_MIGRAINE entity)
-		{
-			this.SendPropertyChanging();
-			entity.T_MEDICAMENTS_MIGRAINE = this;
-		}
-		
-		private void detach_T_MIGRAINE(T_MIGRAINE entity)
-		{
-			this.SendPropertyChanging();
-			entity.T_MEDICAMENTS_MIGRAINE = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEURS_MIGRAINE")]
@@ -2602,8 +2161,6 @@ namespace MigraineCSMiddleware.DAO
 		private int _IDFacteur;
 		
 		private System.Nullable<int> _Quantité;
-		
-		private EntitySet<T_MIGRAINE> _T_MIGRAINE;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -2621,7 +2178,6 @@ namespace MigraineCSMiddleware.DAO
 		
 		public T_FACTEURS_MIGRAINE()
 		{
-			this._T_MIGRAINE = new EntitySet<T_MIGRAINE>(new Action<T_MIGRAINE>(this.attach_T_MIGRAINE), new Action<T_MIGRAINE>(this.detach_T_MIGRAINE));
 			OnCreated();
 		}
 		
@@ -2705,19 +2261,6 @@ namespace MigraineCSMiddleware.DAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_FACTEURS_MIGRAINE_T_MIGRAINE", Storage="_T_MIGRAINE", ThisKey="IDMigraine", OtherKey="ID")]
-		public EntitySet<T_MIGRAINE> T_MIGRAINE
-		{
-			get
-			{
-				return this._T_MIGRAINE;
-			}
-			set
-			{
-				this._T_MIGRAINE.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2736,18 +2279,6 @@ namespace MigraineCSMiddleware.DAO
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_T_MIGRAINE(T_MIGRAINE entity)
-		{
-			this.SendPropertyChanging();
-			entity.T_FACTEURS_MIGRAINE = this;
-		}
-		
-		private void detach_T_MIGRAINE(T_MIGRAINE entity)
-		{
-			this.SendPropertyChanging();
-			entity.T_FACTEURS_MIGRAINE = null;
 		}
 	}
 	
@@ -2791,6 +2322,249 @@ namespace MigraineCSMiddleware.DAO
 				if ((this._IDMigraine != value))
 				{
 					this._IDMigraine = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MIGRAINE")]
+	public partial class T_MIGRAINE
+	{
+		
+		private int _ID;
+		
+		private System.Nullable<int> _Intensite;
+		
+		private string _Debut;
+		
+		private string _Fin;
+		
+		private System.Nullable<int> _IDFacteursMigraine;
+		
+		private System.Nullable<int> _IDMedicamentsMigraine;
+		
+		public T_MIGRAINE()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Intensite", DbType="Int")]
+		public System.Nullable<int> Intensite
+		{
+			get
+			{
+				return this._Intensite;
+			}
+			set
+			{
+				if ((this._Intensite != value))
+				{
+					this._Intensite = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Debut", DbType="VarChar(MAX)")]
+		public string Debut
+		{
+			get
+			{
+				return this._Debut;
+			}
+			set
+			{
+				if ((this._Debut != value))
+				{
+					this._Debut = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fin", DbType="VarChar(MAX)")]
+		public string Fin
+		{
+			get
+			{
+				return this._Fin;
+			}
+			set
+			{
+				if ((this._Fin != value))
+				{
+					this._Fin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteursMigraine", DbType="Int")]
+		public System.Nullable<int> IDFacteursMigraine
+		{
+			get
+			{
+				return this._IDFacteursMigraine;
+			}
+			set
+			{
+				if ((this._IDFacteursMigraine != value))
+				{
+					this._IDFacteursMigraine = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMedicamentsMigraine", DbType="Int")]
+		public System.Nullable<int> IDMedicamentsMigraine
+		{
+			get
+			{
+				return this._IDMedicamentsMigraine;
+			}
+			set
+			{
+				if ((this._IDMedicamentsMigraine != value))
+				{
+					this._IDMedicamentsMigraine = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEURS")]
+	public partial class T_FACTEURS
+	{
+		
+		private int _IDPatient;
+		
+		private int _IDFacteur;
+		
+		public T_FACTEURS()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
+		public int IDPatient
+		{
+			get
+			{
+				return this._IDPatient;
+			}
+			set
+			{
+				if ((this._IDPatient != value))
+				{
+					this._IDPatient = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteur", DbType="Int NOT NULL")]
+		public int IDFacteur
+		{
+			get
+			{
+				return this._IDFacteur;
+			}
+			set
+			{
+				if ((this._IDFacteur != value))
+				{
+					this._IDFacteur = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEUR")]
+	public partial class T_FACTEUR
+	{
+		
+		private int _ID;
+		
+		private bool _TypeFacteur;
+		
+		private string _Nom;
+		
+		private string _Question;
+		
+		public T_FACTEUR()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeFacteur", DbType="Bit NOT NULL")]
+		public bool TypeFacteur
+		{
+			get
+			{
+				return this._TypeFacteur;
+			}
+			set
+			{
+				if ((this._TypeFacteur != value))
+				{
+					this._TypeFacteur = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nom", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Nom
+		{
+			get
+			{
+				return this._Nom;
+			}
+			set
+			{
+				if ((this._Nom != value))
+				{
+					this._Nom = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Question", DbType="VarChar(MAX)")]
+		public string Question
+		{
+			get
+			{
+				return this._Question;
+			}
+			set
+			{
+				if ((this._Question != value))
+				{
+					this._Question = value;
 				}
 			}
 		}

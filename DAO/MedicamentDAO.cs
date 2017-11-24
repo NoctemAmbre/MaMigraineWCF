@@ -31,6 +31,25 @@ namespace MigraineCSMiddleware.DAO
                     ListMedicament.Add(new Medicament() { ID = element.ID, CodeCIS = (int)element.CodeCIS, DenominationMedicment = element.Denominationmedicament, FromePharmaceutique = element.Formepharmaceutique, VoieAdministration = element.Voiesadministration, StatutAdministratif = element.Statutadministratif, TypeDeProcedureAutorisation = element.Typedeprocedureautorisation, EtatCommercialisatoin = element.Etatcommercialisation, DateAmm = (DateTime)element.DateAMM, StatutDbm = element.StatutBdm, NumeroAutorisation = element.Numeroautorisationeuropeenne, Titulaire = element.Titulaire, SurveillanceRenforcee = element.Surveillancerenforcee });
                 }
             }
+        }
+
+        public List<Medicament> ListMedicamentDeLaMigraine(int IDMigraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var ListMedicaments = entity.T_MEDICAMENT.Join(entity.T_MEDICAMENTS_MIGRAINE,
+                    M => M.ID,
+                    MM => MM.IDMedicament,
+                    (M, MM) => new { IDMigraine = MM.IDMigraine, Quantite = MM.Quantité, Denominationmedicament = M.Denominationmedicament, Formepharmaceutique = M.Formepharmaceutique, Voiesadministration = M.Voiesadministration }).ToList();
+                var MedicamentPourMigraine = ListMedicaments.Where(elt => elt.IDMigraine == IDMigraine).ToList();
+                List<Medicament> ListMedicament = new List<Medicament>();
+                foreach(var Element in MedicamentPourMigraine)
+                {
+                    ListMedicament.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                }
+                return ListMedicament;
+            }
+        }
 
             //var res = entity.T_MEDICAMENT.ToList();
 
@@ -46,7 +65,7 @@ namespace MigraineCSMiddleware.DAO
             //        ListMedicament.Add(medicament);
             //    }
             //}
-        }
+       
 
         public Medicament VoirMedicament(int IdMedicament)
         {

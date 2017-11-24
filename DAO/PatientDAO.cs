@@ -143,19 +143,12 @@ namespace MigraineCSMiddleware.DAO
                 var ret = entity.T_PATIENT.Join(entity.T_COMPTE,
                     P => P.IdCompte,
                     C => C.ID,
-                //(P, C) => new { IDPatient = P.ID, Identifiant = C.Identifiant, Nom = C.Nom, Prenom = C.Prenom }).Where(elt => elt.IDPatient == IdPatient).FirstOrDefault();
                 (P, C) => new { IDPatient = P.ID, ID = C.ID, Identifiant = C.Identifiant, Nom = C.Nom, Prenom = C.Prenom, AdresseMail = C.AdressMail, Telephone = P.TelephoneFixe, TelephonePortable = P.TelephonePortable, DateNaissance = P.DateNaissance, Token = C.Token }).Where(elt => elt.IDPatient == IdPatient).FirstOrDefault();
-                //return new Patient() { IDPatient = ret.IDPatient, Identifiant = ret.Identifiant, Nom = ret.Nom, Prenom = ret.Prenom });
-               return new Patient() {IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient), Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
-            }
-            //(from elt in T_PATIENT where (elt.IDPatient == IdPatient) select elt).First();
 
-            //return (from elt in _ListPatient where (elt.IDPatient == IdPatient) select elt).SingleOrDefault();
-            //foreach (Patient Element in _ListPatient)
-            //{
-            //    if (Element.IDPatient == IdPatient) return Element;
-            //}
-            //return null;
+                List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
+                List<Migraine> MesMigraines = new MigraineDAO().ListeMigrainePatient((int)ret.IDPatient);
+                return new Patient() {IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = MesMedecins, MesMigraines = MesMigraines, Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
+            }
         }
 
         /// <summary>

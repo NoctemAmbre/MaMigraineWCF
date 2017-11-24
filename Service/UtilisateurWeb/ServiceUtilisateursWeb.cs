@@ -180,6 +180,7 @@ namespace MigraineCSMiddleware.Service.Utilisateur
                 Nom = patient.Nom,
                 Prenom = patient.Prenom,
                 MesMedecin = retourMedecinAttritre(patient.MesMedecin),
+                MesMigraines = patient.MesMigraines,
                 Telephone = patient.Telephone,
                 TelephonePortable = patient.TelephonePortable,
                 AdresseMail = patient.AdresseMail,

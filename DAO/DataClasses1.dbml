@@ -184,11 +184,6 @@
       <Column Name="Token" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.AjoutMedicament" Method="AjoutMedicament">
-    <Parameter Name="nom" Type="System.String" DbType="VarChar(MAX)" />
-    <Parameter Name="idType" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.AjoutCompte" Method="AjoutCompte">
     <Parameter Name="Identifiant" Parameter="identifiant" Type="System.String" DbType="VarChar(MAX)" />
     <Parameter Name="MotDePass" Parameter="motDePass" Type="System.String" DbType="VarChar(MAX)" />
@@ -298,6 +293,17 @@
   <Function Name="dbo.SupprMedecinPatient" Method="SupprMedecinPatient">
     <Parameter Name="IdMedecin" Parameter="idMedecin" Type="System.Int32" DbType="Int" />
     <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutMedicamentAPatient" Method="AjoutMedicamentAPatient">
+    <Parameter Name="IDMedicament" Parameter="iDMedicament" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDPatient" Parameter="iDPatient" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Quantite" Parameter="quantite" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprMedicamentDuPatient" Method="SupprMedicamentDuPatient">
+    <Parameter Name="IDMedicament" Parameter="iDMedicament" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDPatient" Parameter="iDPatient" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

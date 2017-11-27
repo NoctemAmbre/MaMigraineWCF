@@ -158,8 +158,6 @@ namespace MigraineCSMiddleware.Service.Utilisateur
             ServiceSecurite.IsTokenValid(UtilWeb.Token); //teste du token long
 
             return Conversion((new ServiceMedecin()).AttributionPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.IDWeb));
-
-            return null;
         }
 
 
@@ -181,6 +179,8 @@ namespace MigraineCSMiddleware.Service.Utilisateur
                 Prenom = patient.Prenom,
                 MesMedecin = retourMedecinAttritre(patient.MesMedecin),
                 MesMigraines = patient.MesMigraines,
+                MesMedicaments = patient.MesMedicaments,
+                MesFacteurs = patient.MesFacteurs,
                 Telephone = patient.Telephone,
                 TelephonePortable = patient.TelephonePortable,
                 AdresseMail = patient.AdresseMail,

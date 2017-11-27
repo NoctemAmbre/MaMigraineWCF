@@ -147,7 +147,9 @@ namespace MigraineCSMiddleware.DAO
 
                 List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
                 List<Migraine> MesMigraines = new MigraineDAO().ListeMigrainePatient((int)ret.IDPatient);
-                return new Patient() {IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = MesMedecins, MesMigraines = MesMigraines, Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
+                List<Medicament> MesMedicaments = new MedicamentDAO().ListeMesMedicaments((int)ret.IDPatient);
+                List<Facteur> MesFacteurs = new FacteurDAO().ListeFacteurPatient((int)ret.IDPatient);
+                return new Patient() {IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = MesMedecins, MesMigraines = MesMigraines,  MesMedicaments = MesMedicaments, MesFacteurs = MesFacteurs, Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
             }
         }
 

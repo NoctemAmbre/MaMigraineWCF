@@ -220,13 +220,6 @@ namespace MigraineCSMiddleware.DAO
 			return ((ISingleResult<ListPatientResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedicament")]
-		public int AjoutMedicament([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string nom, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idType)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), nom, idType);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutCompte")]
 		public int AjoutCompte([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Identifiant", DbType="VarChar(MAX)")] string identifiant, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MotDePass", DbType="VarChar(MAX)")] string motDePass, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nom", DbType="VarChar(MAX)")] string nom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Prenom", DbType="VarChar(MAX)")] string prenom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateCreation", DbType="VarChar(MAX)")] string dateCreation, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DerniereModif", DbType="VarChar(MAX)")] string derniereModif, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreePar", DbType="Int")] System.Nullable<int> creePar, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AdressMail", DbType="VarChar(MAX)")] string adressMail, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Token", DbType="VarChar(MAX)")] string token)
 		{
@@ -301,6 +294,20 @@ namespace MigraineCSMiddleware.DAO
 		public int SupprMedecinPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMedecin", DbType="Int")] System.Nullable<int> idMedecin, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedicamentAPatient")]
+		public int AjoutMedicamentAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMedicament, iDPatient, quantite);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMedicamentDuPatient")]
+		public int SupprMedicamentDuPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMedicament, iDPatient);
 			return ((int)(result.ReturnValue));
 		}
 	}

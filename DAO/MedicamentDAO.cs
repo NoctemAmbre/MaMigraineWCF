@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace MigraineCSMiddleware.DAO
@@ -33,7 +34,25 @@ namespace MigraineCSMiddleware.DAO
             }
         }
 
-        public List<Medicament> ListMedicamentDeLaMigraine(int IDMigraine)
+        public List<Medicament> ListeMesMedicaments(int IDPatient)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var ListMedicaments = entity.T_MEDICAMENT.Join(entity.T_ORDONNANCE,
+                    M => M.ID,
+                    O => O.idMedicament,
+                    (M, O) => new { IDPatient = O.idPatient, Quantite = O.Quantité, Denominationmedicament = M.Denominationmedicament, Formepharmaceutique = M.Formepharmaceutique, Voiesadministration = M.Voiesadministration }).ToList();
+                var MedicamentDuPatient = ListMedicaments.Where(elt => elt.IDPatient == IDPatient).ToList();
+                List<Medicament> ListMedicament = new List<Medicament>();
+                foreach (var Element in MedicamentDuPatient)
+                {
+                    ListMedicament.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                }
+                return ListMedicament;
+            }
+        }
+
+        public List<Medicament> ListeMedicamentDeLaMigraine(int IDMigraine)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
@@ -51,36 +70,80 @@ namespace MigraineCSMiddleware.DAO
             }
         }
 
-            //var res = entity.T_MEDICAMENT.ToList();
+        /// <summary>
+        /// Liste des médicaments sont le mot recherché est contenu dans l'intitulé
+        /// </summary>
+        /// <param name="Nom"></param>
+        /// <returns></returns>
+        public List<Medicament> ChercheMedicement(string Nom)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var ListMedicaments = entity.T_MEDICAMENT.Where(elt =>  elt.Denominationmedicament.Contains(Nom)).ToList();
+                List<Medicament> ListRetour= new List<Medicament>();
+                foreach(var Element in ListMedicaments)
+                {
+                    ListRetour.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration});
+                }
+                return ListRetour;
+            }
+        }
+
+        /// <summary>
+        /// List de tout les médicaments
+        /// </summary>
+        /// <returns></returns>
+        public List<Medicament> ListeMedicements()
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var ListMedicaments = entity.T_MEDICAMENT.ToList();
+                List<Medicament> ListRetour = new List<Medicament>();
+                foreach (var Element in ListMedicaments)
+                {
+                    ListRetour.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration });
+                }
+                return ListRetour;
+            }
+        }
+
+        //var res = entity.T_MEDICAMENT.ToList();
 
 
-            //    foreach (T_MEDICAMENT element in entity.T_MEDICAMENT)
-            //    {
-            //        string Type;
-            //        List<T_MEDICAMENT> test = (from elt in entity.T_MEDICAMENT select elt).ToList();
-            //       T_TYPE res = (from elt in entity.T_TYPE where (elt.ID == element.idType) select elt).First();
-            //        if (res != null) Type = res.Type; else Type = "";
+        //    foreach (T_MEDICAMENT element in entity.T_MEDICAMENT)
+        //    {
+        //        string Type;
+        //        List<T_MEDICAMENT> test = (from elt in entity.T_MEDICAMENT select elt).ToList();
+        //       T_TYPE res = (from elt in entity.T_TYPE where (elt.ID == element.idType) select elt).First();
+        //        if (res != null) Type = res.Type; else Type = "";
 
-            //        Medicament medicament = new Medicament() { Id = element.ID, Nom = element.nom, Type = Type };
-            //        ListMedicament.Add(medicament);
-            //    }
-            //}
-       
+        //        Medicament medicament = new Medicament() { Id = element.ID, Nom = element.nom, Type = Type };
+        //        ListMedicament.Add(medicament);
+        //    }
+        //}
+
 
         public Medicament VoirMedicament(int IdMedicament)
         {
             return _ListMedicament.SingleOrDefault(elt => elt.ID == IdMedicament);
         }
 
-        //public Medicament AjoutMedicament(string nom, string idType)
-        //{
-        //    using (DataClasses1DataContext entity = new DataClasses1DataContext())
-        //    {
-        //        int retour = entity.AjoutMedicament(nom, int.Parse(idType));
-        //        Rafraichir();
+        public Patient AjoutMedicamentAuPatient(int IDMedicament, int IDPatient, int Quantite)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                int retour = entity.AjoutMedicamentAPatient(IDMedicament, IDPatient, Quantite);
 
-        //        return (from elt in _ListMedicament where (elt.Nom == nom) select elt).First();
-        //    }
-        //}
+                return new PatientDAO().VoirPatient(IDPatient);
+            }
+        }
+        public Patient SupprMedicamentDuPatient(int IDMedicament, int IDPatient)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                int retour = entity.SupprMedicamentDuPatient(IDMedicament, IDPatient);
+                return new PatientDAO().VoirPatient(IDPatient);
+            }
+        }
     }
 }

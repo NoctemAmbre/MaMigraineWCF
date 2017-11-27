@@ -36,7 +36,7 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retourMigraine = entity.T_MIGRAINE.FirstOrDefault(elt => elt.ID == IDMigraine);
-                List<Medicament> ListMedicament = new MedicamentDAO().ListMedicamentDeLaMigraine((int)retourMigraine.IDMedicamentsMigraine);
+                List<Medicament> ListMedicament = new MedicamentDAO().ListeMedicamentDeLaMigraine((int)retourMigraine.IDMedicamentsMigraine);
                 List<Facteur> ListFacteurs = new FacteurDAO().ListeFacteurMigraine(IDMigraine);
                 Patient patient = new PatientDAO().VoirPatient((int)entity.T_MIGRAINES_PATIENT.FirstOrDefault(elt => elt.IDMigraine == IDMigraine).IDPatient);
                 return new Migraine() { ID = retourMigraine.ID, Debut = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Debut), Fin = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Fin), Facteurs = ListFacteurs, MedicamentsPris = ListMedicament, Intensite = (int)retourMigraine.Intensite };

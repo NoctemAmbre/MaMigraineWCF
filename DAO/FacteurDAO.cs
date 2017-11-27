@@ -25,5 +25,22 @@ namespace MigraineCSMiddleware.DAO
                 return ListFacteur;
             }
         }
+        public List<Facteur> ListeFacteurPatient(int IDPatient)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var retour = entity.T_FACTEUR.Join(entity.T_FACTEURS,
+                    F => F.ID,
+                    FS => FS.IDFacteur,
+                    (F, FS) => new { IDPatient = FS.IDPatient, TipeFacteur = F.TypeFacteur, Nom = F.Nom, Question = F.Question }).Where(elt => elt.IDPatient == IDPatient).ToList();
+
+                List<Facteur> ListFacteur = new List<Facteur>();
+                foreach (var Element in retour)
+                {
+                    ListFacteur.Add(new Facteur() { Nom = Element.Nom, Type = (bool)Element.TipeFacteur, Question = Element.Question });
+                }
+                return ListFacteur;
+            }
+        }
     }
 }

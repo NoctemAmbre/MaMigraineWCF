@@ -1,22 +1,28 @@
 ﻿using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Date;
-using MigraineCSMiddleware.Service.Securite;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.medecin;
+using MigraineCSMiddleware.Service.medicament;
+using MigraineCSMiddleware.Service.patient;
+using MigraineCSMiddleware.Service.securite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MigraineCSMiddleware.Service.Utilisateur
+namespace MigraineCSMiddleware.Service.utilisateurweb
 {
     public class ServiceUtilisateursWeb
     {
+
         public ServiceUtilisateursWeb()
         {
 
         }
         public UtilisateurWeb Login(string Token)
         {
+            
             Compte compte = ServiceSecurite.GetCompteSecurite(Token); //teste du compte et du token basic. Si incorrecte passage en catch
            
             PatientDAO _PatientDAO = new PatientDAO();
@@ -30,7 +36,6 @@ namespace MigraineCSMiddleware.Service.Utilisateur
                 return Conversion(_MedecinDAO.Login(compte.Identifiant, compte.MotDePass));
             }
             else return null;
-            return null;
         }
 
         public UtilisateurWeb CreationCompte(string ValueJSON)
@@ -150,6 +155,28 @@ namespace MigraineCSMiddleware.Service.Utilisateur
                 return Conversion((new ServicePatient()).AttributionMedecin(UtilWeb.IDWeb, UtilWeb.MesMedecin[0].IDWeb));
             }
             else return null;
+        }
+        public List<Modele.Medicament> GetListTotalMedicaments(string Value)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
+            ServiceSecurite.IsTokenValid(UtilWeb.Token); //teste du token long
+            return new ServiceMedicament().ListeTotalMedicaments();
+        }
+
+        //public List<Modele.Medicament> GetListMedicaments(string Value)
+        public List<Medicament> GetListMedicaments(string Value)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
+            ServiceSecurite.IsTokenValid(UtilWeb.Token); //teste du token long
+            //UtilisateurWeb test = new UtilisateurWeb();
+            //List<Medicament> toto = new List<Medicament>();
+            //Medicament tata = new Medicament() { ID = 0, DenominationMedicament = "Medoc" };
+            //toto.Add(tata);
+            //test.IDWeb = 10;
+            return new ServiceMedicament().ListeMedicaments(UtilWeb.MesMedicaments[0].DenominationMedicament);
+             
+            //Docteur
+            //return new ServiceMedicament().ListeMedicaments(UtilWeb.MesMedicaments[0].DenominationMedicament);
         }
 
         public UtilisateurWeb AttributionPatient(string ValueJSON)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.Service.Utilisateur
+namespace MigraineCSMiddleware.Service.compte
 {
     [Serializable]
     internal class CompteException : Exception

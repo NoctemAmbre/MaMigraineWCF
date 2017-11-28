@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.DAO
+namespace MigraineCSMiddleware.Service.compte
 {
     [Serializable]
     internal class CompteModificationException : Exception

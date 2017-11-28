@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.DAO
+namespace MigraineCSMiddleware.Service.patient
 {
     [Serializable]
     internal class PatientIntrouvableException : Exception

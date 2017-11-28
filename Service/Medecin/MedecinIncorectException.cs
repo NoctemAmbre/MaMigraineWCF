@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.Service
+namespace MigraineCSMiddleware.Service.medecin
 {
     [Serializable]
     internal class MedecinIncorectException : Exception

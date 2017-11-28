@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace MigraineCSMiddleware.Service.Date
+namespace MigraineCSMiddleware.Service.date
 {
     public class ConvertionDate
     {

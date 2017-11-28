@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using MigraineCSMiddleware.Metier;
 using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Medicament;
-using MigraineCSMiddleware.Service.Utilisateur;
+using MigraineCSMiddleware.Service.medicament;
+using MigraineCSMiddleware.Service.utilisateurweb;
 using System.Web;
 using System.ServiceModel.Activation;
 using System;
-using MigraineCSMiddleware.Service.Securite;
+using MigraineCSMiddleware.Service.securite;
 using System.ServiceModel.Web;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.patient;
+using MigraineCSMiddleware.Service.medecin;
 
 namespace MigraineCSMiddleware
 {
@@ -461,6 +464,38 @@ namespace MigraineCSMiddleware
         #endregion
 
         #region Medicament
+
+        public List<Medicament> GetListTotalMedicaments(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().GetListTotalMedicaments(Value);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+        }
+        public List<Medicament> GetListMedicaments(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().GetListMedicaments(Value);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+        }
+
         //public Medicament AjoutMedicament(string nom, string idType)
         //{
         //    return new ServiceMedicament().AjoutMedicament(nom, idType);

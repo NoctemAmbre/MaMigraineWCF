@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.Service.Securite
+namespace MigraineCSMiddleware.Service.securite
 {
     [Serializable]
     internal class TokenExpireException : Exception

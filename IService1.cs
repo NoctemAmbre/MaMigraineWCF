@@ -10,7 +10,7 @@ using MigraineCSMiddleware.Modele;
 using System.ServiceModel.Activation;
 using System.Security.Policy;
 using System.Web;
-using MigraineCSMiddleware.Service.Utilisateur;
+using MigraineCSMiddleware.Service.utilisateurweb;
 
 namespace MigraineCSMiddleware
 {
@@ -290,6 +290,17 @@ namespace MigraineCSMiddleware
         #endregion
 
         #region Medicament
+
+        [WebGet(UriTemplate = "/Medicament/ListeTotal?Value={Value}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Medicament> GetListTotalMedicaments(string Value);
+
+        [WebGet(UriTemplate = "/Medicament/Liste?Value={Value}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Medicament> GetListMedicaments(string Value);
+
         //[WebInvoke(UriTemplate = "/Medicament/Ajout", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,

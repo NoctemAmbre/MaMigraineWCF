@@ -1,6 +1,7 @@
 ﻿using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Date;
-using MigraineCSMiddleware.Service.Securite;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.securite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace MigraineCSMiddleware.DAO
                 if (retour == null) throw new AutentificationIncorrecteException(Identifiant, "Identifiant ou mot de passe incorrecte");
                 else return new Compte() { ID = retour.ID, Identifiant = retour.Identifiant, MotDePass = retour.MotDePass, Nom = retour.Nom, Prenom = retour.Prenom};
             }
-            return null;
+     
         }
 
         private void AjoutToken(int idCompte)

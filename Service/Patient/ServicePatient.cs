@@ -1,13 +1,14 @@
 ﻿using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Metier;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Securite;
+using MigraineCSMiddleware.Service.medecin;
+using MigraineCSMiddleware.Service.securite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
-namespace MigraineCSMiddleware.Service
+namespace MigraineCSMiddleware.Service.patient
 {
     public class ServicePatient
     {

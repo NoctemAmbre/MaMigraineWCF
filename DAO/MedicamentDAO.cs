@@ -14,7 +14,7 @@ namespace MigraineCSMiddleware.DAO
 
         public MedicamentDAO()
         {
-            Rafraichir();
+            //Rafraichir();
         }
 
         /// <summary>
@@ -29,7 +29,8 @@ namespace MigraineCSMiddleware.DAO
                 ListMedicament.Clear();
                 foreach (var element in ret)
                 {
-                    ListMedicament.Add(new Medicament() { ID = element.ID, CodeCIS = (int)element.CodeCIS, DenominationMedicment = element.Denominationmedicament, FromePharmaceutique = element.Formepharmaceutique, VoieAdministration = element.Voiesadministration, StatutAdministratif = element.Statutadministratif, TypeDeProcedureAutorisation = element.Typedeprocedureautorisation, EtatCommercialisatoin = element.Etatcommercialisation, DateAmm = (DateTime)element.DateAMM, StatutDbm = element.StatutBdm, NumeroAutorisation = element.Numeroautorisationeuropeenne, Titulaire = element.Titulaire, SurveillanceRenforcee = element.Surveillancerenforcee });
+                    //ListMedicament.Add(new Medicament() { ID = element.ID, CodeCIS = (int)element.CodeCIS, DenominationMedicament = element.Denominationmedicament, FormePharmaceutique = element.Formepharmaceutique, VoiesAdministration = element.Voiesadministration, StatutAdministratif = element.Statutadministratif, TypeDeProcedureAutorisation = element.Typedeprocedureautorisation, EtatCommercialisatoin = element.Etatcommercialisation, DateAmm = (DateTime)element.DateAMM, Statutbdm = element.StatutBdm, NumeroAutorisation = element.Numeroautorisationeuropeenne, Titulaire = element.Titulaire, SurveillanceRenforcee = element.Surveillancerenforcee });
+                    ListMedicament.Add(new Medicament() { ID = element.ID, DenominationMedicament = element.Denominationmedicament, FormePharmaceutique = element.Formepharmaceutique, VoiesAdministration = element.Voiesadministration });
                 }
             }
         }
@@ -46,7 +47,8 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListMedicament = new List<Medicament>();
                 foreach (var Element in MedicamentDuPatient)
                 {
-                    ListMedicament.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                    //ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                    ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration });
                 }
                 return ListMedicament;
             }
@@ -64,7 +66,8 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListMedicament = new List<Medicament>();
                 foreach(var Element in MedicamentPourMigraine)
                 {
-                    ListMedicament.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                    //ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
+                    ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration });
                 }
                 return ListMedicament;
             }
@@ -75,7 +78,7 @@ namespace MigraineCSMiddleware.DAO
         /// </summary>
         /// <param name="Nom"></param>
         /// <returns></returns>
-        public List<Medicament> ChercheMedicement(string Nom)
+        public List<Medicament> ChercheMedicament(string Nom)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
@@ -83,7 +86,7 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListRetour= new List<Medicament>();
                 foreach(var Element in ListMedicaments)
                 {
-                    ListRetour.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration});
+                    ListRetour.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration});
                 }
                 return ListRetour;
             }
@@ -101,7 +104,7 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListRetour = new List<Medicament>();
                 foreach (var Element in ListMedicaments)
                 {
-                    ListRetour.Add(new Medicament() { DenominationMedicment = Element.Denominationmedicament, FromePharmaceutique = Element.Formepharmaceutique, VoieAdministration = Element.Voiesadministration });
+                    ListRetour.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration });
                 }
                 return ListRetour;
             }

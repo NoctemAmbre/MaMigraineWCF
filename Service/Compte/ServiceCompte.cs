@@ -1,11 +1,11 @@
 ﻿using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Metier;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Date;
+using MigraineCSMiddleware.Service.date;
 using System;
 using System.Collections.Generic;
 
-namespace MigraineCSMiddleware.Service
+namespace MigraineCSMiddleware.Service.compte
 {
     public class ServiceCompte
     {

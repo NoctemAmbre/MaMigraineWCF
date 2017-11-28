@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MigraineCSMiddleware.Service.Utilisateur
+namespace MigraineCSMiddleware.Service.medecin
 {
     [Serializable]
     internal class MedecinIntrouvableException : Exception

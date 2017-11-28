@@ -5,13 +5,23 @@ using System.Web;
 using MigraineCSMiddleware.Modele;
 using MigraineCSMiddleware.DAO;
 
-namespace MigraineCSMiddleware.Service.Medicament
+namespace MigraineCSMiddleware.Service.medicament
 {
     public class ServiceMedicament
     {
         public ServiceMedicament()
         {
 
+        }
+        
+        public List<MigraineCSMiddleware.Modele.Medicament> ListeTotalMedicaments()
+        {
+            return new MedicamentDAO().ListeMedicements();
+        }
+
+        public List<MigraineCSMiddleware.Modele.Medicament> ListeMedicaments(string Nom)
+        {
+            return new MedicamentDAO().ChercheMedicament(Nom);
         }
         //public Modele.Medicament AjoutMedicament(string nom, string idType)
         //{

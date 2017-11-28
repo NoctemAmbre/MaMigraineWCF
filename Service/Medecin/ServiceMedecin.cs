@@ -1,10 +1,11 @@
 ﻿using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Metier;
 using MigraineCSMiddleware.Modele;
+using MigraineCSMiddleware.Service.patient;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MigraineCSMiddleware.Service
+namespace MigraineCSMiddleware.Service.medecin
 {
     public class ServiceMedecin
     {

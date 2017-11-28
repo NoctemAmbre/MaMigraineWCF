@@ -1,9 +1,10 @@
 ﻿using MigraineCSMiddleware.Metier;
 using MigraineCSMiddleware.Modele;
 using MigraineCSMiddleware.Service;
-using MigraineCSMiddleware.Service.Date;
-using MigraineCSMiddleware.Service.Securite;
-using MigraineCSMiddleware.Service.Utilisateur;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.securite;
+using MigraineCSMiddleware.Service.utilisateurweb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +103,7 @@ namespace MigraineCSMiddleware.DAO
                     return new Medecin() { IDMedecin = ret.IDMedecin, ID = ret.ID, Identifiant = ret.Identifiant, Nom = ret.Nom, Prenom = ret.Prenom };
             }
             
-            return null;
+        
             //return (from elt in _ListMedecin where (elt.IDMedecin == IdMedecin) select elt).First();
         }
 
@@ -271,7 +272,7 @@ namespace MigraineCSMiddleware.DAO
 
                 return _ListMedecin.Where(Id => Id.IDMedecin == retour).First();
             }
-            return null;
+        
         }
 
         public Medecin NouveauMotDePass(Medecin medecin)

@@ -1,6 +1,7 @@
 ﻿using MigraineCSMiddleware.DAO;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Date;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.date;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace MigraineCSMiddleware.Service.Securite
+namespace MigraineCSMiddleware.Service.securite
 {
     public class ServiceSecurite
     {

@@ -7,9 +7,12 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using MigraineCSMiddleware.Modele;
-using MigraineCSMiddleware.Service.Date;
-using MigraineCSMiddleware.Service.Securite;
-using MigraineCSMiddleware.Service.Utilisateur;
+using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.securite;
+using MigraineCSMiddleware.Service.utilisateurweb;
+using MigraineCSMiddleware.Service.compte;
+using MigraineCSMiddleware.Service.patient;
+using MigraineCSMiddleware.Service.medecin;
 
 namespace MigraineCSMiddleware.DAO
 {
@@ -221,7 +224,7 @@ namespace MigraineCSMiddleware.DAO
                 RetourPatient.Adresse = new AdresseDAO().AjoutAdresse(patienbdd.ID, patient);
                 return RetourPatient;
               }
-            return null;
+      
         }
 
         public Patient NouveauMotDePass(Patient patient)

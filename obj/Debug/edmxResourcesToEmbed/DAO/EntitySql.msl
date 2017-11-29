@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MigraineModelStoreContainer" CdmEntityContainer="MigraineEntities1">
+    <EntitySetMapping Name="T_ADRESSE">
+      <EntityTypeMapping TypeName="MigraineModel.T_ADRESSE">
+        <MappingFragment StoreEntitySet="T_ADRESSE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IdCompte" ColumnName="IdCompte" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="NomRue" ColumnName="NomRue" />
+          <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+          <ScalarProperty Name="Ville" ColumnName="Ville" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_COMPTE">
+      <EntityTypeMapping TypeName="MigraineModel.T_COMPTE">
+        <MappingFragment StoreEntitySet="T_COMPTE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Identifiant" ColumnName="Identifiant" />
+          <ScalarProperty Name="MotDePass" ColumnName="MotDePass" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
+          <ScalarProperty Name="DerniereModif" ColumnName="DerniereModif" />
+          <ScalarProperty Name="CreePar" ColumnName="CreePar" />
+          <ScalarProperty Name="AdressMail" ColumnName="AdressMail" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_HORAIRE">
+      <EntityTypeMapping TypeName="MigraineModel.T_HORAIRE">
+        <MappingFragment StoreEntitySet="T_HORAIRE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDMedecin" ColumnName="IDMedecin" />
+          <ScalarProperty Name="IDPlageHoraire" ColumnName="IDPlageHoraire" />
+          <ScalarProperty Name="IDJour" ColumnName="IDJour" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_MEDECIN">
+      <EntityTypeMapping TypeName="MigraineModel.T_MEDECIN">
+        <MappingFragment StoreEntitySet="T_MEDECIN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TelephoneCabinet" ColumnName="TelephoneCabinet" />
+          <ScalarProperty Name="InfoComplementaire" ColumnName="InfoComplementaire" />
+          <ScalarProperty Name="IdCompte" ColumnName="IdCompte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_MEDICAMENT">
+      <EntityTypeMapping TypeName="MigraineModel.T_MEDICAMENT">
+        <MappingFragment StoreEntitySet="T_MEDICAMENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="idType" ColumnName="idType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_PATIENT">
+      <EntityTypeMapping TypeName="MigraineModel.T_PATIENT">
+        <MappingFragment StoreEntitySet="T_PATIENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DateNaissance" ColumnName="DateNaissance" />
+          <ScalarProperty Name="IdMedecin" ColumnName="IdMedecin" />
+          <ScalarProperty Name="IdCompte" ColumnName="IdCompte" />
+          <ScalarProperty Name="TelephonePortable" ColumnName="TelephonePortable" />
+          <ScalarProperty Name="TelephoneFixe" ColumnName="TelephoneFixe" />
+          <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_PLAGEHORAIRE">
+      <EntityTypeMapping TypeName="MigraineModel.T_PLAGEHORAIRE">
+        <MappingFragment StoreEntitySet="T_PLAGEHORAIRE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HeureDebut" ColumnName="HeureDebut" />
+          <ScalarProperty Name="HeureFin" ColumnName="HeureFin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_TYPE">
+      <EntityTypeMapping TypeName="MigraineModel.T_TYPE">
+        <MappingFragment StoreEntitySet="T_TYPE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_PATIENT_MEDICAMENT">
+      <EntityTypeMapping TypeName="MigraineModel.T_PATIENT_MEDICAMENT">
+        <MappingFragment StoreEntitySet="T_PATIENT_MEDICAMENT">
+          <ScalarProperty Name="idPatient" ColumnName="idPatient" />
+          <ScalarProperty Name="idMedicament" ColumnName="idMedicament" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MigraineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="T_ADRESSE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCompte" Type="Int32" Nullable="false" />
+    <Property Name="Numero" Type="Int32" />
+    <Property Name="NomRue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CodePostal" Type="Int32" />
+    <Property Name="Ville" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="T_COMPTE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Identifiant" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MotDePass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateCreation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DerniereModif" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreePar" Type="Int32" />
+    <Property Name="AdressMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="T_HORAIRE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDMedecin" Type="Int32" Nullable="false" />
+    <Property Name="IDPlageHoraire" Type="Int32" Nullable="false" />
+    <Property Name="IDJour" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_MEDECIN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TelephoneCabinet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InfoComplementaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdCompte" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_MEDICAMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="idType" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_PATIENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateNaissance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdMedecin" Type="Int32" />
+    <Property Name="IdCompte" Type="Int32" Nullable="false" />
+    <Property Name="TelephonePortable" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TelephoneFixe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Sexe" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_PLAGEHORAIRE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HeureDebut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HeureFin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="T_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="T_PATIENT_MEDICAMENT">
+    <Key>
+      <PropertyRef Name="idPatient" />
+      <PropertyRef Name="idMedicament" />
+    </Key>
+    <Property Name="idPatient" Type="Int32" Nullable="false" />
+    <Property Name="idMedicament" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="MigraineEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="T_ADRESSE" EntityType="Self.T_ADRESSE" />
+    <EntitySet Name="T_COMPTE" EntityType="Self.T_COMPTE" />
+    <EntitySet Name="T_HORAIRE" EntityType="Self.T_HORAIRE" />
+    <EntitySet Name="T_MEDECIN" EntityType="Self.T_MEDECIN" />
+    <EntitySet Name="T_MEDICAMENT" EntityType="Self.T_MEDICAMENT" />
+    <EntitySet Name="T_PATIENT" EntityType="Self.T_PATIENT" />
+    <EntitySet Name="T_PLAGEHORAIRE" EntityType="Self.T_PLAGEHORAIRE" />
+    <EntitySet Name="T_TYPE" EntityType="Self.T_TYPE" />
+    <EntitySet Name="T_PATIENT_MEDICAMENT" EntityType="Self.T_PATIENT_MEDICAMENT" />
+  </EntityContainer>
+</Schema>

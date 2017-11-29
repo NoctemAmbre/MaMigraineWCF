@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MigraineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="T_ADRESSE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdCompte" Type="int" Nullable="false" />
+    <Property Name="Numero" Type="int" />
+    <Property Name="NomRue" Type="varchar(max)" />
+    <Property Name="CodePostal" Type="int" />
+    <Property Name="Ville" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="T_COMPTE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identifiant" Type="varchar(max)" Nullable="false" />
+    <Property Name="MotDePass" Type="varchar(max)" Nullable="false" />
+    <Property Name="Nom" Type="varchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="varchar(max)" Nullable="false" />
+    <Property Name="DateCreation" Type="varchar(max)" Nullable="false" />
+    <Property Name="DerniereModif" Type="varchar(max)" />
+    <Property Name="CreePar" Type="int" />
+    <Property Name="AdressMail" Type="varchar(max)" />
+    <Property Name="Token" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="T_HORAIRE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDMedecin" Type="int" Nullable="false" />
+    <Property Name="IDPlageHoraire" Type="int" Nullable="false" />
+    <Property Name="IDJour" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_MEDECIN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TelephoneCabinet" Type="ntext" />
+    <Property Name="InfoComplementaire" Type="ntext" />
+    <Property Name="IdCompte" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_MEDICAMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom" Type="varchar(max)" />
+    <Property Name="idType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_PATIENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateNaissance" Type="nvarchar(max)" />
+    <Property Name="IdMedecin" Type="int" />
+    <Property Name="IdCompte" Type="int" Nullable="false" />
+    <Property Name="TelephonePortable" Type="varchar(max)" Nullable="false" />
+    <Property Name="TelephoneFixe" Type="varchar(max)" />
+    <Property Name="Sexe" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'Migraine.dbo.T_PATIENT_MEDICAMENT' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="T_PATIENT_MEDICAMENT">
+    <Key>
+      <PropertyRef Name="idPatient" />
+      <PropertyRef Name="idMedicament" />
+    </Key>
+    <Property Name="idPatient" Type="int" Nullable="false" />
+    <Property Name="idMedicament" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_PLAGEHORAIRE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeureDebut" Type="nvarchar(max)" />
+    <Property Name="HeureFin" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="T_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar(max)" />
+  </EntityType>
+  <EntityContainer Name="MigraineModelStoreContainer">
+    <EntitySet Name="T_ADRESSE" EntityType="Self.T_ADRESSE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_COMPTE" EntityType="Self.T_COMPTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_HORAIRE" EntityType="Self.T_HORAIRE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_MEDECIN" EntityType="Self.T_MEDECIN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_MEDICAMENT" EntityType="Self.T_MEDICAMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_PATIENT" EntityType="Self.T_PATIENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_PLAGEHORAIRE" EntityType="Self.T_PLAGEHORAIRE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_TYPE" EntityType="Self.T_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_PATIENT_MEDICAMENT" EntityType="Self.T_PATIENT_MEDICAMENT" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [T_PATIENT_MEDICAMENT].[idPatient] AS [idPatient], 
+    [T_PATIENT_MEDICAMENT].[idMedicament] AS [idMedicament]
+    FROM [dbo].[T_PATIENT_MEDICAMENT] AS [T_PATIENT_MEDICAMENT]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

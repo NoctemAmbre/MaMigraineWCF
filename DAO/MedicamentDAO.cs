@@ -86,7 +86,7 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListRetour= new List<Medicament>();
                 foreach(var Element in ListMedicaments)
                 {
-                    ListRetour.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration});
+                    ListRetour.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration, ID = Element.ID, EtatCommercialisatoin = Element.Etatcommercialisation, StatutAdministratif = Element.Statutadministratif, TypeDeProcedureAutorisation = Element.Typedeprocedureautorisation, CodeCIS = (int)Element.CodeCIS, NumeroAutorisation = Element.Numeroautorisationeuropeenne, Statutbdm = Element.StatutBdm, SurveillanceRenforcee = Element.Surveillancerenforcee, Titulaire = Element.Titulaire });
                 }
                 return ListRetour;
             }

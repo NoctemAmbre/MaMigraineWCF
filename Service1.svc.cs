@@ -63,7 +63,8 @@ namespace MigraineCSMiddleware
             catch (TokenExpireException Exp)
             {
                 //return new UtilisateurWeb() { Erreur = Exp.Message };
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (CompteException Exp)
             {
@@ -85,7 +86,8 @@ namespace MigraineCSMiddleware
             catch (TokenExpireException Exp)
             {
                 //return new UtilisateurWeb() { Erreur = Exp.Message };
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (CompteException Exp)
             {
@@ -105,7 +107,8 @@ namespace MigraineCSMiddleware
             catch (TokenExpireException Exp)
             {
                 //return new UtilisateurWeb() { Erreur = Exp.Message };
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (CompteException Exp)
             {
@@ -169,7 +172,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
                 //return new UtilisateurWeb() { Erreur = Exp.Message };
             }
             catch (CompteException Exp)
@@ -204,7 +208,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -228,7 +233,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -249,11 +255,13 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
 
         }
@@ -270,11 +278,12 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
 
         }
@@ -297,6 +306,23 @@ namespace MigraineCSMiddleware
             //bool test = Authenticate(context);
 
             return new ServicePatient().Login(Login, Pass);
+        }
+
+        public UtilisateurWeb PatientAjoutMedicament(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientAjoutMedicament(Value);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
         }
 
 
@@ -369,11 +395,12 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -405,11 +432,12 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 
@@ -473,11 +501,13 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
         public List<Medicament> GetListMedicaments(string Value)
@@ -488,11 +518,12 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
             catch (TokenExpireException Exp)
             {
-                throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
 

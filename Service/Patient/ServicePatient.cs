@@ -67,6 +67,14 @@ namespace MigraineCSMiddleware.Service.patient
             return patientDAO.AttributionMedecin(patient, medecin);
         }
 
+        public Patient AjoutMedicamentAPatient(int IdPatient, int IdMedicament)
+        {
+            PatientDAO patientDAO = new PatientDAO();
+            if (!patientDAO.IsPatient(IdPatient)) throw new PatientIncorectException("Ce compte c'est pas un compte Patient");
+            Patient patient = new MedicamentDAO().AjoutMedicamentAuPatient(IdMedicament, IdPatient);
+            return patient;
+        }
+
 
         private bool IsPatient(int idPatient)
         {

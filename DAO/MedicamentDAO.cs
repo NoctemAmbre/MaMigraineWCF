@@ -131,11 +131,11 @@ namespace MigraineCSMiddleware.DAO
             return _ListMedicament.SingleOrDefault(elt => elt.ID == IdMedicament);
         }
 
-        public Patient AjoutMedicamentAuPatient(int IDMedicament, int IDPatient, int Quantite)
+        public Patient AjoutMedicamentAuPatient(int IDMedicament, int IDPatient)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                int retour = entity.AjoutMedicamentAPatient(IDMedicament, IDPatient, Quantite);
+                int retour = entity.AjoutMedicamentAPatient(IDMedicament, IDPatient, 1);
 
                 return new PatientDAO().VoirPatient(IDPatient);
             }

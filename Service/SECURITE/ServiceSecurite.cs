@@ -84,9 +84,9 @@ namespace MigraineCSMiddleware.Service.securite
         /// </summary>
         /// <param name="Token"></param>
         /// <returns></returns>
-        public static void TokenBasicValide(string tokenbasic)
+        public static void TokenBasicValide(UtilisateurWeb Utilisateur)
         {
-            if (Encoding.UTF8.GetString(Convert.FromBase64String(tokenbasic)) != _CleeBasic) throw new TokenInvalidException("Le tocken est invalide");
+            if (Encoding.UTF8.GetString(Convert.FromBase64String(Utilisateur.Token)) != _CleeBasic) throw new TokenInvalidException(Utilisateur, "Le tocken est invalide");
         }
 
         //public static TokenValide(string tokenlongue)
@@ -157,14 +157,14 @@ namespace MigraineCSMiddleware.Service.securite
             {
                 DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Compte));
                 Compte compte = (Compte)deserializer.ReadObject(ms);
-
+                UtilisateurWeb utilisateur = new UtilisateurWeb() { Identifiant = compte.Identifiant, Token = compte.Token };
 
 
                 if (key == null) throw new AutentificationIncorrecteException("Les information de login / mot de passe sont incorrecte");
                 if (String.IsNullOrEmpty(compte.Identifiant)) throw new AutentificationIncorrecteException("Le login est nul ou vide");
                 if (String.IsNullOrEmpty(compte.MotDePass)) throw new AutentificationIncorrecteException("Le mot de passe est nul ou vide");
-                if (String.IsNullOrEmpty(compte.Token)) throw new TokenInvalidException("Le tocken est nul ou vide");
-                if (compte.Token != _CleeBasic) throw new TokenInvalidException("Le tocken est invalide");
+                if (String.IsNullOrEmpty(compte.Token)) throw new TokenInvalidException(utilisateur, "Le tocken est nul ou vide");
+                if (compte.Token != _CleeBasic) throw new TokenInvalidException(utilisateur, "Le tocken est invalide");
                 compte.MotDePass = HashMotDePass(compte.MotDePass);
 
                 string retourMotDePass = new CompteDAO().GetMotDePass(compte.Identifiant);
@@ -179,13 +179,13 @@ namespace MigraineCSMiddleware.Service.securite
         //    return IsTokenValid(utilisateurweb.Token);
         //}
 
-        public static void IsTokenValid(string token)
+        public static void IsTokenValid(UtilisateurWeb utilisateur)
         {
-            if (string.IsNullOrEmpty(token)) throw new TokenInvalidException("Le token est invalide");
-            string key = Encoding.UTF8.GetString(Convert.FromBase64String(token));
+            if (string.IsNullOrEmpty(utilisateur.Token)) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(utilisateur.Token));
 
             string[] parts = key.Split(new char[] { ':' });
-            if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException("Le token est invalide");
+            if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException(utilisateur, "Le token est invalide");
   
             string hash = parts[0];
             string username = parts[1];
@@ -193,12 +193,12 @@ namespace MigraineCSMiddleware.Service.securite
             DateTime timeStamp = new DateTime(ticks);
             // Ensure the timestamp is valid.
             bool expired = Math.Abs((DateTime.UtcNow - timeStamp).TotalMinutes) > _expirationMinutes;
-            if (expired) throw new TokenExpireException("Le token est expiré");
+            if (expired) throw new TokenExpireException(utilisateur, "Le token est expiré");
                
             CompteDAO comptedao = new CompteDAO();
 
             string[] Keybdd = Encoding.UTF8.GetString(Convert.FromBase64String(comptedao.GetToken(username))).Split(new char[] { ':' });
-            if (Keybdd[0] != hash) throw new TokenInvalidException("Le token est invalide");
+            if (Keybdd[0] != hash) throw new TokenInvalidException(utilisateur, "Le token est invalide");
 
             //string computedToken = GenererToken(username, comptedao.GetMotDePass(username), ticks);
 

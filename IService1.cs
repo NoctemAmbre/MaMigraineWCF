@@ -221,6 +221,13 @@ namespace MigraineCSMiddleware
         [OperationContract]
         List<UtilisateurWeb> GetListPatient(string Value);
 
+        [WebInvoke(UriTemplate = "/Patient/AjoutMedicament?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientAjoutMedicament(string Value);
+
         //[WebInvoke(UriTemplate = "/Patient/login?username={Login}&password={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,

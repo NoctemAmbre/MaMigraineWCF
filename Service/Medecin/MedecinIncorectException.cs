@@ -5,26 +5,37 @@ using System.Runtime.Serialization;
 namespace MigraineCSMiddleware.Service.medecin
 {
     [Serializable]
-    internal class MedecinIncorectException : Exception
+    internal class MedecinIncorrecteException : Exception
     {
-        public MedecinIncorectException()
+        private Patient _patient;
+        private Medecin _medecin;
+        public MedecinIncorrecteException()
         {
         }
 
-        public MedecinIncorectException(string message) : base(message)
+        public MedecinIncorrecteException(string message) : base(message)
         {
         }
 
-        public MedecinIncorectException(Medecin medecin, string message) : base(message)
+        public MedecinIncorrecteException(string message, Patient patient) : base(message)
+        {
+            this.Patient = patient;
+        }
+
+        public MedecinIncorrecteException(string message, Medecin medecin) : base(message)
+        {
+            this.Medecin = medecin;
+        }
+
+        public MedecinIncorrecteException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        public MedecinIncorectException(string message, Exception innerException) : base(message, innerException)
+        protected MedecinIncorrecteException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 
-        protected MedecinIncorectException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        public Patient Patient { get => _patient; set => _patient = value; }
+        public Medecin Medecin { get => _medecin; set => _medecin = value; }
     }
 }

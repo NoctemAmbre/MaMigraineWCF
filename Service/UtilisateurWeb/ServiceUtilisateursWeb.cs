@@ -156,6 +156,8 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             }
             else return null;
         }
+
+        
         public List<Modele.Medicament> GetListTotalMedicaments(string Value)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
@@ -183,8 +185,24 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             ServiceSecurite.IsTokenValid(UtilWeb); //teste du token long
+            Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
+            if (retour is Medecin)
+            {
+                return Conversion((new ServiceMedecin()).AttributionPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.IDWeb));
+            }
+            else return null;
+        }
 
-            return Conversion((new ServiceMedecin()).AttributionPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.IDWeb));
+        public UtilisateurWeb DesAttributionPatient(string ValueJSON)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenValid(UtilWeb); //teste du token long
+            Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
+            if (retour is Medecin)
+            {
+                return Conversion((new ServiceMedecin()).SupprimerPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.IDWeb));
+            }
+            else return null;
         }
 
         public UtilisateurWeb PatientAjoutMedicament(string ValueJSON)
@@ -194,6 +212,12 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             return Conversion((new ServicePatient()).AjoutMedicamentAPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.MesPatients[0].MesMedicaments[0].ID));
         }
 
+        public UtilisateurWeb PatientSupprMedicament(string ValueJSON)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenValid(UtilWeb); //teste du token long
+            return Conversion((new ServicePatient()).SupprMedicamentAPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.MesPatients[0].MesMedicaments[0].ID));
+        }
 
         public UtilisateurWeb Conversion(Patient patient)
         {

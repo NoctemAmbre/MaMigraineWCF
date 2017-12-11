@@ -290,13 +290,6 @@ namespace MigraineCSMiddleware.DAO
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMedecinPatient")]
-		public int SupprMedecinPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMedecin", DbType="Int")] System.Nullable<int> idMedecin, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedicamentAPatient")]
 		public int AjoutMedicamentAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
 		{
@@ -308,6 +301,13 @@ namespace MigraineCSMiddleware.DAO
 		public int SupprMedicamentDuPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMedicament, iDPatient);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMedecinPatient")]
+		public int SupprMedecinPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMedecin", DbType="Int")] System.Nullable<int> idMedecin, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient);
 			return ((int)(result.ReturnValue));
 		}
 	}

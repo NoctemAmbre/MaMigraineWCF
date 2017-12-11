@@ -42,13 +42,13 @@ namespace MigraineCSMiddleware.DAO
                 var ListMedicaments = entity.T_MEDICAMENT.Join(entity.T_ORDONNANCE,
                     M => M.ID,
                     O => O.idMedicament,
-                    (M, O) => new { IDPatient = O.idPatient, Quantite = O.Quantité, Denominationmedicament = M.Denominationmedicament, Formepharmaceutique = M.Formepharmaceutique, Voiesadministration = M.Voiesadministration }).ToList();
+                    (M, O) => new {ID = O.idMedicament, IDPatient = O.idPatient, Quantite = O.Quantité, Denominationmedicament = M.Denominationmedicament, Formepharmaceutique = M.Formepharmaceutique, Voiesadministration = M.Voiesadministration }).ToList();
                 var MedicamentDuPatient = ListMedicaments.Where(elt => elt.IDPatient == IDPatient).ToList();
                 List<Medicament> ListMedicament = new List<Medicament>();
                 foreach (var Element in MedicamentDuPatient)
                 {
                     //ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration, Quantite = (int)Element.Quantite });
-                    ListMedicament.Add(new Medicament() { DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration });
+                    ListMedicament.Add(new Medicament() {ID = Element.ID, DenominationMedicament = Element.Denominationmedicament, FormePharmaceutique = Element.Formepharmaceutique, VoiesAdministration = Element.Voiesadministration });
                 }
                 return ListMedicament;
             }

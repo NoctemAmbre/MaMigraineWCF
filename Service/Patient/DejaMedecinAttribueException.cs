@@ -7,7 +7,7 @@ namespace MigraineCSMiddleware.Service.patient
     [Serializable]
     internal class DejaMedecinAttribueException : Exception
     {
-        private Patient _patient;
+        private Medecin _medecin;
 
         public DejaMedecinAttribueException()
         {
@@ -17,9 +17,9 @@ namespace MigraineCSMiddleware.Service.patient
         {
         }
 
-        public DejaMedecinAttribueException(string message, Patient patient) : base(message)
+        public DejaMedecinAttribueException(string message, Medecin medecin) : base(message)
         {
-            this.Patient = patient;
+            this.Medecin = medecin;
         }
 
         public DejaMedecinAttribueException(string message, Exception innerException) : base(message, innerException)
@@ -30,6 +30,6 @@ namespace MigraineCSMiddleware.Service.patient
         {
         }
 
-        public Patient Patient { get => _patient; set => _patient = value; }
+        public Medecin Medecin { get => _medecin; set => _medecin = value; }
     }
 }

@@ -52,6 +52,10 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().Login(Value);
             }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
             catch (AutentificationIncorrecteException Exp)
             {
                 return new UtilisateurWeb() { Identifiant = Exp.Identifiant, Erreur = Exp.Message };
@@ -79,6 +83,10 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().CreationCompte(Value);
             }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
             catch (TokenInvalidException Exp)
             {
                 return new UtilisateurWeb() { Erreur = Exp.Message };
@@ -99,6 +107,10 @@ namespace MigraineCSMiddleware
             try
             {
                 return new ServiceUtilisateursWeb().ModificationCompte(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
             }
             catch (TokenInvalidException Exp)
             {
@@ -166,6 +178,10 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().ChangeMotDePass(Value);
             }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
             catch (TokenInvalidException Exp)
             {
                 return new UtilisateurWeb() { Erreur = Exp.Message };
@@ -192,19 +208,23 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().AttributionMedecin(Value);
             }
-            catch (PatientIncorectException Exp)
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
             {
                 return null;
 
             }
-            catch (MedecinIncorectException Exp)
+            catch (MedecinIncorrecteException Exp)
             {
                 return null;
 
             }
             catch (DejaMedecinAttribueException Exp)
             {
-                return new ServiceUtilisateursWeb().Conversion(Exp.Patient);
+                return new ServiceUtilisateursWeb().Conversion(Exp.Medecin);
             }
             catch (TokenExpireException Exp)
             {
@@ -219,11 +239,15 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().AttributionPatient(Value);
             }
-            catch (PatientIncorectException Exp)
+            catch (UtilisateurWebInexistantException Exp)
             {
                 return null;
             }
-            catch (MedecinIncorectException Exp)
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+            catch (MedecinIncorrecteException Exp)
             {
                 return null;
             }
@@ -238,7 +262,36 @@ namespace MigraineCSMiddleware
             }
         }
 
+        public UtilisateurWeb SupprPatientAMedecin(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().DesAttributionPatient(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+            catch (MedecinIncorrecteException Exp)
+            {
+                return null;
+            }
+            catch (DejaMedecinAttribueException Exp)
+            {
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+        }
 
+        
         #endregion
 
         #region Patient
@@ -252,6 +305,10 @@ namespace MigraineCSMiddleware
             try
             {
                 return new ServiceUtilisateursWeb().GetPatient(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
             }
             catch (TokenInvalidException Exp)
             {
@@ -314,6 +371,10 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().PatientAjoutMedicament(Value);
             }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
             catch (TokenInvalidException Exp)
             {
                 throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
@@ -323,6 +384,32 @@ namespace MigraineCSMiddleware
                 //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
                 throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
+        }
+
+        public UtilisateurWeb PatientSupprMedicament(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientSupprMedicament(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+            
         }
 
 
@@ -357,32 +444,6 @@ namespace MigraineCSMiddleware
         //        return new Patient() { IDPatient = ID, ID = exp.IdCompte, Identifiant = Identifiant, MotDePass = "", Nom = Nom, Prenom = Prenom, DateNaissance = new DateTime(long.Parse(DateNaissance)), MesMedecin = null, Erreur = exp.Message };
         //    }
         //}
-
-        public List<Patient> SupprimerMonPatient(int IdMedecin, int IdPatient)
-        {
-            try
-            {
-                return new ServicePatient().SupprimerMedecin(IdPatient, IdMedecin);
-            }
-            catch (PatientIncorectException exp)
-            {
-                List<Patient> retour = new List<Patient>();
-                retour.Add(new Patient() { IDPatient = IdPatient, Erreur = exp.Message });
-                return retour;
-            }
-            catch (MedecinMalAttribueAuPatientException exp)
-            {
-                List<Patient> retour = new List<Patient>();
-                retour.Add(new Patient() { IDPatient = IdPatient, Erreur = exp.Message });
-                return retour;
-            }
-            catch (MedecinNonAttribueAuPatientException exp)
-            {
-                List<Patient> retour = new List<Patient>();
-                retour.Add(new Patient() { IDPatient = IdPatient, Erreur = exp.Message });
-                return retour;
-            }
-        }
         #endregion
 
         #region Medecin
@@ -392,6 +453,10 @@ namespace MigraineCSMiddleware
             try
             {
                 return new ServiceUtilisateursWeb().GetMedecin(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
             }
             catch (TokenInvalidException Exp)
             {
@@ -426,6 +491,7 @@ namespace MigraineCSMiddleware
             {
                 return new ServiceUtilisateursWeb().GetListMedecin(Value);
             }
+
             catch (MedecinIntrouvableException Exp)
             {
                 return null;
@@ -457,12 +523,12 @@ namespace MigraineCSMiddleware
         //    {
         //        return new ServicePatient().AttributionMedecin(IdPatient, IdMedecin);
         //    }
-        //    catch (PatientIncorectException Exp)
+        //    catch (PatientIncorrecteException Exp)
         //    {
         //        return null;
 
         //    }
-        //    catch (MedecinIncorectException Exp)
+        //    catch (MedecinIncorrecteException Exp)
         //    {
         //        return null;
 

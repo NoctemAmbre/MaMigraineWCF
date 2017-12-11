@@ -114,6 +114,13 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb AjoutPatientAMedecin(string Value);
 
+        [WebInvoke(UriTemplate = "/Compte/SupprPatient?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb SupprPatientAMedecin(string Value);
+
 
         //    [WebInvoke(UriTemplate = "/Compte/login?Login={Login}&Pass={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
@@ -200,12 +207,6 @@ namespace MigraineCSMiddleware
         [OperationContract]
         List<Patient> GetListMesPatient(string idMedecin);
 
-        [WebInvoke(UriTemplate = "/Medecin/SupprimerPatient", Method = "POST",
-        RequestFormat = WebMessageFormat.Json,
-        ResponseFormat = WebMessageFormat.Json,
-        BodyStyle = WebMessageBodyStyle.Wrapped)]
-        [OperationContract]
-        List<Patient> SupprimerMonPatient(int IdMedecin, int IdPatient);
         */
         #endregion
 
@@ -227,6 +228,13 @@ namespace MigraineCSMiddleware
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
         UtilisateurWeb PatientAjoutMedicament(string Value);
+
+        [WebInvoke(UriTemplate = "/Patient/SupprMedicament?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientSupprMedicament(string Value);
 
         //[WebInvoke(UriTemplate = "/Patient/login?username={Login}&password={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,

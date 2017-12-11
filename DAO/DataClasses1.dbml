@@ -290,11 +290,6 @@
     <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.SupprMedecinPatient" Method="SupprMedecinPatient">
-    <Parameter Name="IdMedecin" Parameter="idMedecin" Type="System.Int32" DbType="Int" />
-    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.AjoutMedicamentAPatient" Method="AjoutMedicamentAPatient">
     <Parameter Name="IDMedicament" Parameter="iDMedicament" Type="System.Int32" DbType="Int" />
     <Parameter Name="IDPatient" Parameter="iDPatient" Type="System.Int32" DbType="Int" />
@@ -304,6 +299,11 @@
   <Function Name="dbo.SupprMedicamentDuPatient" Method="SupprMedicamentDuPatient">
     <Parameter Name="IDMedicament" Parameter="iDMedicament" Type="System.Int32" DbType="Int" />
     <Parameter Name="IDPatient" Parameter="iDPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprMedecinPatient" Method="SupprMedecinPatient">
+    <Parameter Name="IdMedecin" Parameter="idMedecin" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

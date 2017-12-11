@@ -2,6 +2,7 @@
 using MigraineCSMiddleware.Modele;
 using MigraineCSMiddleware.Service.compte;
 using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.utilisateurweb;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,8 +101,9 @@ namespace MigraineCSMiddleware.Service.securite
         /// <param name="compteWeb"></param>
         /// <returns></returns>
         public static Compte UtilisateurWebVersCompte(UtilisateurWeb compteWeb)
-        { 
-            if (compteWeb.Type) // si le compte en création est un Medecin
+        {
+            if (new MedecinDAO().IsMedecin(compteWeb.IDWeb)) // si le compte en création est un Medecin
+            //if (compteWeb.Type) 
             {
                 Medecin CompteMedecin = new Medecin();
                 CompteMedecin.IDMedecin = compteWeb.IDWeb;
@@ -120,7 +122,7 @@ namespace MigraineCSMiddleware.Service.securite
                 CompteMedecin.Token = compteWeb.Token;
                 return CompteMedecin;
             }
-            else //si le compte en création est un patient
+            if (new PatientDAO().IsPatient(compteWeb.IDWeb)) // si le compte en création est un Patient
             {
                 Patient retourPatient = new Patient();
                 retourPatient.IDPatient = compteWeb.IDWeb;
@@ -142,6 +144,7 @@ namespace MigraineCSMiddleware.Service.securite
 
                 return retourPatient;
             }
+            else throw new UtilisateurWebInexistantException("Ce compte n'existe pas", compteWeb);
         }
 
         /// <summary>

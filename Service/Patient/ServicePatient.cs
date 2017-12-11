@@ -21,7 +21,7 @@ namespace MigraineCSMiddleware.Service.patient
 
         public List<Patient> GetListPatient()
         {
-            return new PatientDAO().ListPatient;
+            return new PatientDAO().ListPatient();
         }
 
         public List<Patient> GetListPatient(string Nom)
@@ -44,8 +44,8 @@ namespace MigraineCSMiddleware.Service.patient
         {
             PatientDAO patientDAO = new PatientDAO();
             MedecinDAO medecinDAO = new MedecinDAO();
-            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorectException("Ce compte c'est pas un compte Patient");
-            if (!medecinDAO.IsMedecin(IDMedecin)) throw new MedecinIncorectException("Ce compte n'est pas un compte Medcin");
+            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", medecinDAO.VoirMedecin(IDMedecin));
+            if (!medecinDAO.IsMedecin(IDMedecin)) throw new MedecinIncorrecteException("Ce compte n'est pas un compte Medcin", medecinDAO.VoirMedecin(IDMedecin));
 
             Patient patient = patientDAO.VoirPatient(IDpatient);
             if (patient.MesMedecin != null)
@@ -55,7 +55,7 @@ namespace MigraineCSMiddleware.Service.patient
                     if (element.IDMedecin == IDMedecin)
                     {
                         patient.Erreur = "Le Médecin " + element.Nom + " " + element.Prenom + " fait déjà partit de vos médecin de référence";
-                        throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", patient);
+                        throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", element);
                     }
                 }
                 return patient;
@@ -70,10 +70,18 @@ namespace MigraineCSMiddleware.Service.patient
         public Patient AjoutMedicamentAPatient(int IdPatient, int IdMedicament)
         {
             PatientDAO patientDAO = new PatientDAO();
-            if (!patientDAO.IsPatient(IdPatient)) throw new PatientIncorectException("Ce compte c'est pas un compte Patient");
+            if (!patientDAO.IsPatient(IdPatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", patientDAO.VoirPatient(IdPatient));
             Patient patient = new MedicamentDAO().AjoutMedicamentAuPatient(IdMedicament, IdPatient);
             return patient;
         }
+        public Patient SupprMedicamentAPatient(int IdPatient, int IdMedicament)
+        {
+            PatientDAO patientDAO = new PatientDAO();
+            if (!patientDAO.IsPatient(IdPatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", patientDAO.VoirPatient(IdPatient));
+            Patient patient = new MedicamentDAO().SupprMedicamentDuPatient(IdMedicament, IdPatient);
+            return patient;
+        }
+        
 
 
         private bool IsPatient(int idPatient)
@@ -111,9 +119,39 @@ namespace MigraineCSMiddleware.Service.patient
         //    return new PatientDAO().ListPatientDuMedecin(IdMedecin);
         //}
 
-        public List<Patient> SupprimerMedecin(int IdPatient, int IdMedecin)
+        public Patient SupprimerMedecin(int IDpatient, int IDMedecin)
         {
-            return new PatientDAO().SupprMedecinDuPatient(IdPatient, IdMedecin);
+            PatientDAO patientDAO = new PatientDAO();
+            MedecinDAO medecinDAO = new MedecinDAO();
+            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", patientDAO.VoirPatient(IDpatient));
+            if (!medecinDAO.IsMedecin(IDMedecin)) throw new MedecinIncorrecteException("Ce compte n'est pas un compte Medecin", patientDAO.VoirPatient(IDpatient));
+            Medecin medecin = medecinDAO.VoirMedecin(IDMedecin);
+            Patient patient = patientDAO.VoirPatient(IDpatient);
+            if (patient.MesMedecin.SingleOrDefault(elt => elt.IDMedecin == IDMedecin) == null) //S'il n'y a pas de médecin pour patient
+            {
+                medecin.Erreur = "Le patient " + patient.Nom + " " + patient.Prenom + " " + patient.Identifiant + " vous est déjà attribué";
+                throw new PatientNonPresentException("Impossible de supprimer le patient du Médecin car attribution pas présente", medecin);
+            }
+            else patientDAO.SupprMedecinDuPatient(patient, medecin);
+            return patientDAO.VoirPatient(patient.ID);
+        }
+
+        public Medecin SupprimerPatient(int IDpatient, int IDMedecin)
+        {
+            PatientDAO patientDAO = new PatientDAO();
+            MedecinDAO medecinDAO = new MedecinDAO();
+            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", medecinDAO.VoirMedecin(IDMedecin));
+            if (!medecinDAO.IsMedecin(IDMedecin)) throw new MedecinIncorrecteException("Ce compte n'est pas un compte Medcin", medecinDAO.VoirMedecin(IDMedecin));
+            Medecin medecin = medecinDAO.VoirMedecin(IDMedecin);
+            Patient patient = patientDAO.VoirPatient(IDpatient);
+            if (patient.MesMedecin.SingleOrDefault(elt => elt.IDMedecin == IDMedecin) == null) //S'il n'y a pas de médecin pour patient
+            {
+                medecin.Erreur = "Le patient " + patient.Nom + " " + patient.Prenom + " " + patient.Identifiant + " vous est déjà attribué";
+                throw new PatientNonPresentException("Impossible de supprimer le patient du Médecin car attribution non présente", medecin);
+            }
+            else patientDAO.SupprMedecinDuPatient(patient, medecin);
+
+            return medecinDAO.VoirMedecin(medecin.IDMedecin);
         }
     }
 }

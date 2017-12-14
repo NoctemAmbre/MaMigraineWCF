@@ -62,7 +62,7 @@ namespace MigraineCSMiddleware.DAO
                     C => C.ID,
                 (P, C) => new { IDPatient = P.ID, ID = C.ID, Identifiant = C.Identifiant, Nom = C.Nom, Prenom = C.Prenom, AdresseMail = C.AdressMail, Telephone = P.TelephoneFixe, TelephonePortable = P.TelephonePortable, DateNaissance = P.DateNaissance, Token = C.Token }).Where(elt => elt.IDPatient == IdPatient).FirstOrDefault();
 
-                List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
+               List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
                 List<Migraine> MesMigraines = new MigraineDAO().ListeMigrainePatient((int)ret.IDPatient);
                 List<Medicament> MesMedicaments = new MedicamentDAO().ListeMesMedicaments((int)ret.IDPatient);
                 List<Facteur> MesFacteurs = new FacteurDAO().ListeFacteurPatient((int)ret.IDPatient);
@@ -267,7 +267,7 @@ namespace MigraineCSMiddleware.DAO
 
                 if (retour != -1)
                 {
-                    return VoirPatient(retour);
+                    return VoirPatient(patient.IDPatient);
                     //Rafraichir(); //rafraichissement de la list
                     //return VoirPatient(patient.IDPatient); //retourne le Patient en fonction de son ID
                 }

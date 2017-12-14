@@ -202,6 +202,10 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             {
                 return Conversion((new ServiceMedecin()).SupprimerPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.IDWeb));
             }
+            else if (retour is Patient)
+            {
+                return Conversion((new ServicePatient()).SupprimerMedecin(UtilWeb.IDWeb, UtilWeb.MesMedecin[0].IDWeb));
+            }
             else return null;
         }
 

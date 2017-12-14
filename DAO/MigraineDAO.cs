@@ -47,14 +47,18 @@ namespace MigraineCSMiddleware.DAO
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                var RetourMesMigraine = entity.T_MIGRAINES_PATIENT.Where(elt => elt.IDPatient == IDPatient).ToList();
+                List<Migraine> MesMigraine = new List<Migraine>();
+                var ListMesMigraines = entity.T_MIGRAINES_PATIENT.Join(entity.T_MIGRAINE,
+                    MP => MP.IDMigraine,
+                    M => M.ID,
+                    (MP, M) => new { IDPatient = MP.IDPatient, IDMigraine = M.ID, IDMedicamentsMigraine = M.IDMedicamentsMigraine, IDFacteursMigraine = M.IDFacteursMigraine, Intensite = M.Intensite, Debut = M.Debut, Fin = M.Fin }).Where(elt => elt.IDPatient == IDPatient).ToList();
 
-                List<Migraine> ListMigraines = new List<Migraine>();
-                foreach (var Element in RetourMesMigraine)
+                foreach (var Element in ListMesMigraines)
                 {
-                    ListMigraines.Add(VoirMigraine(Element.IDMigraine));
+                    Migraine MaMigraine = new Migraine() { ID = Element.IDMigraine, Debut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut), Fin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin), Intensite = (int)Element.Intensite, Facteurs = new FacteurDAO().ListeFacteurMigraine(Element.IDMigraine), MedicamentsPris = new MedicamentDAO().ListeMedicamentDeLaMigraine(Element.IDMigraine) };
+                    MesMigraine.Add(MaMigraine);
                 }
-                return ListMigraines;
+                return MesMigraine;
             }
         }
     }

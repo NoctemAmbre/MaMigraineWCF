@@ -306,4 +306,35 @@
     <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.AjoutFacteur" Method="AjoutFacteur">
+    <Parameter Name="TypeFacteur" Parameter="typeFacteur" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="nom" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Question" Parameter="question" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprFacteur" Method="SupprFacteur">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutFacteurAPatient" Method="AjoutFacteurAPatient">
+    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprFacteurDuPatient" Method="SupprFacteurDuPatient">
+    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutFacteurAMigraine" Method="AjoutFacteurAMigraine">
+    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdMigraine" Parameter="idMigraine" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Quantite" Parameter="quantite" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SupprFacteurDeMigraine" Method="SupprFacteurDeMigraine">
+    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdMigraine" Parameter="idMigraine" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

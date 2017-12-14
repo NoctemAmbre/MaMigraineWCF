@@ -224,7 +224,7 @@ namespace MigraineCSMiddleware
             }
             catch (DejaMedecinAttribueException Exp)
             {
-                return new ServiceUtilisateursWeb().Conversion(Exp.Medecin);
+                return new ServiceUtilisateursWeb().Conversion(Exp.Patient);
             }
             catch (TokenExpireException Exp)
             {
@@ -291,7 +291,36 @@ namespace MigraineCSMiddleware
             }
         }
 
-        
+        public UtilisateurWeb SupprMedecinAPatient(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().DesAttributionPatient(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+            catch (MedecinIncorrecteException Exp)
+            {
+                return null;
+            }
+            catch (DejaMedecinAttribueException Exp)
+            {
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+        }
+
+
         #endregion
 
         #region Patient
@@ -614,10 +643,19 @@ namespace MigraineCSMiddleware
         {
             return "ça marche !!!!! ";
         }
-        public string testSimple(string Test)
+
+
+        public Product testSimple(string name, string description)
         {
-            return Test;
+            return new Product() { name = name, description = description };
         }
+
+
+        public string Post()
+        {
+            return "Retour Poste";
+        }
+
         public string test(string Test)
         {
             return "coucou";
@@ -634,11 +672,7 @@ namespace MigraineCSMiddleware
         }
 
 
-        public string Post()
-        {
-            return "Retour Poste";
-        }
-
+        
         public string get()
         {
             var token = HttpContext.Current.Request.Headers["Authorisation"];

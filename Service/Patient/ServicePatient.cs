@@ -50,20 +50,23 @@ namespace MigraineCSMiddleware.Service.patient
             Patient patient = patientDAO.VoirPatient(IDpatient);
             if (patient.MesMedecin != null)
             {
-                foreach (Medecin element in patient.MesMedecin)
-                {
-                    if (element.IDMedecin == IDMedecin)
-                    {
-                        patient.Erreur = "Le Médecin " + element.Nom + " " + element.Prenom + " fait déjà partit de vos médecin de référence";
-                        throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", element);
-                    }
-                }
-                return patient;
+
+                var resultat = patient.MesMedecin.FirstOrDefault(elt => elt.IDMedecin == IDMedecin);
+                if (resultat != null) throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", patient);
+                
+                //foreach (Medecin element in patient.MesMedecin)
+                //{
+                //    if (element.IDMedecin == IDMedecin)
+                //    {
+                //        patient.Erreur = "Le Médecin " + element.Nom + " " + element.Prenom + " fait déjà partit de vos médecin de référence";
+                //        throw new DejaMedecinAttribueException("Il y a déjà un médecin attribué à ce Patient", element);
+                //    }
+                //}
+                //return patient;
                 
             }
 
             Medecin medecin = medecinDAO.VoirMedecinSimple(IDMedecin);
-
             return patientDAO.AttributionMedecin(patient, medecin);
         }
 
@@ -133,7 +136,7 @@ namespace MigraineCSMiddleware.Service.patient
                 throw new PatientNonPresentException("Impossible de supprimer le patient du Médecin car attribution pas présente", medecin);
             }
             else patientDAO.SupprMedecinDuPatient(patient, medecin);
-            return patientDAO.VoirPatient(patient.ID);
+            return patientDAO.VoirPatient(patient.IDPatient);
         }
 
         public Medecin SupprimerPatient(int IDpatient, int IDMedecin)

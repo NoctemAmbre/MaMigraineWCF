@@ -21,21 +21,26 @@ namespace MigraineCSMiddleware
     public interface IService1
     {
         #region Test
-        [WebGet(UriTemplate = "/hello")]
-        [OperationContract]
-        string hello();
-
-        [WebGet(UriTemplate = "/TestJson",
-            ResponseFormat = WebMessageFormat.Json)]
-        [OperationContract]
-        TEST GetTestJSon();
 
         [WebInvoke(UriTemplate = "/testSimple", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Wrapped)]
         [OperationContract]
-        string testSimple(string Test);
+        Product testSimple(string name, string description);
+
+
+        [WebGet(UriTemplate = "/TestJson",
+            ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        TEST GetTestJSon();
+
+
+        [WebGet(UriTemplate = "/hello")]
+        [OperationContract]
+        string hello();
+
+
 
         [WebInvoke(UriTemplate = "/test?Index={Index}", Method = "POST",
         //[WebInvoke(UriTemplate = "/test", Method = "POST",
@@ -121,6 +126,12 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb SupprPatientAMedecin(string Value);
 
+        [WebInvoke(UriTemplate = "/Compte/SupprMedecin?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb SupprMedecinAPatient(string Value);
 
         //    [WebInvoke(UriTemplate = "/Compte/login?Login={Login}&Pass={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,

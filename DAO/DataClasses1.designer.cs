@@ -310,6 +310,48 @@ namespace MigraineCSMiddleware.DAO
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteur")]
+		public int AjoutFacteur([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TypeFacteur", DbType="Bit")] System.Nullable<bool> typeFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string nom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Question", DbType="VarChar(MAX)")] string question)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), typeFacteur, nom, question);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprFacteur")]
+		public int SupprFacteur([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteurAPatient")]
+		public int AjoutFacteurAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idPatient);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprFacteurDuPatient")]
+		public int SupprFacteurDuPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idPatient);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteurAMigraine")]
+		public int AjoutFacteurAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine, quantite);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprFacteurDeMigraine")]
+		public int SupprFacteurDeMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECIN")]

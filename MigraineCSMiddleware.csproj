@@ -81,6 +81,7 @@
     <Compile Include="DAO\MigraineDAO.cs" />
     <Compile Include="Modele\Facteur.cs" />
     <Compile Include="Modele\Migraine.cs" />
+    <Compile Include="Modele\Product.cs" />
     <Compile Include="Service\compte\CompteModificationException.cs" />
     <Compile Include="Service\compte\AutentificationIncorrecte.cs" />
     <Compile Include="DAO\CompteDAO.cs" />

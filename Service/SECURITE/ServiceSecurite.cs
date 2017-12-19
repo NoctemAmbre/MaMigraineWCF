@@ -102,8 +102,51 @@ namespace MigraineCSMiddleware.Service.securite
         /// <returns></returns>
         public static Compte UtilisateurWebVersCompte(UtilisateurWeb compteWeb)
         {
+            
+            if (compteWeb.IDWeb == 0) //S'il s'agit d'un nouveau compte.
+            {
+                if (compteWeb.Type)
+                {
+                    Medecin CompteMedecin = new Medecin();
+                    CompteMedecin.IDMedecin = compteWeb.IDWeb;
+                    CompteMedecin.InfoComplementaire = compteWeb.InfoComplementaire;
+                    CompteMedecin.Adresse = compteWeb.Adresse;
+                    CompteMedecin.CreePar = compteWeb.CreePar;
+                    CompteMedecin.DateCreation = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
+                    CompteMedecin.DernierModif = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
+                    CompteMedecin.Identifiant = compteWeb.Identifiant;
+                    CompteMedecin.MotDePass = compteWeb.MotDePass;
+                    CompteMedecin.Nom = compteWeb.Nom;
+                    CompteMedecin.Prenom = compteWeb.Prenom;
+                    CompteMedecin.Telephone = compteWeb.Telephone;
+                    CompteMedecin.AdresseMail = compteWeb.AdresseMail;
+                    CompteMedecin.HoraireOuverture = compteWeb.HoraireOuverture;
+                    CompteMedecin.Token = compteWeb.Token;
+                    return CompteMedecin;
+                }
+                else
+                {
+                    Patient retourPatient = new Patient();
+                    retourPatient.IDPatient = compteWeb.IDWeb;
+                    retourPatient.Adresse = compteWeb.Adresse;
+                    retourPatient.CreePar = compteWeb.CreePar;
+                    retourPatient.DateCreation = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
+                    retourPatient.DateNaissance = ConvertionDate.ConvertionStringVersDateTime(compteWeb.DateNaissance);
+                    retourPatient.DernierModif = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
+                    retourPatient.Identifiant = compteWeb.Identifiant;
+                    retourPatient.MesMedecin = null;
+                    retourPatient.MotDePass = compteWeb.MotDePass;
+                    retourPatient.Nom = compteWeb.Nom;
+                    retourPatient.Prenom = compteWeb.Prenom;
+                    retourPatient.Sexe = compteWeb.Sexe;
+                    retourPatient.Telephone = compteWeb.Telephone;
+                    retourPatient.TelephonePortable = compteWeb.TelephonePortable;
+                    retourPatient.AdresseMail = compteWeb.AdresseMail;
+                    retourPatient.Token = compteWeb.Token;
+                    return retourPatient;
+                }
+            }
             if (new MedecinDAO().IsMedecin(compteWeb.IDWeb)) // si le compte en création est un Medecin
-            //if (compteWeb.Type) 
             {
                 Medecin CompteMedecin = new Medecin();
                 CompteMedecin.IDMedecin = compteWeb.IDWeb;
@@ -182,10 +225,11 @@ namespace MigraineCSMiddleware.Service.securite
         //    return IsTokenValid(utilisateurweb.Token);
         //}
 
-        public static void IsTokenValid(UtilisateurWeb utilisateur)
+        public static void IsTokenValid(UtilisateurWeb utilisateur, String Token)
         {
-            if (string.IsNullOrEmpty(utilisateur.Token)) throw new TokenInvalidException(utilisateur, "Le token est invalide");
-            string key = Encoding.UTF8.GetString(Convert.FromBase64String(utilisateur.Token));
+            if (string.IsNullOrEmpty(Token) | (Token == "undefined")) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+         
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
 
             string[] parts = key.Split(new char[] { ':' });
             if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException(utilisateur, "Le token est invalide");

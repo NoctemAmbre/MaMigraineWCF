@@ -16,7 +16,13 @@ namespace MigraineCSMiddleware
             
             //Extract the Authorization header, and parse out the credentials converting the Base64 string:  
             var authHeader = WebOperationContext.Current.IncomingRequest.Headers["Authorization"];
-
+            //if (WebOperationContext.Current.IncomingRequest.Method == "OPTIONS")
+            //{
+            //    WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            //    WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+            //    WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+            //    WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Max-Age", "1728000");
+            //}
 
             HttpContext httpContext = HttpContext.Current;
             NameValueCollection headerList = httpContext.Request.Headers;

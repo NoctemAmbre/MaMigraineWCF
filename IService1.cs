@@ -20,14 +20,33 @@ namespace MigraineCSMiddleware
     
     public interface IService1
     {
-        #region Test
+        //[OperationContract]
+        //[WebInvoke(Method = "OPTIONS", UriTemplate = "/testSimple")]
+        //void Getoptions();
 
         [WebInvoke(UriTemplate = "/testSimple", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Wrapped)]
         [OperationContract]
-        Product testSimple(string name, string description);
+        string testSimple(int id, string name, string description);
+
+
+        #region Test
+
+        //[WebInvoke(UriTemplate = "/testSimple", Method = "POST",
+        //RequestFormat = WebMessageFormat.Json,
+        //ResponseFormat = WebMessageFormat.Json,
+        //BodyStyle = WebMessageBodyStyle.Wrapped)]
+        //[OperationContract]
+        //Product testSimple(string name, string description);
+
+        //[WebInvoke(UriTemplate = "/testSimple", Method = "POST",
+        //RequestFormat = WebMessageFormat.Json,
+        //ResponseFormat = WebMessageFormat.Json,
+        //BodyStyle = WebMessageBodyStyle.Wrapped)]
+        //[OperationContract]
+        //string testSimple(int id, string name, string description);
 
 
         [WebGet(UriTemplate = "/TestJson",
@@ -84,12 +103,12 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb CompteAjout(string Value);
 
-        [WebInvoke(UriTemplate = "/Compte/ChangeInformation?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/ChangeInformation?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb ChangementInfoCompte(string Value);
+        UtilisateurWeb ChangementInfoCompte(string Value, string Token);
 
         //[WebInvoke(UriTemplate = "/Compte/ChangeMDP", Method = "POST",
         //RequestFormat = WebMessageFormat.Json,
@@ -98,40 +117,40 @@ namespace MigraineCSMiddleware
         //[OperationContract]
         //UtilisateurWeb ChangementMDPCompte(int ID, string MotDePass);
 
-        [WebInvoke(UriTemplate = "/Compte/ChangeMDP?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/ChangeMDP?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb ChangementMDPCompte(string Value);
+        UtilisateurWeb ChangementMDPCompte(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Compte/AjoutMedecin?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/AjoutMedecin?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb AjoutMedecinAPatient(string Value);
+        UtilisateurWeb AjoutMedecinAPatient(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Compte/AjoutPatient?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/AjoutPatient?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb AjoutPatientAMedecin(string Value);
+        UtilisateurWeb AjoutPatientAMedecin(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Compte/SupprPatient?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/SupprPatient?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb SupprPatientAMedecin(string Value);
+        UtilisateurWeb SupprPatientAMedecin(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Compte/SupprMedecin?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Compte/SupprMedecin?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb SupprMedecinAPatient(string Value);
+        UtilisateurWeb SupprMedecinAPatient(string Value, string Token);
 
         //    [WebInvoke(UriTemplate = "/Compte/login?Login={Login}&Pass={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
@@ -162,10 +181,10 @@ namespace MigraineCSMiddleware
 
         #region Medecin
 
-        [WebGet(UriTemplate = "/Medecin/Voir?Value={Value}",
+        [WebGet(UriTemplate = "/Medecin/Voir?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        UtilisateurWeb GetMedecin(string Value);
+        UtilisateurWeb GetMedecin(string Value, string Token);
             
 
         //[WebInvoke(UriTemplate = "/Medecin/login", Method = "POST",
@@ -180,10 +199,10 @@ namespace MigraineCSMiddleware
         //[OperationContract]
         //List<UtilisateurWeb> GetListMedecin();
 
-        [WebGet(UriTemplate = "/Medecin/Liste?Value={Value}",
+        [WebGet(UriTemplate = "/Medecin/Liste?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<UtilisateurWeb> GetListMedecin(string Value);
+        List<UtilisateurWeb> GetListMedecin(string Value, string Token);
         /*
         [WebInvoke(UriTemplate = "/Medecin/Ajout", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
@@ -223,29 +242,45 @@ namespace MigraineCSMiddleware
 
         #region Patient
 
-        [WebGet(UriTemplate = "/Patient/Voir?Value={Value}",
+        [WebGet(UriTemplate = "/Patient/Voir?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        UtilisateurWeb GetPatient(string Value);
+        UtilisateurWeb GetPatient(string Value, string Token);
 
-        [WebGet(UriTemplate = "/Patient/Liste?Value={Value}",
+        [WebGet(UriTemplate = "/Patient/Liste?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<UtilisateurWeb> GetListPatient(string Value);
+        List<UtilisateurWeb> GetListPatient(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Patient/AjoutMedicament?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Patient/AjoutMedicament?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb PatientAjoutMedicament(string Value);
+        UtilisateurWeb PatientAjoutMedicament(string Value, string Token);
 
-        [WebInvoke(UriTemplate = "/Patient/SupprMedicament?Value={Value}", Method = "POST",
+        [WebInvoke(UriTemplate = "/Patient/SupprMedicament?Value={Value}&Token={Token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
-        UtilisateurWeb PatientSupprMedicament(string Value);
+        UtilisateurWeb PatientSupprMedicament(string Value, string Token);
+
+        [WebGet(UriTemplate = "Patient/ListMigraine?Value={Value}&Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Migraine> GetListMigraineDuPatient(string Value, string Token);
+
+        [WebGet(UriTemplate = "Patient/ListMedicament?Value={Value}&Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Medicament> GetListMedicamentDuPatient(string Value, string Token);
+
+        [WebGet(UriTemplate = "Patient/ListFacteur?Value={Value}&Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Facteur> GetListFacteurDuPatient(string Value, string Token);
+
 
         //[WebInvoke(UriTemplate = "/Patient/login?username={Login}&password={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
@@ -317,15 +352,15 @@ namespace MigraineCSMiddleware
 
         #region Medicament
 
-        [WebGet(UriTemplate = "/Medicament/ListeTotal?Value={Value}",
+        [WebGet(UriTemplate = "/Medicament/ListeTotal?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<Medicament> GetListTotalMedicaments(string Value);
+        List<Medicament> GetListTotalMedicaments(string Value, string Token);
 
-        [WebGet(UriTemplate = "/Medicament/Liste?Value={Value}",
+        [WebGet(UriTemplate = "/Medicament/Liste?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<Medicament> GetListMedicaments(string Value);
+        List<Medicament> GetListMedicaments(string Value, string Token);
 
         //[WebInvoke(UriTemplate = "/Medicament/Ajout", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,

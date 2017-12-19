@@ -21,6 +21,19 @@ namespace MigraineCSMiddleware
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class Service1 : IService1
     {
+
+
+        public void Getoptions()
+        {
+            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+            {
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Max-Age", "1728000");
+            }
+        }
+
         #region Compte
         public UtilisateurWeb CompteLogin(string Value)
         {
@@ -102,11 +115,11 @@ namespace MigraineCSMiddleware
                 return new UtilisateurWeb() { Erreur = Exp.Message };
             }
         }
-        public UtilisateurWeb ChangementInfoCompte(string Value)
+        public UtilisateurWeb ChangementInfoCompte(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().ModificationCompte(Value);
+                return new ServiceUtilisateursWeb().ModificationCompte(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -172,11 +185,11 @@ namespace MigraineCSMiddleware
         {
             return new ServiceCompte().GetListComptes();
         }
-        public UtilisateurWeb ChangementMDPCompte(string Value)
+        public UtilisateurWeb ChangementMDPCompte(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().ChangeMotDePass(Value);
+                return new ServiceUtilisateursWeb().ChangeMotDePass(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -202,11 +215,11 @@ namespace MigraineCSMiddleware
             }
         }
 
-        public UtilisateurWeb AjoutMedecinAPatient(string Value)
+        public UtilisateurWeb AjoutMedecinAPatient(string Value,string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().AttributionMedecin(Value);
+                return new ServiceUtilisateursWeb().AttributionMedecin(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -233,11 +246,11 @@ namespace MigraineCSMiddleware
             }
         }
 
-        public UtilisateurWeb AjoutPatientAMedecin(string Value)
+        public UtilisateurWeb AjoutPatientAMedecin(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().AttributionPatient(Value);
+                return new ServiceUtilisateursWeb().AttributionPatient(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -262,11 +275,11 @@ namespace MigraineCSMiddleware
             }
         }
 
-        public UtilisateurWeb SupprPatientAMedecin(string Value)
+        public UtilisateurWeb SupprPatientAMedecin(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().DesAttributionPatient(Value);
+                return new ServiceUtilisateursWeb().DesAttributionPatient(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -291,11 +304,11 @@ namespace MigraineCSMiddleware
             }
         }
 
-        public UtilisateurWeb SupprMedecinAPatient(string Value)
+        public UtilisateurWeb SupprMedecinAPatient(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().DesAttributionPatient(Value);
+                return new ServiceUtilisateursWeb().DesAttributionPatient(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -329,11 +342,11 @@ namespace MigraineCSMiddleware
             //Patient patient = new Patient();
             return new ServicePatient().AjoutPatient(new Patient() { Identifiant = Identifiant, MotDePass = motdepass, Nom = nom, Prenom = prenom, DateNaissance = new DateTime(long.Parse(DateNaissance))});
         }
-        public UtilisateurWeb GetPatient(string Value)
+        public UtilisateurWeb GetPatient(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetPatient(Value);
+                return new ServiceUtilisateursWeb().GetPatient(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -356,11 +369,11 @@ namespace MigraineCSMiddleware
         {
             return new ServicePatient().GetListPatient();
         }
-        public List<UtilisateurWeb> GetListPatient(string Value)
+        public List<UtilisateurWeb> GetListPatient(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetListPatient(Value);
+                return new ServiceUtilisateursWeb().GetListPatient(Value, Token);
             }
             catch (TokenInvalidException Exp)
             {
@@ -394,11 +407,11 @@ namespace MigraineCSMiddleware
             return new ServicePatient().Login(Login, Pass);
         }
 
-        public UtilisateurWeb PatientAjoutMedicament(string Value)
+        public UtilisateurWeb PatientAjoutMedicament(string Value,string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().PatientAjoutMedicament(Value);
+                return new ServiceUtilisateursWeb().PatientAjoutMedicament(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -415,11 +428,11 @@ namespace MigraineCSMiddleware
             }
         }
 
-        public UtilisateurWeb PatientSupprMedicament(string Value)
+        public UtilisateurWeb PatientSupprMedicament(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().PatientSupprMedicament(Value);
+                return new ServiceUtilisateursWeb().PatientSupprMedicament(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -441,6 +454,89 @@ namespace MigraineCSMiddleware
             
         }
 
+        public List<Migraine> GetListMigraineDuPatient(string Value, string Token)
+        {
+            try
+            {
+
+                return new ServiceUtilisateursWeb().PatientListeMigraine(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
+        public List<Medicament> GetListMedicamentDuPatient(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().GetListMedicamentsDuPatient(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
+
+        public List<Facteur> GetListFacteurDuPatient(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientListeFacteurs(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
+        
 
         //public bool LoginPatient1(string Login)
         //{
@@ -477,11 +573,11 @@ namespace MigraineCSMiddleware
 
         #region Medecin
 
-        public UtilisateurWeb GetMedecin(string Value)
+        public UtilisateurWeb GetMedecin(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetMedecin(Value);
+                return new ServiceUtilisateursWeb().GetMedecin(Value, Token);
             }
             catch (UtilisateurWebInexistantException Exp)
             {
@@ -514,11 +610,11 @@ namespace MigraineCSMiddleware
         //    }
         //}
 
-        public List<UtilisateurWeb> GetListMedecin(string Value)
+        public List<UtilisateurWeb> GetListMedecin(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetListMedecin(Value);
+                return new ServiceUtilisateursWeb().GetListMedecin(Value, Token);
             }
 
             catch (MedecinIntrouvableException Exp)
@@ -588,11 +684,11 @@ namespace MigraineCSMiddleware
 
         #region Medicament
 
-        public List<Medicament> GetListTotalMedicaments(string Value)
+        public List<Medicament> GetListTotalMedicaments(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetListTotalMedicaments(Value);
+                return new ServiceUtilisateursWeb().GetListTotalMedicaments(Value, Token);
             }
             catch (TokenInvalidException Exp)
             {
@@ -605,11 +701,11 @@ namespace MigraineCSMiddleware
                 throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
             }
         }
-        public List<Medicament> GetListMedicaments(string Value)
+        public List<Medicament> GetListMedicaments(string Value, string Token)
         {
             try
             {
-                return new ServiceUtilisateursWeb().GetListMedicaments(Value);
+                return new ServiceUtilisateursWeb().GetListMedicaments(Value, Token);
             }
             catch (TokenInvalidException Exp)
             {
@@ -645,12 +741,6 @@ namespace MigraineCSMiddleware
         }
 
 
-        public Product testSimple(string name, string description)
-        {
-            return new Product() { name = name, description = description };
-        }
-
-
         public string Post()
         {
             return "Retour Poste";
@@ -679,7 +769,11 @@ namespace MigraineCSMiddleware
             return "information";
         }
 
-
+        public string testSimple(int id, string name, string description)
+        {
+            //Getoptions();
+            return id.ToString() + name + description;
+        }
     }
 
 }

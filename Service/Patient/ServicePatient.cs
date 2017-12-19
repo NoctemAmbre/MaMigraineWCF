@@ -91,7 +91,7 @@ namespace MigraineCSMiddleware.Service.patient
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                T_PATIENT res = (from elt in entity.T_PATIENT where (elt.ID == idPatient) select elt).First();
+                T_PATIENT res = (from elt in entity.T_PATIENT where (elt.ID == idPatient) select elt).FirstOrDefault();
                 if (res == null) return false;
                 else return true;
             }
@@ -143,7 +143,7 @@ namespace MigraineCSMiddleware.Service.patient
         {
             PatientDAO patientDAO = new PatientDAO();
             MedecinDAO medecinDAO = new MedecinDAO();
-            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", medecinDAO.VoirMedecin(IDMedecin));
+            if (!patientDAO.IsPatient(IDpatient)) throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", patientDAO.VoirPatient(IDpatient));
             if (!medecinDAO.IsMedecin(IDMedecin)) throw new MedecinIncorrecteException("Ce compte n'est pas un compte Medcin", medecinDAO.VoirMedecin(IDMedecin));
             Medecin medecin = medecinDAO.VoirMedecin(IDMedecin);
             Patient patient = patientDAO.VoirPatient(IDpatient);
@@ -156,5 +156,34 @@ namespace MigraineCSMiddleware.Service.patient
 
             return medecinDAO.VoirMedecin(medecin.IDMedecin);
         }
+
+        public List<Migraine> ListMigraine(int IDPatient)
+        {
+            if (IsPatient(IDPatient))
+            {
+                return new MigraineDAO().ListeMigrainePatient(IDPatient);
+            }
+            else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
+        }
+
+        public List<Medicament> ListeMedicaments(int IDPatient)
+        {
+            if (IsPatient(IDPatient))
+            {
+                return new MedicamentDAO().ListeMesMedicaments(IDPatient);
+            }
+            else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
+        }
+
+        public List<Facteur> ListFacteurs(int IDPatient)
+        {
+            if (IsPatient(IDPatient))
+            {
+                return new FacteurDAO().ListeFacteurPatient(IDPatient);
+            }
+            else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
+        }
+
+        
     }
 }

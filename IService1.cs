@@ -266,21 +266,53 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb PatientSupprMedicament(string Value, string Token);
 
-        [WebGet(UriTemplate = "Patient/ListMigraine?Value={Value}&Token={Token}",
+        [WebInvoke(UriTemplate = "/Patient/AjouterFacteur?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientAjoutFacteur(string Value, string Token);
+
+        [WebGet(UriTemplate = "/Patient/ListMigraine?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Migraine> GetListMigraineDuPatient(string Value, string Token);
 
-        [WebGet(UriTemplate = "Patient/ListMedicament?Value={Value}&Token={Token}",
+        [WebGet(UriTemplate = "/Patient/ListMedicament?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Medicament> GetListMedicamentDuPatient(string Value, string Token);
 
-        [WebGet(UriTemplate = "Patient/ListFacteur?Value={Value}&Token={Token}",
+        [WebGet(UriTemplate = "/Patient/ListFacteur?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Facteur> GetListFacteurDuPatient(string Value, string Token);
 
+        [WebGet(UriTemplate = "/Facteur/Liste?Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<Facteur> GetListFacteurs(string Token);
+
+        [WebInvoke(UriTemplate = "/Facteur/Ajout?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        List<Facteur> AjoutNouveauFacteur(string Value, string Token);
+
+        [WebInvoke(UriTemplate = "/Facteur/Modification?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        List<Facteur> ModificationFacteur(string Value, string Token);
+
+        [WebInvoke(UriTemplate = "/Facteur/Suppression?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        List<Facteur> SuppressionFacteur(string Value, string Token);
 
         //[WebInvoke(UriTemplate = "/Patient/login?username={Login}&password={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,

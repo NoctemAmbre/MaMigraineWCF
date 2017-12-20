@@ -2,6 +2,7 @@
 using MigraineCSMiddleware.Modele;
 using MigraineCSMiddleware.Service.compte;
 using MigraineCSMiddleware.Service.date;
+using MigraineCSMiddleware.Service.facteur;
 using MigraineCSMiddleware.Service.medecin;
 using MigraineCSMiddleware.Service.medicament;
 using MigraineCSMiddleware.Service.patient;
@@ -59,7 +60,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public UtilisateurWeb ModificationCompte(string ValueJSON, String Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
 
             Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
             if (retour is Medecin)
@@ -87,7 +88,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public UtilisateurWeb ChangeMotDePass(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
             if (retour is Medecin)
             {
@@ -104,7 +105,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public UtilisateurWeb GetMedecin(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion(new ServiceMedecin().GetMedecin(UtilWeb.MesMedecin[0].IDWeb));
         }
 
@@ -123,28 +124,28 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public List<UtilisateurWeb> GetListMedecin(string ValueJSON,string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return RetourListMedecin(new ServiceMedecin().GetListMedecin(UtilWeb.Nom));
         }
 
         public UtilisateurWeb GetPatient(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion(new ServicePatient().GetPatient(UtilWeb.MesPatients[0].IDWeb));
         }
 
         public List<UtilisateurWeb> GetListPatient(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return RetourListPatient(new ServicePatient().GetListPatient(UtilWeb.Nom));
         }
 
         public UtilisateurWeb AttributionMedecin(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
             //if (retour is Medecin)
             //{
@@ -161,7 +162,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public List<Modele.Medicament> GetListTotalMedicaments(string Value, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return new ServiceMedicament().ListeTotalMedicaments();
         }
 
@@ -169,7 +170,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public List<Medicament> GetListMedicaments(string Value, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             //UtilisateurWeb test = new UtilisateurWeb();
             //List<Medicament> toto = new List<Medicament>();
             //Medicament tata = new Medicament() { ID = 0, DenominationMedicament = "Medoc" };
@@ -184,14 +185,14 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public List<Medicament> GetListMedicamentsDuPatient(string Value, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(Value);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return new ServicePatient().ListeMedicaments(UtilWeb.IDWeb);
         }
 
         public UtilisateurWeb AttributionPatient(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
             if (retour is Medecin)
             {
@@ -203,7 +204,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public UtilisateurWeb DesAttributionPatient(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             Compte retour = ServiceSecurite.UtilisateurWebVersCompte(UtilWeb);
             if (retour is Medecin)
             {
@@ -219,34 +220,39 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         public UtilisateurWeb PatientAjoutMedicament(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion((new ServicePatient()).AjoutMedicamentAPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.MesPatients[0].MesMedicaments[0].ID));
         }
+        public UtilisateurWeb PatientAjoutFacteur(string ValueJSON, string Token)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
+            return Conversion((new ServicePatient()).AjouterFacteur(UtilWeb.IDWeb, UtilWeb.MesFacteurs[0].ID));
+        }
+        
 
         public UtilisateurWeb PatientSupprMedicament(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion((new ServicePatient()).SupprMedicamentAPatient(UtilWeb.MesPatients[0].IDWeb, UtilWeb.MesPatients[0].MesMedicaments[0].ID));
         }
 
         public List<Migraine> PatientListeMigraine(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return (new ServicePatient()).ListMigraine(UtilWeb.IDWeb);
         }
 
         public List<Facteur> PatientListeFacteurs(string ValueJSON, string Token)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
-            ServiceSecurite.IsTokenValid(UtilWeb, Token); //teste du token long
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
             return (new ServicePatient()).ListFacteurs(UtilWeb.IDWeb);
         }
 
-        
-
-        public UtilisateurWeb Conversion(Patient patient)
+    public UtilisateurWeb Conversion(Patient patient)
         {
             if (patient == null) throw new CompteException("Une erreur est survenu sur le patient");
 

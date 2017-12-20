@@ -98,6 +98,7 @@
     <Compile Include="Modele\UtilisateurWeb.cs" />
     <Compile Include="RestAuthorizationManager.cs" />
     <Compile Include="Service\date\ConvertionDate.cs" />
+    <Compile Include="Service\facteur\ServiceFacteur.cs" />
     <Compile Include="Service\patient\PatientNonPresentException.cs" />
     <Compile Include="Service\securite\SecuriteLoginIncorecteException.cs" />
     <Compile Include="Service\securite\SecuriteNullException.cs" />

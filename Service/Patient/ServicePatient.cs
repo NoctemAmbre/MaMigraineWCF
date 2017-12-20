@@ -184,6 +184,17 @@ namespace MigraineCSMiddleware.Service.patient
             else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
         }
 
-        
+        public Patient AjouterFacteur(int IDPatient, int IDFacteur)
+        {
+            if (IsPatient(IDPatient))
+            {
+                new FacteurDAO().AjouterFacteurAPatient(IDFacteur, IDPatient);
+                return new PatientDAO().VoirPatient(IDPatient);
+
+            }
+            else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
+        }
+
+
     }
 }

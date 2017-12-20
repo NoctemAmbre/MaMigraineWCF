@@ -13,6 +13,7 @@ using System.ServiceModel.Web;
 using MigraineCSMiddleware.Service.compte;
 using MigraineCSMiddleware.Service.patient;
 using MigraineCSMiddleware.Service.medecin;
+using MigraineCSMiddleware.Service.facteur;
 
 namespace MigraineCSMiddleware
 {
@@ -358,9 +359,10 @@ namespace MigraineCSMiddleware
             }
             catch (TokenExpireException Exp)
             {
-                
+
                 //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
-                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
             }
 
         }
@@ -454,6 +456,31 @@ namespace MigraineCSMiddleware
             
         }
 
+        public UtilisateurWeb PatientAjoutFacteur(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientAjoutFacteur(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
         public List<Migraine> GetListMigraineDuPatient(string Value, string Token)
         {
             try
@@ -734,7 +761,90 @@ namespace MigraineCSMiddleware
         //}
 
         #endregion
+        #region Facteur
 
+        
+
+        public List<Facteur> GetListFacteurs(string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().ListeFacteurTotal(Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+
+        }
+
+        public List<Facteur> AjoutNouveauFacteur(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().AjoutFacteur(Value, Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+
+        }
+        public List<Facteur> ModificationFacteur(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().ModificationFacteur(Value, Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+
+        }
+
+        public List<Facteur> SuppressionFacteur(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().SuppressionFacteur(Value, Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+        }
+        
+
+        #endregion
         public string hello()
         {
             return "ça marche !!!!! ";
@@ -774,6 +884,7 @@ namespace MigraineCSMiddleware
             //Getoptions();
             return id.ToString() + name + description;
         }
+
     }
 
 }

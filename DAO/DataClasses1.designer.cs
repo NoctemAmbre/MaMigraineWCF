@@ -352,6 +352,13 @@ namespace MigraineCSMiddleware.DAO
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ModifFacteur")]
+		public int ModifFacteur([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TypeFacteur", DbType="Bit")] System.Nullable<bool> typeFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string nom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Question", DbType="VarChar(MAX)")] string question)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, typeFacteur, nom, question);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECIN")]

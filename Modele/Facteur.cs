@@ -7,6 +7,7 @@ namespace MigraineCSMiddleware.Modele
 {
     public class Facteur
     {
+        public int ID { get; set; }
         public FACTEUR TypeFacteur { get; set; }
         public bool Type { get; set; }
         public string Nom { get; set; }

@@ -225,14 +225,14 @@ namespace MigraineCSMiddleware.Service.securite
         //    return IsTokenValid(utilisateurweb.Token);
         //}
 
-        public static void IsTokenValid(UtilisateurWeb utilisateur, String Token)
+        public static void IsTokenValid(String Token)
         {
-            if (string.IsNullOrEmpty(Token) | (Token == "undefined")) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+            if (string.IsNullOrEmpty(Token) | (Token == "undefined")) throw new TokenInvalidException("Le token est invalide");
          
             string key = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
 
             string[] parts = key.Split(new char[] { ':' });
-            if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+            if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException("Le token est invalide");
   
             string hash = parts[0];
             string username = parts[1];
@@ -240,12 +240,12 @@ namespace MigraineCSMiddleware.Service.securite
             DateTime timeStamp = new DateTime(ticks);
             // Ensure the timestamp is valid.
             bool expired = Math.Abs((DateTime.UtcNow - timeStamp).TotalMinutes) > _expirationMinutes;
-            if (expired) throw new TokenExpireException(utilisateur, "Le token est expiré");
+            if (expired) throw new TokenExpireException("Le token est expiré");
                
             CompteDAO comptedao = new CompteDAO();
 
             string[] Keybdd = Encoding.UTF8.GetString(Convert.FromBase64String(comptedao.GetToken(username))).Split(new char[] { ':' });
-            if (Keybdd[0] != hash) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+            if (Keybdd[0] != hash) throw new TokenInvalidException("Le token est invalide");
 
             //string computedToken = GenererToken(username, comptedao.GetMotDePass(username), ticks);
 

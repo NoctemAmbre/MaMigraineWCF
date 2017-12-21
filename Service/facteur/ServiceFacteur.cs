@@ -14,6 +14,18 @@ namespace MigraineCSMiddleware.Service.facteur
 {
     public class ServiceFacteur
     {
+        public List<TypeFacteur> ListTypeFacteur(string Token)
+        {
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
+            return new FacteurDAO().ListTypeFacteur();
+        }
+
+        public List<TypeReponse> ListTypeReponse(string Token)
+        {
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
+            return new FacteurDAO().ListTypeReponse();
+        }
+
         public List<Facteur> ListeFacteurTotal(string Token)
         {
             ServiceSecurite.IsTokenValid(Token); //teste du token long

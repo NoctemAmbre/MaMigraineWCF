@@ -229,7 +229,13 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion((new ServicePatient()).AjouterFacteur(UtilWeb.IDWeb, UtilWeb.MesFacteurs[0].ID));
         }
-        
+
+        public UtilisateurWeb PatientSupprFacteur(string ValueJSON, string Token)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
+            return Conversion((new ServicePatient()).SupprimerFacteur(UtilWeb.IDWeb, UtilWeb.MesFacteurs[0].ID));
+        }
 
         public UtilisateurWeb PatientSupprMedicament(string ValueJSON, string Token)
         {
@@ -251,9 +257,16 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             ServiceSecurite.IsTokenValid(Token); //teste du token long
             return (new ServicePatient()).ListFacteurs(UtilWeb.IDWeb);
         }
-
-    public UtilisateurWeb Conversion(Patient patient)
+        public UtilisateurWeb PatientAjoutMigraine(string ValueJSON, string Token)
         {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenValid(Token); //teste du token long
+            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
+        }
+
+
+        public UtilisateurWeb Conversion(Patient patient)
+            {
             if (patient == null) throw new CompteException("Une erreur est survenu sur le patient");
 
             return new UtilisateurWeb()

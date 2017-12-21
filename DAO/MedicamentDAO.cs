@@ -131,6 +131,22 @@ namespace MigraineCSMiddleware.DAO
             return _ListMedicament.SingleOrDefault(elt => elt.ID == IdMedicament);
         }
 
+        public void AjoutListMedicamentAMigraine(List<Medicament> medicaments, int IDMigraine)
+        {
+            foreach(Medicament medicament in medicaments)
+            {
+                AjoutMedicamentAMigraine(medicament.ID, IDMigraine, medicament.Quantite);
+            }
+        }
+
+        public int AjoutMedicamentAMigraine(int IDMedicament, int IDMigraine, int Quantite)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                return entity.AjoutMedicamentAMigraine(IDMedicament, IDMigraine, Quantite);
+            }
+        }
+
         public Patient AjoutMedicamentAuPatient(int IDMedicament, int IDPatient)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())

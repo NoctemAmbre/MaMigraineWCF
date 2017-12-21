@@ -241,7 +241,6 @@ namespace MigraineCSMiddleware
         #endregion
 
         #region Patient
-
         [WebGet(UriTemplate = "/Patient/Voir?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
@@ -273,6 +272,14 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb PatientAjoutFacteur(string Value, string Token);
 
+        [WebInvoke(UriTemplate = "/Patient/SupprFacteur?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientSupprFacteur(string Value, string Token);
+
+
         [WebGet(UriTemplate = "/Patient/ListMigraine?Value={Value}&Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
@@ -287,6 +294,29 @@ namespace MigraineCSMiddleware
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Facteur> GetListFacteurDuPatient(string Value, string Token);
+
+        [WebInvoke(UriTemplate = "/Patient/AjoutMigraine?Value={Value}&Token={Token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientAjoutMigraine(string Value, string Token);
+
+
+
+        #endregion
+
+        #region Facteur
+        [WebGet(UriTemplate = "/TypeFacteur/Liste?Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<TypeFacteur> GetListTypeFacteur(string Token);
+
+        [WebGet(UriTemplate = "/TypeReponse/Liste?Token={Token}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<TypeReponse> GetListTypeReponse(string Token);
+
 
         [WebGet(UriTemplate = "/Facteur/Liste?Token={Token}",
         ResponseFormat = WebMessageFormat.Json)]
@@ -313,7 +343,7 @@ namespace MigraineCSMiddleware
         BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
         List<Facteur> SuppressionFacteur(string Value, string Token);
-
+        #endregion
         //[WebInvoke(UriTemplate = "/Patient/login?username={Login}&password={Pass}", Method = "POST",
         //    RequestFormat = WebMessageFormat.Json,
         //    ResponseFormat = WebMessageFormat.Json,
@@ -380,7 +410,7 @@ namespace MigraineCSMiddleware
         [OperationContract]
         Patient ChangementInfoPatient(int ID, string Login, string Nom, string Prenom, string DateNaissance, int IdMedecin);
     */
-        #endregion
+
 
         #region Medicament
 

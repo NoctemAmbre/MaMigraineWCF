@@ -8,18 +8,58 @@ namespace MigraineCSMiddleware.DAO
 {
     public class FacteurDAO
     {
-       
+        public List<TypeFacteur> ListTypeFacteur()
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var retour = entity.T_TYPEFACTEUR.ToList();
+                List<TypeFacteur> ListTypeFacteur = new List<TypeFacteur>();
+                foreach(var Element in retour)
+                {
+                    ListTypeFacteur.Add(new TypeFacteur() { ID = Element.ID, Type = Element.Type });
+                }
+                return ListTypeFacteur;
+            }
+        }
+
+        public List<TypeReponse> ListTypeReponse()
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var retour = entity.T_TYPEREPONSE.ToList();
+                List<TypeReponse> ListTypeReponse = new List<TypeReponse>();
+                foreach (var Element in retour)
+                {
+                    ListTypeReponse.Add(new TypeReponse() { ID = Element.ID, Type = Element.TypeReponse, Information = Element.Information});
+                }
+                return ListTypeReponse;
+            }
+        }
 
         public List<Facteur> ListeFacteurs()
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-
                 var retour = entity.T_FACTEUR.ToList();
                 List<Facteur> ListFacteur = new List<Facteur>();
                 foreach (var Element in retour)
                 {
-                    ListFacteur.Add(new Facteur() { ID = Element.ID, Nom = Element.Nom, Type = (bool)Element.TypeFacteur, Question = Element.Question });
+                    var retourTypeFacteur = entity.T_TYPEFACTEUR.FirstOrDefault(elt => elt.ID == Element.IDTypeFacteur);
+                    TypeFacteur typeFacteur = new TypeFacteur() { ID = retourTypeFacteur.ID, Type = retourTypeFacteur.Type };
+
+                    var retourTypeReponse = entity.T_TYPEREPONSE.FirstOrDefault(elt => elt.ID == Element.IDTypeResponse);
+                    TypeReponse typeReponse = new TypeReponse() { ID = retourTypeReponse.ID, Type = retourTypeReponse.TypeReponse, Information = retourTypeReponse.Information };
+
+                    Facteur facteur = new Facteur()
+                    {
+                        ID = Element.ID,
+                        Nom = Element.Nom,
+                        Question = Element.Question,
+                        Reponse = (int)Element.Reponse,
+                        TypeDeFacteur = typeFacteur,
+                        TypeDeReponse = typeReponse
+                    };
+                    ListFacteur.Add(facteur);
                 }
                 return ListFacteur;
             }
@@ -30,14 +70,30 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retour = entity.T_FACTEUR
-                    .Join(entity.T_FACTEURS_MIGRAINE, F => F.ID, FM => FM.IDFacteur, (F, FM) => new { ID = F.ID, TipeFacteur = F.TypeFacteur, Nom = F.Nom, Quantite = FM.Quantité, IDMigraine = FM.IDMigraine, Question = F.Question })
-                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {ID = FFM.ID, TipeFacteur = FFM.TipeFacteur, Nom = FFM.Nom, Quantite = FFM.Quantite, Question = FFM.Question })
+                    .Join(entity.T_FACTEURS_MIGRAINE, F => F.ID, FM => FM.IDFacteur, (F, FM) => new { ID = F.ID, IDTypeFacteur = F.IDTypeFacteur, IDTypeResponse = F.IDTypeResponse, Nom = F.Nom, Reponse = F.Reponse, IDMigraine = FM.IDMigraine, Question = F.Question })
+                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {ID = FFM.ID, IDTypeFacteur = FFM.IDTypeFacteur, IDTypeResponse = FFM.IDTypeResponse, Nom = FFM.Nom, Reponse = FFM.Reponse, Question = FFM.Question })
                     .ToList();
 
                 List<Facteur> ListFacteur = new List<Facteur>();
                 foreach(var Element in retour)
                 {
-                    ListFacteur.Add(new Facteur() { ID = Element.ID, Nom = Element.Nom, Type = (bool)Element.TipeFacteur, Quantite = (int)Element.Quantite, Question = Element.Question  });
+                    var retourTypeFacteur = entity.T_TYPEFACTEUR.FirstOrDefault(elt => elt.ID == Element.IDTypeFacteur);
+                    TypeFacteur typeFacteur = new TypeFacteur() { ID = retourTypeFacteur.ID, Type = retourTypeFacteur.Type };
+
+                    var retourTypeReponse = entity.T_TYPEREPONSE.FirstOrDefault(elt => elt.ID == Element.IDTypeResponse);
+                    TypeReponse typeReponse = new TypeReponse() { ID = retourTypeReponse.ID, Type = retourTypeReponse.TypeReponse, Information = retourTypeReponse.Information };
+
+                    Facteur facteur = new Facteur()
+                    {
+                        ID = Element.ID,
+                        Nom = Element.Nom,
+                        Question = Element.Question,
+                        Reponse = (int)Element.Reponse,
+                        TypeDeFacteur = typeFacteur,
+                        TypeDeReponse = typeReponse
+                    };
+
+                    ListFacteur.Add(facteur);
                 }
                 return ListFacteur;
             }
@@ -49,12 +105,28 @@ namespace MigraineCSMiddleware.DAO
                 var retour = entity.T_FACTEUR.Join(entity.T_FACTEURS,
                     F => F.ID,
                     FS => FS.IDFacteur,
-                    (F, FS) => new { ID = F.ID, IDPatient = FS.IDPatient, TipeFacteur = F.TypeFacteur, Nom = F.Nom, Question = F.Question }).Where(elt => elt.IDPatient == IDPatient).ToList();
+                    (F, FS) => new { ID = F.ID, IDPatient = FS.IDPatient, IDTypeFacteur = F.IDTypeFacteur, IDTypeResponse = F.IDTypeResponse, Nom = F.Nom, Question = F.Question, Reponse = F.Reponse }).Where(elt => elt.IDPatient == IDPatient).ToList();
 
                 List<Facteur> ListFacteur = new List<Facteur>();
                 foreach (var Element in retour)
                 {
-                    ListFacteur.Add(new Facteur() { ID = Element.ID, Nom = Element.Nom, Type = (bool)Element.TipeFacteur, Question = Element.Question });
+                    var retourTypeFacteur = entity.T_TYPEFACTEUR.FirstOrDefault(elt => elt.ID == Element.IDTypeFacteur);
+                    TypeFacteur typeFacteur = new TypeFacteur() { ID = retourTypeFacteur.ID, Type = retourTypeFacteur.Type };
+
+                    var retourTypeReponse = entity.T_TYPEREPONSE.FirstOrDefault(elt => elt.ID == Element.IDTypeResponse);
+                    TypeReponse typeReponse = new TypeReponse() { ID = retourTypeReponse.ID, Type = retourTypeReponse.TypeReponse, Information = retourTypeReponse.Information };
+
+                    Facteur facteur = new Facteur()
+                    {
+                        ID = Element.ID,
+                        Nom = Element.Nom,
+                        Question = Element.Question,
+                        Reponse = (int)Element.Reponse,
+                        TypeDeFacteur = typeFacteur,
+                        TypeDeReponse = typeReponse
+                    };
+
+                    ListFacteur.Add(facteur);
                 }
                 return ListFacteur;
             }
@@ -65,7 +137,24 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retour = entity.T_FACTEUR.Where(elt => elt.ID == IdFacteur).FirstOrDefault();
-                return new Facteur() { ID = retour.ID, Nom = retour.Nom, Type = (bool)retour.TypeFacteur, Question = retour.Question };
+
+
+                var retourTypeFacteur = entity.T_TYPEFACTEUR.FirstOrDefault(elt => elt.ID == retour.IDTypeFacteur);
+                TypeFacteur typeFacteur = new TypeFacteur() { ID = retourTypeFacteur.ID, Type = retourTypeFacteur.Type };
+
+                var retourTypeReponse = entity.T_TYPEREPONSE.FirstOrDefault(elt => elt.ID == retour.IDTypeResponse);
+                TypeReponse typeReponse = new TypeReponse() { ID = retourTypeReponse.ID, Type = retourTypeReponse.TypeReponse, Information = retourTypeReponse.Information };
+
+                Facteur facteur = new Facteur()
+                {
+                    ID = retour.ID,
+                    Nom = retour.Nom,
+                    Question = retour.Question,
+                    Reponse = (int)retour.Reponse,
+                    TypeDeFacteur = typeFacteur,
+                    TypeDeReponse = typeReponse
+                };
+                return facteur;
             }
         }
 
@@ -73,7 +162,7 @@ namespace MigraineCSMiddleware.DAO
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                int retour = entity.AjoutFacteur(NouveauFacteur.Type, NouveauFacteur.Nom, NouveauFacteur.Question);
+                int retour = entity.AjoutFacteur(NouveauFacteur.Nom, NouveauFacteur.Question, NouveauFacteur.Reponse, NouveauFacteur.TypeDeFacteur.ID, NouveauFacteur.TypeDeReponse.ID);
                 if (retour != -1) return ListeFacteurs();
             }
             return null;
@@ -90,9 +179,11 @@ namespace MigraineCSMiddleware.DAO
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                return entity.ModifFacteur(facteur.ID, facteur.Type, facteur.Nom, facteur.Question);
+                return entity.ModifFacteur(facteur.ID, facteur.Nom, facteur.Question, facteur.Reponse, facteur.TypeDeFacteur.ID, facteur.TypeDeReponse.ID);
             }
         }
+
+
 
         public int AjouterFacteurAPatient(int IdFacteur, int IdPatient)
         {
@@ -107,6 +198,14 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 return entity.SupprFacteurDuPatient(IdFacteur, IdPatient);
+            }
+        }
+
+        public void AjouterListeFacteursAMigraine(List<Facteur> facteurs, int IdMigraine)
+        {
+            foreach (Facteur facteur in facteurs)
+            {
+                AjouterFacteurAMigraine(facteur.ID, IdMigraine, 1);
             }
         }
 

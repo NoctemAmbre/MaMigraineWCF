@@ -355,7 +355,8 @@ namespace MigraineCSMiddleware
             }
             catch (TokenInvalidException Exp)
             {
-                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
             }
             catch (TokenExpireException Exp)
             {
@@ -366,6 +367,9 @@ namespace MigraineCSMiddleware
             }
 
         }
+
+
+
 
         public List<Patient> GetListPatient()
         {
@@ -481,6 +485,34 @@ namespace MigraineCSMiddleware
             }
 
         }
+        public UtilisateurWeb PatientSupprFacteur(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientSupprFacteur(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
+
+
+        
         public List<Migraine> GetListMigraineDuPatient(string Value, string Token)
         {
             try
@@ -563,7 +595,36 @@ namespace MigraineCSMiddleware
             }
 
         }
-        
+
+        public UtilisateurWeb PatientAjoutMigraine(string Value, string Token)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientAjoutMigraine(Value, Token);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+
+        }
+       
+
 
         //public bool LoginPatient1(string Login)
         //{
@@ -764,7 +825,46 @@ namespace MigraineCSMiddleware
         #region Facteur
 
         
+        public List<TypeFacteur> GetListTypeFacteur(string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().ListTypeFacteur(Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
 
+        }
+
+        public List<TypeReponse> GetListTypeReponse(string Token)
+        {
+            try
+            {
+                return new ServiceFacteur().ListTypeReponse(Token);
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token est incorrecte", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+
+        }
+        
         public List<Facteur> GetListFacteurs(string Token)
         {
             try

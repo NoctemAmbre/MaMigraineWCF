@@ -30,14 +30,26 @@ namespace MigraineCSMiddleware.DAO
         //        }
         //    }
         //}
+        public Migraine CreerMigraine(Migraine migraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                migraine.ID = entity.AjoutMigraine(migraine.Intensite, ConvertionDate.ConvertionDateTimeVersString(migraine.Debut), ConvertionDate.ConvertionDateTimeVersString(migraine.Fin));
+                new FacteurDAO().AjouterListeFacteursAMigraine(migraine.Facteurs, migraine.ID);
+                new MedicamentDAO().AjoutListMedicamentAMigraine(migraine.MedicamentsPris, migraine.ID);
+                return VoirMigraine(migraine.ID);
+            }
+        }
 
         public Migraine VoirMigraine(int IDMigraine)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retourMigraine = entity.T_MIGRAINE.FirstOrDefault(elt => elt.ID == IDMigraine);
-                List<Medicament> ListMedicament = new MedicamentDAO().ListeMedicamentDeLaMigraine((int)retourMigraine.IDMedicamentsMigraine);
+
+                List<Medicament> ListMedicament = new MedicamentDAO().ListeMedicamentDeLaMigraine((int)retourMigraine.ID);
                 List<Facteur> ListFacteurs = new FacteurDAO().ListeFacteurMigraine(IDMigraine);
+
                 Patient patient = new PatientDAO().VoirPatient((int)entity.T_MIGRAINES_PATIENT.FirstOrDefault(elt => elt.IDMigraine == IDMigraine).IDPatient);
                 return new Migraine() { ID = retourMigraine.ID, Debut = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Debut), Fin = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Fin), Facteurs = ListFacteurs, MedicamentsPris = ListMedicament, Intensite = (int)retourMigraine.Intensite };
             }
@@ -51,14 +63,31 @@ namespace MigraineCSMiddleware.DAO
                 var ListMesMigraines = entity.T_MIGRAINES_PATIENT.Join(entity.T_MIGRAINE,
                     MP => MP.IDMigraine,
                     M => M.ID,
-                    (MP, M) => new { IDPatient = MP.IDPatient, IDMigraine = M.ID, IDMedicamentsMigraine = M.IDMedicamentsMigraine, IDFacteursMigraine = M.IDFacteursMigraine, Intensite = M.Intensite, Debut = M.Debut, Fin = M.Fin }).Where(elt => elt.IDPatient == IDPatient).ToList();
+                    (MP, M) => new { IDPatient = MP.IDPatient, IDMigraine = M.ID, Intensite = M.Intensite, Debut = M.Debut, Fin = M.Fin }).Where(elt => elt.IDPatient == IDPatient).ToList();
 
                 foreach (var Element in ListMesMigraines)
                 {
-                    Migraine MaMigraine = new Migraine() { ID = Element.IDMigraine, Debut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut), Fin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin), Intensite = (int)Element.Intensite, Facteurs = new FacteurDAO().ListeFacteurMigraine(Element.IDMigraine), MedicamentsPris = new MedicamentDAO().ListeMedicamentDeLaMigraine(Element.IDMigraine) };
+                    Migraine MaMigraine = new Migraine()
+                    {
+                        ID = Element.IDMigraine,
+                        Debut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut),
+                        Fin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin),
+                        Intensite = (int)Element.Intensite,
+                        Facteurs = new FacteurDAO().ListeFacteurMigraine(Element.IDMigraine),
+                        MedicamentsPris = new MedicamentDAO().ListeMedicamentDeLaMigraine(Element.IDMigraine)
+                    };
                     MesMigraine.Add(MaMigraine);
                 }
                 return MesMigraine;
+            }
+        }
+
+        public Patient AjouterMigraineAPatient(int IDPatient, Migraine migraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                entity.AjoutMigraineAPatient(migraine.ID, IDPatient);
+                return new PatientDAO().VoirPatient(IDPatient);
             }
         }
     }

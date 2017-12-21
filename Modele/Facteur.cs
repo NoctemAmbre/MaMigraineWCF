@@ -8,16 +8,22 @@ namespace MigraineCSMiddleware.Modele
     public class Facteur
     {
         public int ID { get; set; }
-        public FACTEUR TypeFacteur { get; set; }
-        public bool Type { get; set; }
         public string Nom { get; set; }
         public string Question { get; set; }
-        public int Quantite { get; set; }
-
-        public enum FACTEUR
-        {
-            AGRAVANT, AMELIORANT
-        };
+        public int Reponse { get; set; }
+        public TypeFacteur TypeDeFacteur { get; set; }
+        public TypeReponse TypeDeReponse { get; set; }
+    }
+    public class TypeFacteur
+    {
+        public int ID { get; set; }
+        public string Type { get; set; }
+    }
+    public class TypeReponse
+    {
+        public int ID { get; set; }
+        public string Type { get; set; }
+        public string Information { get; set; }
     }
     
 }

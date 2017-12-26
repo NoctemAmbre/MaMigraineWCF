@@ -225,8 +225,8 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         }
         public UtilisateurWeb PatientAjoutFacteur(string ValueJSON, string Token)
         {
-            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             ServiceSecurite.IsTokenValid(Token); //teste du token long
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             return Conversion((new ServicePatient()).AjouterFacteur(UtilWeb.IDWeb, UtilWeb.MesFacteurs[0].ID));
         }
 

@@ -9,8 +9,8 @@ namespace MigraineCSMiddleware.Modele
     {
         public int ID { get; set; }
         public int Intensite { get; set; }
-        public DateTime Debut { get; set; }
-        public DateTime Fin { get; set; }
+        public string Debut { get; set; }
+        public string Fin { get; set; }
         public List<Medicament> MedicamentsPris { get; set; }
         public List<Facteur> Facteurs { get; set; }
     }

@@ -57,12 +57,12 @@ namespace MigraineCSMiddleware.DAO
     partial void InsertT_TYPEREPONSE(T_TYPEREPONSE instance);
     partial void UpdateT_TYPEREPONSE(T_TYPEREPONSE instance);
     partial void DeleteT_TYPEREPONSE(T_TYPEREPONSE instance);
-    partial void InsertT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
-    partial void UpdateT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
-    partial void DeleteT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
     partial void InsertT_FACTEUR(T_FACTEUR instance);
     partial void UpdateT_FACTEUR(T_FACTEUR instance);
     partial void DeleteT_FACTEUR(T_FACTEUR instance);
+    partial void InsertT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
+    partial void UpdateT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
+    partial void DeleteT_FACTEURS_MIGRAINE(T_FACTEURS_MIGRAINE instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -215,19 +215,19 @@ namespace MigraineCSMiddleware.DAO
 			}
 		}
 		
-		public System.Data.Linq.Table<T_FACTEURS_MIGRAINE> T_FACTEURS_MIGRAINE
-		{
-			get
-			{
-				return this.GetTable<T_FACTEURS_MIGRAINE>();
-			}
-		}
-		
 		public System.Data.Linq.Table<T_FACTEUR> T_FACTEUR
 		{
 			get
 			{
 				return this.GetTable<T_FACTEUR>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_FACTEURS_MIGRAINE> T_FACTEURS_MIGRAINE
+		{
+			get
+			{
+				return this.GetTable<T_FACTEURS_MIGRAINE>();
 			}
 		}
 		
@@ -357,13 +357,6 @@ namespace MigraineCSMiddleware.DAO
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteurAMigraine")]
-		public int AjoutFacteurAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine, quantite);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprFacteurDeMigraine")]
 		public int SupprFacteurDeMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine)
 		{
@@ -403,6 +396,13 @@ namespace MigraineCSMiddleware.DAO
 		public int AjoutMedicamentAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMedicament, iDMigraine, quantite);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteurAMigraine")]
+		public int AjoutFacteurAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Reponse", DbType="Int")] System.Nullable<int> reponse)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine, reponse);
 			return ((int)(result.ReturnValue));
 		}
 	}
@@ -2673,157 +2673,6 @@ namespace MigraineCSMiddleware.DAO
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEURS_MIGRAINE")]
-	public partial class T_FACTEURS_MIGRAINE : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _IDMigraine;
-		
-		private int _IDFacteur;
-		
-		private EntityRef<T_FACTEUR> _T_FACTEUR;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnIDMigraineChanging(int value);
-    partial void OnIDMigraineChanged();
-    partial void OnIDFacteurChanging(int value);
-    partial void OnIDFacteurChanged();
-    #endregion
-		
-		public T_FACTEURS_MIGRAINE()
-		{
-			this._T_FACTEUR = default(EntityRef<T_FACTEUR>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMigraine", DbType="Int NOT NULL")]
-		public int IDMigraine
-		{
-			get
-			{
-				return this._IDMigraine;
-			}
-			set
-			{
-				if ((this._IDMigraine != value))
-				{
-					this.OnIDMigraineChanging(value);
-					this.SendPropertyChanging();
-					this._IDMigraine = value;
-					this.SendPropertyChanged("IDMigraine");
-					this.OnIDMigraineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteur", DbType="Int NOT NULL")]
-		public int IDFacteur
-		{
-			get
-			{
-				return this._IDFacteur;
-			}
-			set
-			{
-				if ((this._IDFacteur != value))
-				{
-					if (this._T_FACTEUR.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDFacteurChanging(value);
-					this.SendPropertyChanging();
-					this._IDFacteur = value;
-					this.SendPropertyChanged("IDFacteur");
-					this.OnIDFacteurChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_FACTEUR_T_FACTEURS_MIGRAINE", Storage="_T_FACTEUR", ThisKey="IDFacteur", OtherKey="ID", IsForeignKey=true)]
-		public T_FACTEUR T_FACTEUR
-		{
-			get
-			{
-				return this._T_FACTEUR.Entity;
-			}
-			set
-			{
-				T_FACTEUR previousValue = this._T_FACTEUR.Entity;
-				if (((previousValue != value) 
-							|| (this._T_FACTEUR.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._T_FACTEUR.Entity = null;
-						previousValue.T_FACTEURS_MIGRAINE.Remove(this);
-					}
-					this._T_FACTEUR.Entity = value;
-					if ((value != null))
-					{
-						value.T_FACTEURS_MIGRAINE.Add(this);
-						this._IDFacteur = value.ID;
-					}
-					else
-					{
-						this._IDFacteur = default(int);
-					}
-					this.SendPropertyChanged("T_FACTEUR");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEUR")]
 	public partial class T_FACTEUR : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3113,6 +2962,181 @@ namespace MigraineCSMiddleware.DAO
 		{
 			this.SendPropertyChanging();
 			entity.T_FACTEUR = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_FACTEURS_MIGRAINE")]
+	public partial class T_FACTEURS_MIGRAINE : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _IDMigraine;
+		
+		private int _IDFacteur;
+		
+		private System.Nullable<int> _Reponse;
+		
+		private EntityRef<T_FACTEUR> _T_FACTEUR;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnIDMigraineChanging(int value);
+    partial void OnIDMigraineChanged();
+    partial void OnIDFacteurChanging(int value);
+    partial void OnIDFacteurChanged();
+    partial void OnReponseChanging(System.Nullable<int> value);
+    partial void OnReponseChanged();
+    #endregion
+		
+		public T_FACTEURS_MIGRAINE()
+		{
+			this._T_FACTEUR = default(EntityRef<T_FACTEUR>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMigraine", DbType="Int NOT NULL")]
+		public int IDMigraine
+		{
+			get
+			{
+				return this._IDMigraine;
+			}
+			set
+			{
+				if ((this._IDMigraine != value))
+				{
+					this.OnIDMigraineChanging(value);
+					this.SendPropertyChanging();
+					this._IDMigraine = value;
+					this.SendPropertyChanged("IDMigraine");
+					this.OnIDMigraineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDFacteur", DbType="Int NOT NULL")]
+		public int IDFacteur
+		{
+			get
+			{
+				return this._IDFacteur;
+			}
+			set
+			{
+				if ((this._IDFacteur != value))
+				{
+					if (this._T_FACTEUR.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIDFacteurChanging(value);
+					this.SendPropertyChanging();
+					this._IDFacteur = value;
+					this.SendPropertyChanged("IDFacteur");
+					this.OnIDFacteurChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reponse", DbType="Int")]
+		public System.Nullable<int> Reponse
+		{
+			get
+			{
+				return this._Reponse;
+			}
+			set
+			{
+				if ((this._Reponse != value))
+				{
+					this.OnReponseChanging(value);
+					this.SendPropertyChanging();
+					this._Reponse = value;
+					this.SendPropertyChanged("Reponse");
+					this.OnReponseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="T_FACTEUR_T_FACTEURS_MIGRAINE", Storage="_T_FACTEUR", ThisKey="IDFacteur", OtherKey="ID", IsForeignKey=true)]
+		public T_FACTEUR T_FACTEUR
+		{
+			get
+			{
+				return this._T_FACTEUR.Entity;
+			}
+			set
+			{
+				T_FACTEUR previousValue = this._T_FACTEUR.Entity;
+				if (((previousValue != value) 
+							|| (this._T_FACTEUR.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._T_FACTEUR.Entity = null;
+						previousValue.T_FACTEURS_MIGRAINE.Remove(this);
+					}
+					this._T_FACTEUR.Entity = value;
+					if ((value != null))
+					{
+						value.T_FACTEURS_MIGRAINE.Add(this);
+						this._IDFacteur = value.ID;
+					}
+					else
+					{
+						this._IDFacteur = default(int);
+					}
+					this.SendPropertyChanged("T_FACTEUR");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

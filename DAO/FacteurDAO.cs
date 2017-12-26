@@ -70,8 +70,8 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retour = entity.T_FACTEUR
-                    .Join(entity.T_FACTEURS_MIGRAINE, F => F.ID, FM => FM.IDFacteur, (F, FM) => new { ID = F.ID, IDTypeFacteur = F.IDTypeFacteur, IDTypeResponse = F.IDTypeResponse, Nom = F.Nom, Reponse = F.Reponse, IDMigraine = FM.IDMigraine, Question = F.Question })
-                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {ID = FFM.ID, IDTypeFacteur = FFM.IDTypeFacteur, IDTypeResponse = FFM.IDTypeResponse, Nom = FFM.Nom, Reponse = FFM.Reponse, Question = FFM.Question })
+                    .Join(entity.T_FACTEURS_MIGRAINE, F => F.ID, FM => FM.IDFacteur, (F, FM) => new { ID = F.ID, IDTypeFacteur = F.IDTypeFacteur, IDTypeResponse = F.IDTypeResponse, Nom = F.Nom, IDMigraine = FM.IDMigraine, Question = F.Question, Reponse = FM.Reponse })
+                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {ID = FFM.ID, IDTypeFacteur = FFM.IDTypeFacteur, IDTypeResponse = FFM.IDTypeResponse, Nom = FFM.Nom, Question = FFM.Question, Reponse = FFM.Reponse })
                     .ToList();
 
                 List<Facteur> ListFacteur = new List<Facteur>();
@@ -205,7 +205,7 @@ namespace MigraineCSMiddleware.DAO
         {
             foreach (Facteur facteur in facteurs)
             {
-                AjouterFacteurAMigraine(facteur.ID, IdMigraine, 1);
+                AjouterFacteurAMigraine(facteur.ID, IdMigraine, facteur.Reponse);
             }
         }
 

@@ -8,7 +8,6 @@ Z:\MigraineCSMiddleware\bin\EntityFramework.xml
 Z:\MigraineCSMiddleware\bin\EntityFramework.SqlServer.xml
 Z:\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.dll
 Z:\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.pdb
-C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.csprojResolveAssemblyReference.cache
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\bin\MigraineCSMiddleware.dll.config
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\bin\MigraineCSMiddleware.dll
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\bin\MigraineCSMiddleware.pdb

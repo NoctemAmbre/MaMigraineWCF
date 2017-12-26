@@ -160,15 +160,6 @@
       <Association Name="T_TYPEREPONSE_T_FACTEUR" Member="T_FACTEUR" ThisKey="ID" OtherKey="IDTypeResponse" Type="T_FACTEUR" />
     </Type>
   </Table>
-  <Table Name="dbo.T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE">
-    <Type Name="T_FACTEURS_MIGRAINE">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IDMigraine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IDFacteur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="T_FACTEURS_MIGRAINE_T_MIGRAINE" Member="T_MIGRAINE" ThisKey="IDMigraine" OtherKey="ID" Type="T_MIGRAINE" />
-      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEUR" ThisKey="IDFacteur" OtherKey="ID" Type="T_FACTEUR" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.T_FACTEUR" Member="T_FACTEUR">
     <Type Name="T_FACTEUR">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -177,10 +168,20 @@
       <Column Name="Reponse" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IDTypeFacteur" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IDTypeResponse" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS_MIGRAINE" />
       <Association Name="T_FACTEUR_T_FACTEURS" Member="T_FACTEURS" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS" />
+      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE" ThisKey="ID" OtherKey="IDFacteur" Type="T_FACTEURS_MIGRAINE" />
       <Association Name="T_TYPEFACTEUR_T_FACTEUR" Member="T_TYPEFACTEUR" ThisKey="IDTypeFacteur" OtherKey="ID" Type="T_TYPEFACTEUR" IsForeignKey="true" />
       <Association Name="T_TYPEREPONSE_T_FACTEUR" Member="T_TYPEREPONSE" ThisKey="IDTypeResponse" OtherKey="ID" Type="T_TYPEREPONSE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_FACTEURS_MIGRAINE" Member="T_FACTEURS_MIGRAINE">
+    <Type Name="T_FACTEURS_MIGRAINE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDMigraine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDFacteur" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Reponse" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="T_FACTEURS_MIGRAINE_T_MIGRAINE" Member="T_MIGRAINE" ThisKey="IDMigraine" OtherKey="ID" Type="T_MIGRAINE" />
+      <Association Name="T_FACTEUR_T_FACTEURS_MIGRAINE" Member="T_FACTEUR" ThisKey="IDFacteur" OtherKey="ID" Type="T_FACTEUR" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.AjoutTypeMedicament" Method="AjoutTypeMedicament">
@@ -336,12 +337,6 @@
     <Parameter Name="IdPatient" Parameter="idPatient" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.AjoutFacteurAMigraine" Method="AjoutFacteurAMigraine">
-    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
-    <Parameter Name="IdMigraine" Parameter="idMigraine" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Quantite" Parameter="quantite" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.SupprFacteurDeMigraine" Method="SupprFacteurDeMigraine">
     <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
     <Parameter Name="IdMigraine" Parameter="idMigraine" Type="System.Int32" DbType="Int" />
@@ -379,6 +374,12 @@
     <Parameter Name="IDMedicament" Parameter="iDMedicament" Type="System.Int32" DbType="Int" />
     <Parameter Name="IDMigraine" Parameter="iDMigraine" Type="System.Int32" DbType="Int" />
     <Parameter Name="Quantite" Parameter="quantite" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AjoutFacteurAMigraine" Method="AjoutFacteurAMigraine">
+    <Parameter Name="IdFacteur" Parameter="idFacteur" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdMigraine" Parameter="idMigraine" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Reponse" Parameter="reponse" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

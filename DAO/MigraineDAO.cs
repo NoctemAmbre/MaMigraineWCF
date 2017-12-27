@@ -51,7 +51,7 @@ namespace MigraineCSMiddleware.DAO
                 List<Medicament> ListMedicament = new MedicamentDAO().ListeMedicamentDeLaMigraine((int)retourMigraine.ID);
                 List<Facteur> ListFacteurs = new FacteurDAO().ListeFacteurMigraine(IDMigraine);
 
-                Patient patient = new PatientDAO().VoirPatient((int)entity.T_MIGRAINES_PATIENT.FirstOrDefault(elt => elt.IDMigraine == IDMigraine).IDPatient);
+                //Patient patient = new PatientDAO().VoirPatient((int)entity.T_MIGRAINES_PATIENT.FirstOrDefault(elt => elt.IDMigraine == IDMigraine).IDPatient);
                 //return new Migraine() { ID = retourMigraine.ID, Debut = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Debut), Fin = ConvertionDate.ConvertionStringVersDateTime(retourMigraine.Fin), Facteurs = ListFacteurs, MedicamentsPris = ListMedicament, Intensite = (int)retourMigraine.Intensite };
                 return new Migraine() { ID = retourMigraine.ID, Debut = retourMigraine.Debut, Fin = retourMigraine.Fin, Facteurs = ListFacteurs, MedicamentsPris = ListMedicament, Intensite = (int)retourMigraine.Intensite };
             }
@@ -72,10 +72,12 @@ namespace MigraineCSMiddleware.DAO
                     Migraine MaMigraine = new Migraine()
                     {
                         ID = Element.IDMigraine,
-                        //Debut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut),
-                        //Fin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin),
+                        DateDebut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut),
+                        DateFin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin),
+                        Duree = ConvertionDate.DureeEntreDateTime(Element.Debut, Element.Fin),
                         Debut = Element.Debut,
                         Fin = Element.Fin,
+                        Moi = ConvertionDate.RechercheMoi(Element.Debut),
                         Intensite = (int)Element.Intensite,
                         Facteurs = new FacteurDAO().ListeFacteurMigraine(Element.IDMigraine),
                         MedicamentsPris = new MedicamentDAO().ListeMedicamentDeLaMigraine(Element.IDMigraine)
@@ -88,6 +90,9 @@ namespace MigraineCSMiddleware.DAO
 
         public Patient AjouterMigraineAPatient(int IDPatient, Migraine migraine)
         {
+
+
+
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 //int IdMigraine = entity.AjoutMigraine(migraine.Intensite, migraine.Debut, migraine.Fin);

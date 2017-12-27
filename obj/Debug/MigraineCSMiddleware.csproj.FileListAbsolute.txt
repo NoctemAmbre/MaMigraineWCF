@@ -17,3 +17,4 @@ C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\bin\EntityFramework.
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\bin\EntityFramework.SqlServer.xml
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.dll
 C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.pdb
+C:\Travail\Projet\MigraineCSMiddleware\MigraineCSMiddleware\obj\Debug\MigraineCSMiddleware.csprojResolveAssemblyReference.cache

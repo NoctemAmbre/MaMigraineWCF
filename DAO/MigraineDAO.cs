@@ -72,8 +72,12 @@ namespace MigraineCSMiddleware.DAO
                     Migraine MaMigraine = new Migraine()
                     {
                         ID = Element.IDMigraine,
-                        DateDebut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut),
-                        DateFin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin),
+                        DateTimeDebut = ConvertionDate.ConvertionStringVersDateTime(Element.Debut),
+                        DateTimeFin = ConvertionDate.ConvertionStringVersDateTime(Element.Fin),
+                        DateDebut = ConvertionDate.ConvertionStringVersDate(Element.Debut),
+                        DateFin = ConvertionDate.ConvertionStringVersDate(Element.Fin),
+                        HeureDebut = ConvertionDate.ConvertionStringVersHeure(Element.Debut),
+                        HeureFin = ConvertionDate.ConvertionStringVersHeure(Element.Fin),
                         Duree = ConvertionDate.DureeEntreDateTime(Element.Debut, Element.Fin),
                         Debut = Element.Debut,
                         Fin = Element.Fin,

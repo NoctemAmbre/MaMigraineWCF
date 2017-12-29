@@ -65,14 +65,18 @@ namespace MigraineCSMiddleware.DAO
             }
         }
 
-        public List<Facteur> ListeFacteurMigraine(int IDMigraine)
+        public List<Facteur> ListeFacteurMigraine(int IDmigraine)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 var retour = entity.T_FACTEUR
                     .Join(entity.T_FACTEURS_MIGRAINE, F => F.ID, FM => FM.IDFacteur, (F, FM) => new { ID = F.ID, IDTypeFacteur = F.IDTypeFacteur, IDTypeResponse = F.IDTypeResponse, Nom = F.Nom, IDMigraine = FM.IDMigraine, Question = F.Question, Reponse = FM.Reponse })
-                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {ID = FFM.ID, IDTypeFacteur = FFM.IDTypeFacteur, IDTypeResponse = FFM.IDTypeResponse, Nom = FFM.Nom, Question = FFM.Question, Reponse = FFM.Reponse })
+                    .Join(entity.T_MIGRAINE, FFM => FFM.IDMigraine, M => M.ID, (FFM, M) => new {IDMigraine = FFM.IDMigraine, ID = FFM.ID, IDTypeFacteur = FFM.IDTypeFacteur, IDTypeResponse = FFM.IDTypeResponse, Nom = FFM.Nom, Question = FFM.Question, Reponse = FFM.Reponse }).Where(elt => elt.IDMigraine == IDmigraine)
                     .ToList();
+
+                //var retour1 = entity.T_FACTEURS_MIGRAINE.
+                //    Join(entity.T_FACTEUR, FM => FM.IDFacteur, F => F.ID, (FM,F) => new { }
+
 
                 List<Facteur> ListFacteur = new List<Facteur>();
                 foreach(var Element in retour)

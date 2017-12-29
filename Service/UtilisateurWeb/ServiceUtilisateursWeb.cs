@@ -132,7 +132,7 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             ServiceSecurite.IsTokenValid(Token); //teste du token long
-            return Conversion(new ServicePatient().GetPatient(UtilWeb.MesPatients[0].IDWeb));
+            return Conversion(new ServicePatient().GetPatient(UtilWeb.IDWeb));
         }
 
         public List<UtilisateurWeb> GetListPatient(string ValueJSON, string Token)

@@ -91,6 +91,44 @@ namespace MigraineCSMiddleware
 
         }
 
+        public UtilisateurWeb TelephoneLogin(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().TelephoneLogin(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (AutentificationIncorrecteException Exp)
+            {
+                return new UtilisateurWeb() { Identifiant = Exp.Identifiant, Erreur = Exp.Message };
+            }
+            catch (TokenInvalidException Exp)
+            {
+                return new UtilisateurWeb() { Erreur = Exp.Message };
+            }
+            catch (TokenExpireException Exp)
+            {
+                //return new UtilisateurWeb() { Erreur = Exp.Message };
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+            }
+            catch (CompteException Exp)
+            {
+                return new UtilisateurWeb() { Erreur = Exp.Message };
+            }
+            catch (TelephoneException Exp)
+            {
+                return new UtilisateurWeb() { Erreur = Exp.Message };
+            }
+            catch (TypeCompteException Exp)
+            {
+                return new UtilisateurWeb() { Erreur = Exp.Message };
+            }
+        }
+
         public UtilisateurWeb CompteAjout(string Value)
         {
             try

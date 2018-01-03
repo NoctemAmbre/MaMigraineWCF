@@ -211,14 +211,37 @@ namespace MigraineCSMiddleware.Service.securite
                 if (key == null) throw new AutentificationIncorrecteException("Les information de login / mot de passe sont incorrecte");
                 if (String.IsNullOrEmpty(compte.Identifiant)) throw new AutentificationIncorrecteException("Le login est nul ou vide");
                 if (String.IsNullOrEmpty(compte.MotDePass)) throw new AutentificationIncorrecteException("Le mot de passe est nul ou vide");
-                if (String.IsNullOrEmpty(compte.Token)) throw new TokenInvalidException(utilisateur, "Le tocken est nul ou vide");
-                if (compte.Token != _CleeBasic) throw new TokenInvalidException(utilisateur, "Le tocken est invalide");
+                if (String.IsNullOrEmpty(compte.Token)) throw new TokenInvalidException(utilisateur, "Le token est nul ou vide");
+                if (compte.Token != _CleeBasic) throw new TokenInvalidException(utilisateur, "Le token est invalide");
                 compte.MotDePass = HashMotDePass(compte.MotDePass);
 
                 string retourMotDePass = new CompteDAO().GetMotDePass(compte.Identifiant);
                 if (retourMotDePass == "" | compte.MotDePass != retourMotDePass) throw new AutentificationIncorrecteException(compte.Identifiant, "Identifiant ou mot de passe incorrecte");
 
                 return compte;
+            }
+        }
+        public static UtilisateurWeb GetTelephoneSecurite(string Token)
+        {
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
+
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(key)))
+            {
+                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(UtilisateurWeb));
+                UtilisateurWeb utilisateur = (UtilisateurWeb)deserializer.ReadObject(ms);
+
+                if (key == null) throw new AutentificationIncorrecteException("Les information de login / mot de passe sont incorrecte");
+                if (String.IsNullOrEmpty(utilisateur.Identifiant)) throw new AutentificationIncorrecteException("Le login est nul ou vide");
+                if (String.IsNullOrEmpty(utilisateur.MotDePass)) throw new AutentificationIncorrecteException("Le mot de passe est nul ou vide");
+                if (String.IsNullOrEmpty(utilisateur.Token)) throw new TokenInvalidException(utilisateur, "Le token est nul ou vide");
+                if (String.IsNullOrEmpty(utilisateur.TelephonePortable)) throw new TelephoneException(utilisateur, "Le téléphone est nul ou vide");
+                if (utilisateur.Token != _CleeBasic) throw new TokenInvalidException(utilisateur, "Le token est invalide");
+                utilisateur.MotDePass = HashMotDePass(utilisateur.MotDePass);
+
+                string retourMotDePass = new CompteDAO().GetMotDePass(utilisateur.Identifiant);
+                if (retourMotDePass == "" | utilisateur.MotDePass != retourMotDePass) throw new AutentificationIncorrecteException(utilisateur.Identifiant, "Identifiant ou mot de passe incorrecte");
+
+                return utilisateur;
             }
         }
 

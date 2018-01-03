@@ -213,6 +213,40 @@ namespace MigraineCSMiddleware.DAO
         }
 
         /// <summary>
+        /// connexion du téléphone portable.
+        /// </summary>
+        /// <param name="Identifiant"></param>
+        /// <param name="Pass"></param>
+        /// <param name="TelephonePortable"></param>
+        /// <returns></returns>
+        public Patient LoginTelephone(string Identifiant, string Pass, string TelephonePortable)
+        {
+            int IdCompte = AutentificationTel(Identifiant, Pass, TelephonePortable); //teste de l'identifiant, du mot de passe et du numéro de téléphone portable pour rejet si non présent dans la base
+
+            return VoirPatientDuCompte(IdCompte);
+        }
+
+        public int AutentificationTel(string Identifiant, string MotDePasse, string TelephonePortable)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var retour = entity.T_COMPTE.Join(entity.T_PATIENT,
+                    C => C.ID,
+                    P => P.IdCompte,
+                    (C, P) => new { ID = C.ID, Identifiant = C.Identifiant, MotDePass = C.MotDePass, TelephonePortable = P.TelephonePortable }).FirstOrDefault(elt => elt.Identifiant == Identifiant);  ;
+
+                if (retour == null) throw new AutentificationIncorrecteException(Identifiant, "Identifiant incorrecte");
+                if (retour.MotDePass != MotDePasse) throw new AutentificationIncorrecteException(Identifiant, "Mot de passe incorrecte");
+                if (retour.TelephonePortable != TelephonePortable) throw new AutentificationIncorrecteException(Identifiant, "Téléphone incorrecte");
+                CompteDAO.AjoutToken(retour.ID);
+                return retour.ID;
+            }
+        }
+
+
+
+
+        /// <summary>
         /// retourne une valeur vrais ou faux pour déterminé si l'id est bien celui d'un Patient
         /// </summary>
         /// <param name="IdPatient"></param>

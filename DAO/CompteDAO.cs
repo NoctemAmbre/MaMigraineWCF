@@ -59,7 +59,7 @@ namespace MigraineCSMiddleware.DAO
      
         }
 
-        private void AjoutToken(int idCompte)
+        public static void AjoutToken(int idCompte)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {

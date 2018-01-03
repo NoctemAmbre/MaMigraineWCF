@@ -39,6 +39,24 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             else return null;
         }
 
+        public UtilisateurWeb TelephoneLogin(string Token)
+        {
+
+            UtilisateurWeb utilisateurWeb = ServiceSecurite.GetTelephoneSecurite(Token); //teste du compte et du token basic. Si incorrecte passage en catch
+
+            PatientDAO _PatientDAO = new PatientDAO();
+            MedecinDAO _MedecinDAO = new MedecinDAO();
+            if (_PatientDAO.IsPatient(utilisateurWeb.Identifiant))
+            {
+                return Conversion(_PatientDAO.LoginTelephone(utilisateurWeb.Identifiant, utilisateurWeb.MotDePass, utilisateurWeb.TelephonePortable));
+            }
+            else if (_MedecinDAO.IsMedecin(utilisateurWeb.Identifiant))
+            {
+                throw new TypeCompteException(utilisateurWeb, "Ce compte n'est pas celui d'un patient");
+            }
+            else return null;
+        }
+
         public UtilisateurWeb CreationCompte(string ValueJSON)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON); //convertion             

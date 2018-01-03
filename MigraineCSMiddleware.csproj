@@ -104,6 +104,7 @@
     <Compile Include="Service\securite\SecuriteNullException.cs" />
     <Compile Include="Service\securite\SecuritePasswordIncorecteException.cs" />
     <Compile Include="Service\securite\ServiceSecurite.cs" />
+    <Compile Include="Service\securite\TelephoneException.cs" />
     <Compile Include="Service\securite\TokenExpireException.cs" />
     <Compile Include="Service\securite\TokenInvalidException.cs" />
     <Compile Include="Modele\Medicament.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Service\patient\ServicePatient.cs" />
     <Compile Include="Service\compte\CompteException.cs" />
     <Compile Include="Service\medecin\MedecinIntrouvableException.cs" />
+    <Compile Include="Service\utilisateurweb\TypeCompteException.cs" />
     <Compile Include="Service\utilisateurweb\UtilisateurWebInexistantException.cs" />
     <Compile Include="Service\utilisateurweb\ServiceUtilisateursWeb.cs" />
   </ItemGroup>

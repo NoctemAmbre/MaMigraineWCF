@@ -103,6 +103,13 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb TelephoneLogin(string Value);
 
+        [WebInvoke(UriTemplate = "/Tel/loginToken?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb TelephoneLoginToken(string Value);
+
 
 
         [WebInvoke(UriTemplate = "/Compte/Ajout?Value={Value}", Method = "POST",
@@ -180,7 +187,12 @@ namespace MigraineCSMiddleware
         ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         UtilisateurWeb GetMedecin(string Value, string Token);
-            
+
+        [WebGet(UriTemplate = "/tel/Medecin/Voir?Value={Value}",
+        ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        UtilisateurWeb GetMedecinTel(string Value);
+
 
         //[WebInvoke(UriTemplate = "/Medecin/login", Method = "POST",
         //RequestFormat = WebMessageFormat.Json,

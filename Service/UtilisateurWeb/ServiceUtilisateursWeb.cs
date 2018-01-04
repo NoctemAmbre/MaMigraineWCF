@@ -57,6 +57,25 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             else return null;
         }
 
+        public UtilisateurWeb TelephoneLoginToken(string Token)
+        {
+            UtilisateurWeb utilisateurWeb = ServiceSecurite.VerificationToken(Token);
+
+
+
+            PatientDAO _PatientDAO = new PatientDAO();
+            MedecinDAO _MedecinDAO = new MedecinDAO();
+            if (_PatientDAO.IsPatient(utilisateurWeb.Identifiant))
+            {
+                return Conversion(_PatientDAO.LoginTelephoneToken(utilisateurWeb.Identifiant));
+            }
+            else if (_MedecinDAO.IsMedecin(utilisateurWeb.Identifiant))
+            {
+                throw new TypeCompteException(utilisateurWeb, "Ce compte n'est pas celui d'un patient");
+            }
+            else return null;
+        }
+
         public UtilisateurWeb CreationCompte(string ValueJSON)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON); //convertion             
@@ -126,6 +145,13 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             ServiceSecurite.IsTokenValid(Token); //teste du token long
             return Conversion(new ServiceMedecin().GetMedecin(UtilWeb.MesMedecin[0].IDWeb));
         }
+        public UtilisateurWeb GetMedecinTel(string ValueJSON)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenTelephoneValid(UtilWeb.Identifiant, UtilWeb.Token); //teste du téléphone
+            return Conversion(new ServiceMedecin().GetMedecin(UtilWeb.MesMedecin[0].IDWeb));
+        }
+        
 
         public List<UtilisateurWeb> GetListMedecin()
         {

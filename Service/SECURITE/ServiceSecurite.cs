@@ -245,10 +245,41 @@ namespace MigraineCSMiddleware.Service.securite
             }
         }
 
+        public static UtilisateurWeb VerificationToken(string value)
+        {
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(value));
+
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(key)))
+            {
+                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(UtilisateurWeb));
+                UtilisateurWeb utilisateur = (UtilisateurWeb)deserializer.ReadObject(ms);
+                IsTokenTelephoneValid(utilisateur.Identifiant, utilisateur.Token);
+                return utilisateur;
+            }
+        }
+
         //public static bool IsTokenValid(UtilisateurWeb utilisateurweb)
         //{
         //    return IsTokenValid(utilisateurweb.Token);
         //}
+
+        public static void IsTokenTelephoneValid(string identifiant, string Token)
+        {
+            if (string.IsNullOrEmpty(Token) | (Token == "undefined")) throw new TokenInvalidException("Le token est invalide");
+            if (string.IsNullOrEmpty(identifiant) | (identifiant == "undefined")) throw new AutentificationIncorrecteException("Le login est invalide");
+
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
+            string[] parts = key.Split(new char[] { ':' });
+            if (parts.Length > 3 | parts.Length < 3) throw new TokenInvalidException("Le token est invalide");
+            string hash = parts[0];
+            string username = parts[1];
+
+            if (username.ToLower() != identifiant.ToLower()) throw new TokenInvalidException("Le login est invalide");
+
+            string[] Keybdd = Encoding.UTF8.GetString(Convert.FromBase64String(new CompteDAO().GetToken(username))).Split(new char[] { ':' });
+            if (Keybdd[0] != hash) throw new TokenInvalidException("Le token est invalide");
+        }
+
 
         public static void IsTokenValid(String Token)
         {
@@ -271,8 +302,6 @@ namespace MigraineCSMiddleware.Service.securite
 
             string[] Keybdd = Encoding.UTF8.GetString(Convert.FromBase64String(comptedao.GetToken(username))).Split(new char[] { ':' });
             if (Keybdd[0] != hash) throw new TokenInvalidException("Le token est invalide");
-
-            //string computedToken = GenererToken(username, comptedao.GetMotDePass(username), ticks);
 
         }
 

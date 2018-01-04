@@ -70,6 +70,23 @@ namespace MigraineCSMiddleware.DAO
             }
         }
 
+        public Patient VoirPatient(string identifiant)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var ret = entity.T_PATIENT.Join(entity.T_COMPTE,
+                    P => P.IdCompte,
+                    C => C.ID,
+                (P, C) => new { IDPatient = P.ID, ID = C.ID, Identifiant = C.Identifiant, Nom = C.Nom, Prenom = C.Prenom, AdresseMail = C.AdressMail, Telephone = P.TelephoneFixe, TelephonePortable = P.TelephonePortable, DateNaissance = P.DateNaissance, Token = C.Token }).Where(elt => elt.Identifiant == identifiant).FirstOrDefault();
+
+                List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
+                List<Migraine> MesMigraines = new MigraineDAO().ListeMigrainePatient((int)ret.IDPatient);
+                List<Medicament> MesMedicaments = new MedicamentDAO().ListeMesMedicaments((int)ret.IDPatient);
+                List<Facteur> MesFacteurs = new FacteurDAO().ListeFacteurPatient((int)ret.IDPatient);
+                return new Patient() { IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = MesMedecins, MesMigraines = MesMigraines, MesMedicaments = MesMedicaments, MesFacteurs = MesFacteurs, Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
+            }
+        }
+
         public Patient VoirPatientDuCompte(int IdCompte)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
@@ -224,6 +241,13 @@ namespace MigraineCSMiddleware.DAO
             int IdCompte = AutentificationTel(Identifiant, Pass, TelephonePortable); //teste de l'identifiant, du mot de passe et du numéro de téléphone portable pour rejet si non présent dans la base
 
             return VoirPatientDuCompte(IdCompte);
+        }
+
+        public Patient LoginTelephoneToken(string Identifiant)
+        {
+            CompteDAO.AjoutToken(Identifiant);
+
+            return VoirPatient(Identifiant);
         }
 
         public int AutentificationTel(string Identifiant, string MotDePasse, string TelephonePortable)

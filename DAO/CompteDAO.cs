@@ -69,6 +69,16 @@ namespace MigraineCSMiddleware.DAO
             }
         }
 
+        public static void AjoutToken(string Identifiant)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                T_COMPTE t_compte = entity.T_COMPTE.Single(c => c.Identifiant == Identifiant);
+                t_compte.Token = ServiceSecurite.GenererToken(t_compte.Identifiant, t_compte.MotDePass, DateTime.UtcNow.Ticks);
+                entity.SubmitChanges();
+            }
+        }
+
         public int Autentification(string Identifiant, string MotDePasse)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())

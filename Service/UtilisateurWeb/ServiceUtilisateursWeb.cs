@@ -308,6 +308,12 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
         }
 
+        public UtilisateurWeb PatientAjoutMigraineTel(string ValueJSON)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenTelephoneValid(UtilWeb.Identifiant, UtilWeb.Token); //teste du token long
+            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
+        }
 
         public UtilisateurWeb Conversion(Patient patient)
             {

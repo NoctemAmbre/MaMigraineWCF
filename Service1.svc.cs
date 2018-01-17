@@ -699,7 +699,34 @@ namespace MigraineCSMiddleware
             }
 
         }
-       
+
+        public UtilisateurWeb PatientAjoutMigraineTel(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientAjoutMigraineTel(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+        }
+
 
 
         //public bool LoginPatient1(string Login)

@@ -321,7 +321,7 @@ namespace MigraineCSMiddleware.DAO
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                int retour = entity.AjoutMedecinPatient(medecin.IDMedecin,patient.IDPatient);
+                int retour = entity.AjoutMedecinPatient(medecin.IDMedecin,patient.IDPatient, true);
 
                 if (retour != -1)
                 {

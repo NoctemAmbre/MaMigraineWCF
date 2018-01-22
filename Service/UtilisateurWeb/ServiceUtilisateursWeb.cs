@@ -305,14 +305,14 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             ServiceSecurite.IsTokenValid(Token); //teste du token long
-            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
+            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0], true));
         }
 
-        public UtilisateurWeb PatientAjoutMigraineTel(string ValueJSON)
+        public UtilisateurWeb PatientAjoutMigraineTel(string ValueJSON, bool Complet)
         {
             UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
             ServiceSecurite.IsTokenTelephoneValid(UtilWeb.Identifiant, UtilWeb.Token); //teste du token long
-            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
+            return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0], Complet));
         }
 
         public UtilisateurWeb Conversion(Patient patient)

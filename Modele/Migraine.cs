@@ -19,6 +19,7 @@ namespace MigraineCSMiddleware.Modele
         public TimeStructure HeureFin { get; set; }
         public int Duree { get; set; }
         public string Moi { get; set; }
+        public bool Complet { get; set; }
 
         public List<Medicament> MedicamentsPris { get; set; }
         public List<Facteur> Facteurs { get; set; }

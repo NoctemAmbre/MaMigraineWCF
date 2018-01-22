@@ -11,6 +11,7 @@ namespace MigraineCSMiddleware.Service.date
     {
         public static DateStructure ConvertionStringVersDate(string valeur)
         {
+            if (string.IsNullOrEmpty(valeur)) return new DateStructure();
             string dateString = Regex.Split(valeur, "T")[0];
             string[] date = Regex.Split(dateString, "-");
             return new DateStructure() { year = int.Parse(date[0]), month = int.Parse(date[1]), day = int.Parse(date[2])};
@@ -18,6 +19,8 @@ namespace MigraineCSMiddleware.Service.date
 
         public static TimeStructure ConvertionStringVersHeure(string valeur)
         {
+            //if (valeur == null) return new TimeStructure();
+            if (string.IsNullOrEmpty(valeur)) return new TimeStructure();
             string heureString = Regex.Split(valeur, "T")[1];
             string[] heure = Regex.Split(heureString, ":");
             return new TimeStructure() { hour = int.Parse(heure[0]), minute = int.Parse(heure[1]), second = 0 };
@@ -57,6 +60,7 @@ namespace MigraineCSMiddleware.Service.date
 
         public static int DureeEntreDateTime(string debut, string fin)
         {
+            if (debut == null | fin == null) return -1;
             DateTime DTDebut = ConvertionStringVersDateTime(debut);
             DateTime DTFin = ConvertionStringVersDateTime(fin);
             if (fin.CompareTo(debut) > 0)

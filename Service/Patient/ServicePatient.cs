@@ -207,12 +207,12 @@ namespace MigraineCSMiddleware.Service.patient
         }
 
 
-        public Patient AjoutMigraine(int IDPatient, Migraine migraine)
+        public Patient AjoutMigraine(int IDPatient, Migraine migraine, bool Complet)
         {
             if (IsPatient(IDPatient))
             {
-                new MigraineDAO().AjouterMigraineAPatient(IDPatient, migraine);
-                return new PatientDAO().VoirPatient(IDPatient);
+                return new MigraineDAO().AjouterMigraineAPatient(IDPatient, migraine, Complet);
+                //return new PatientDAO().VoirPatient(IDPatient);
 
             }
             else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));

@@ -330,6 +330,13 @@ namespace MigraineCSMiddleware
         [OperationContract]
         UtilisateurWeb PatientAjoutMigraineTel(string Value);
 
+        [WebInvoke(UriTemplate = "/Tel/Patient/AjoutMigraineIncomplet?Value={Value}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        UtilisateurWeb PatientAjoutMigraineIncompletTel(string Value);
+
 
 
         #endregion

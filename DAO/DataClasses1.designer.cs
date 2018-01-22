@@ -151,14 +151,6 @@ namespace MigraineCSMiddleware.DAO
 			}
 		}
 		
-		public System.Data.Linq.Table<T_MEDECINPATIENT> T_MEDECINPATIENT
-		{
-			get
-			{
-				return this.GetTable<T_MEDECINPATIENT>();
-			}
-		}
-		
 		public System.Data.Linq.Table<T_PATIENT> T_PATIENT
 		{
 			get
@@ -172,14 +164,6 @@ namespace MigraineCSMiddleware.DAO
 			get
 			{
 				return this.GetTable<T_MEDICAMENTS_MIGRAINE>();
-			}
-		}
-		
-		public System.Data.Linq.Table<T_MIGRAINES_PATIENT> T_MIGRAINES_PATIENT
-		{
-			get
-			{
-				return this.GetTable<T_MIGRAINES_PATIENT>();
 			}
 		}
 		
@@ -228,6 +212,22 @@ namespace MigraineCSMiddleware.DAO
 			get
 			{
 				return this.GetTable<T_FACTEURS_MIGRAINE>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_MEDECINPATIENT> T_MEDECINPATIENT
+		{
+			get
+			{
+				return this.GetTable<T_MEDECINPATIENT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<T_MIGRAINES_PATIENT> T_MIGRAINES_PATIENT
+		{
+			get
+			{
+				return this.GetTable<T_MIGRAINES_PATIENT>();
 			}
 		}
 		
@@ -308,13 +308,6 @@ namespace MigraineCSMiddleware.DAO
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedecinPatient")]
-		public int AjoutMedecinPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMedecin", DbType="Int")] System.Nullable<int> idMedecin, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedicamentAPatient")]
 		public int AjoutMedicamentAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Quantite", DbType="Int")] System.Nullable<int> quantite)
 		{
@@ -364,13 +357,6 @@ namespace MigraineCSMiddleware.DAO
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMigraineAPatient")]
-		public int AjoutMigraineAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMigraine, iDPatient);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutFacteur")]
 		public int AjoutFacteur([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string nom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Question", DbType="VarChar(MAX)")] string question, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Response", DbType="Int")] System.Nullable<int> response, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDTypeFacteur", DbType="Int")] System.Nullable<int> iDTypeFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDTypeResponse", DbType="Int")] System.Nullable<int> iDTypeResponse)
 		{
@@ -403,6 +389,41 @@ namespace MigraineCSMiddleware.DAO
 		public int AjoutFacteurAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdFacteur", DbType="Int")] System.Nullable<int> idFacteur, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMigraine", DbType="Int")] System.Nullable<int> idMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Reponse", DbType="Int")] System.Nullable<int> reponse)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idFacteur, idMigraine, reponse);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMigraineAPatient")]
+		public int AjoutMigraineAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Complet", DbType="Bit")] System.Nullable<bool> complet)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMigraine, iDPatient, complet);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AjoutMedecinPatient")]
+		public int AjoutMedecinPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdMedecin", DbType="Int")] System.Nullable<int> idMedecin, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdPatient", DbType="Int")] System.Nullable<int> idPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Confirmation", DbType="Bit")] System.Nullable<bool> confirmation)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idMedecin, idPatient, confirmation);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ModifMigraine")]
+		public int ModifMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id", DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Intensite", DbType="Int")] System.Nullable<int> intensite, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Debut", DbType="VarChar(MAX)")] string debut, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fin", DbType="VarChar(MAX)")] string fin)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, intensite, debut, fin);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMedicamentAMigraine")]
+		public int SupprMedicamentAMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMedicament", DbType="Int")] System.Nullable<int> iDMedicament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMedicament, iDMigraine);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ModifMigraineAPatient")]
+		public int ModifMigraineAPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Complet", DbType="Bit")] System.Nullable<bool> complet)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMigraine, iDPatient, complet);
 			return ((int)(result.ReturnValue));
 		}
 	}
@@ -1861,51 +1882,6 @@ namespace MigraineCSMiddleware.DAO
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECINPATIENT")]
-	public partial class T_MEDECINPATIENT
-	{
-		
-		private int _IDMedecin;
-		
-		private int _IDPatient;
-		
-		public T_MEDECINPATIENT()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMedecin", DbType="Int NOT NULL")]
-		public int IDMedecin
-		{
-			get
-			{
-				return this._IDMedecin;
-			}
-			set
-			{
-				if ((this._IDMedecin != value))
-				{
-					this._IDMedecin = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
-		public int IDPatient
-		{
-			get
-			{
-				return this._IDPatient;
-			}
-			set
-			{
-				if ((this._IDPatient != value))
-				{
-					this._IDPatient = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_PATIENT")]
 	public partial class T_PATIENT : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2246,51 +2222,6 @@ namespace MigraineCSMiddleware.DAO
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MIGRAINES_PATIENT")]
-	public partial class T_MIGRAINES_PATIENT
-	{
-		
-		private int _IDPatient;
-		
-		private int _IDMigraine;
-		
-		public T_MIGRAINES_PATIENT()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
-		public int IDPatient
-		{
-			get
-			{
-				return this._IDPatient;
-			}
-			set
-			{
-				if ((this._IDPatient != value))
-				{
-					this._IDPatient = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMigraine", DbType="Int NOT NULL")]
-		public int IDMigraine
-		{
-			get
-			{
-				return this._IDMigraine;
-			}
-			set
-			{
-				if ((this._IDMigraine != value))
-				{
-					this._IDMigraine = value;
-				}
 			}
 		}
 	}
@@ -3136,6 +3067,132 @@ namespace MigraineCSMiddleware.DAO
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECINPATIENT")]
+	public partial class T_MEDECINPATIENT
+	{
+		
+		private int _IDMedecin;
+		
+		private int _IDPatient;
+		
+		private bool _Confirmation;
+		
+		public T_MEDECINPATIENT()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMedecin", DbType="Int NOT NULL")]
+		public int IDMedecin
+		{
+			get
+			{
+				return this._IDMedecin;
+			}
+			set
+			{
+				if ((this._IDMedecin != value))
+				{
+					this._IDMedecin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
+		public int IDPatient
+		{
+			get
+			{
+				return this._IDPatient;
+			}
+			set
+			{
+				if ((this._IDPatient != value))
+				{
+					this._IDPatient = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmation", DbType="Bit NOT NULL")]
+		public bool Confirmation
+		{
+			get
+			{
+				return this._Confirmation;
+			}
+			set
+			{
+				if ((this._Confirmation != value))
+				{
+					this._Confirmation = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MIGRAINES_PATIENT")]
+	public partial class T_MIGRAINES_PATIENT
+	{
+		
+		private int _IDPatient;
+		
+		private int _IDMigraine;
+		
+		private bool _Complet;
+		
+		public T_MIGRAINES_PATIENT()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPatient", DbType="Int NOT NULL")]
+		public int IDPatient
+		{
+			get
+			{
+				return this._IDPatient;
+			}
+			set
+			{
+				if ((this._IDPatient != value))
+				{
+					this._IDPatient = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMigraine", DbType="Int NOT NULL")]
+		public int IDMigraine
+		{
+			get
+			{
+				return this._IDMigraine;
+			}
+			set
+			{
+				if ((this._IDMigraine != value))
+				{
+					this._IDMigraine = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Complet", DbType="Bit NOT NULL")]
+		public bool Complet
+		{
+			get
+			{
+				return this._Complet;
+			}
+			set
+			{
+				if ((this._Complet != value))
+				{
+					this._Complet = value;
+				}
 			}
 		}
 	}

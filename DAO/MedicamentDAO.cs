@@ -133,9 +133,12 @@ namespace MigraineCSMiddleware.DAO
 
         public void AjoutListMedicamentAMigraine(List<Medicament> medicaments, int IDMigraine)
         {
-            foreach(Medicament medicament in medicaments)
+            if (medicaments != null)
             {
-                AjoutMedicamentAMigraine(medicament.ID, IDMigraine, medicament.Quantite);
+                foreach (Medicament medicament in medicaments)
+                {
+                    AjoutMedicamentAMigraine(medicament.ID, IDMigraine, medicament.Quantite);
+                }
             }
         }
 
@@ -156,12 +159,36 @@ namespace MigraineCSMiddleware.DAO
                 return new PatientDAO().VoirPatient(IDPatient);
             }
         }
+
+
+
         public Patient SupprMedicamentDuPatient(int IDMedicament, int IDPatient)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 int retour = entity.SupprMedicamentDuPatient(IDMedicament, IDPatient);
                 return new PatientDAO().VoirPatient(IDPatient);
+            }
+        }
+
+        public int SupprToutMedicamentDeLaMigraine(int IDMigraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var resultat = entity.T_MEDICAMENTS_MIGRAINE.Where(elt => elt.IDMigraine == IDMigraine).ToList();
+                foreach(var Element in resultat)
+                {
+                    return SupprMedicamentDeLaMigraine(Element.IDMedicament, Element.IDMigraine);
+                }
+            }
+            return -1;
+        }
+
+        public int SupprMedicamentDeLaMigraine(int IDMedicament, int IDMigraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                return entity.SupprMedicamentAMigraine(IDMedicament, IDMigraine);
             }
         }
     }

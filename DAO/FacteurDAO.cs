@@ -207,9 +207,12 @@ namespace MigraineCSMiddleware.DAO
 
         public void AjouterListeFacteursAMigraine(List<Facteur> facteurs, int IdMigraine)
         {
-            foreach (Facteur facteur in facteurs)
+            if (facteurs != null)
             {
-                AjouterFacteurAMigraine(facteur.ID, IdMigraine, facteur.Reponse);
+                foreach (Facteur facteur in facteurs)
+                {
+                    AjouterFacteurAMigraine(facteur.ID, IdMigraine, facteur.Reponse);
+                }
             }
         }
 
@@ -218,6 +221,18 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 return entity.AjoutFacteurAMigraine(IdFacteur, IdMigraine, Quantite);
+            }
+        }
+
+        public void RetirerToutFacteursAMigraine(int IdMigraine)
+        {
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                var reponse  = entity.T_FACTEURS_MIGRAINE.Where(elt => elt.IDMigraine == IdMigraine).ToList();
+                foreach(var Element in reponse)
+                {
+                    RetirerFacteurAMigraine(Element.IDFacteur, Element.IDMigraine);
+                }
             }
         }
 

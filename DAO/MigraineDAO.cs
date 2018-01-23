@@ -111,7 +111,7 @@ namespace MigraineCSMiddleware.DAO
 
         public Patient AjouterMigraineAPatient(int IDPatient, Migraine migraine, bool Complet)
         {
-            if (migraine.ID != null)
+            if (migraine.ID > 0)
             {
                 using (DataClasses1DataContext entity = new DataClasses1DataContext())
                 {

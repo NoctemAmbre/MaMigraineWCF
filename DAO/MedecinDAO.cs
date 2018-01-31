@@ -136,8 +136,8 @@ namespace MigraineCSMiddleware.DAO
                     M => M.IdCompte,
                     C => C.ID,
                     (M, C) => new { IDMedecin = M.ID, ID = C.ID, Identifiant = C.Identifiant, MotDePass = "", Nom = C.Nom, Prenom = C.Prenom, Telephone = M.TelephoneCabinet, AdresseMail = C.AdressMail, InfoComplementaire = M.InfoComplementaire, DateCreation = C.DateCreation, DernierModif = C.DerniereModif, CreePar = 0, Token = C.Token }).FirstOrDefault(elm => elm.IDMedecin == IDMedecin);
-
-               Medecin medecin = new Medecin() { IDMedecin = (int)ret.IDMedecin, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = ret.MotDePass, Nom = ret.Nom, Prenom = ret.Prenom, Telephone = ret.Telephone, AdresseMail = ret.AdresseMail, InfoComplementaire = ret.InfoComplementaire, DateCreation = ret.DateCreation, DernierModif = ret.DernierModif, CreePar = 0, Token = ret.Token };
+                if (ret == null) throw new CompteException("pas de medecin");
+                Medecin medecin = new Medecin() { IDMedecin = (int)ret.IDMedecin, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = ret.MotDePass, Nom = ret.Nom, Prenom = ret.Prenom, Telephone = ret.Telephone, AdresseMail = ret.AdresseMail, InfoComplementaire = ret.InfoComplementaire, DateCreation = ret.DateCreation, DernierModif = ret.DernierModif, CreePar = 0, Token = ret.Token };
                 medecin.Adresse             = adresseDAO.LectureAdresse(medecin.ID); 
                 medecin.HoraireOuverture    = horaireDAO.LectureHoraire(medecin.IDMedecin);
                 medecin.MesPatient          = new PatientDAO().ListPatientDuMedecin(medecin.IDMedecin);
@@ -183,12 +183,12 @@ namespace MigraineCSMiddleware.DAO
                 //Rafraichir();
                 //Medecin RetourMedecin = _ListMedecin.Where(Id => Id.IDMedecin == retour).SingleOrDefault();
                 //Medecin RetourMedecin =
+                Medecin RetourMedecin = this.VoirMedecin(retour);
+                RetourMedecin.HoraireOuverture = new HoraireDAO().AjoutHoraire(retour, medecin.HoraireOuverture);
+                RetourMedecin.Adresse = new AdresseDAO().AjoutAdresse(RetourMedecin.ID, medecin);
 
-                //RetourMedecin.HoraireOuverture = new HoraireDAO().AjoutHoraire(retour, medecin.HoraireOuverture);
-                //RetourMedecin.Adresse = new AdresseDAO().AjoutAdresse(RetourMedecin.ID, medecin);
 
-
-                return VoirMedecin(medecin.IDMedecin);
+                return VoirMedecin(retour);
             }
         }
 
@@ -265,17 +265,27 @@ namespace MigraineCSMiddleware.DAO
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
                 //Medecin medecinbdd = _ListMedecin.Where(elt => elt.Identifiant == medecin.Identifiant).SingleOrDefault();
-                Medecin medecinbdd = VoirMedecin(medecin.Identifiant);
-                int retour = entity.ModifMedecin(medecinbdd.ID, medecin.Nom, medecin.Prenom, ConvertionDate.ConvertionDateTimeVersString(DateTime.UtcNow), medecin.AdresseMail, ServiceSecurite.GenererToken(medecin.Identifiant, new CompteDAO().GetMotDePass(medecin.Identifiant), DateTime.UtcNow.Ticks), (int)medecin.IDMedecin, medecin.Telephone, medecin.InfoComplementaire);
+                //Medecin medecinbdd = VoirMedecin(medecin.Identifiant);
+                int retour = entity.ModifMedecin(entity.T_MEDECIN.FirstOrDefault(elt => elt.ID == medecin.IDMedecin).IdCompte, medecin.Nom, medecin.Prenom, ConvertionDate.ConvertionDateTimeVersString(DateTime.UtcNow), medecin.AdresseMail, ServiceSecurite.GenererToken(medecin.Identifiant, new CompteDAO().GetMotDePass(medecin.Identifiant), DateTime.UtcNow.Ticks), (int)medecin.IDMedecin, medecin.Telephone, medecin.InfoComplementaire);
                 if (retour == -1) throw new CompteModificationException(medecin, "La modification du medecin n'a pus avoir lieu");
+
+                Medecin RetourMedecin = this.VoirMedecin(retour);
+                RetourMedecin.Adresse = new AdresseDAO().AjoutAdresse(RetourMedecin.ID, medecin);
+                RetourMedecin.HoraireOuverture = new HoraireDAO().AjoutHoraire(retour, medecin.HoraireOuverture);
+
+                return RetourMedecin;
+                //if (AdresseRetour == null) throw new CompteModificationException(medecin, "La modification du medecin n'a pus avoir lieu");
+                //if (HoraireRetour.Length == 0) throw new CompteModificationException(medecin, "La modification du medecin n'a pus avoir lieu");
+
+
+
 
                 //Rafraichir();
 
-                //Medecin RetourMedecin = _ListMedecin.Where(Id => Id.IDMedecin == retour).SingleOrDefault();
                 //RetourMedecin.HoraireOuverture = new HoraireDAO().AjoutHoraire(retour, medecin.HoraireOuverture);
                 //RetourMedecin.Adresse = new AdresseDAO().AjoutAdresse(RetourMedecin.ID, medecin);
                 //Rafraichir();
-                return VoirMedecin(medecin.IDMedecin);
+
                 //return _ListMedecin.Where(Id => Id.IDMedecin == retour).First();
             }
         
@@ -283,17 +293,21 @@ namespace MigraineCSMiddleware.DAO
 
         public Medecin NouveauMotDePass(Medecin medecin)
         {
-            //Medecin medecinbdd = _ListMedecin.Where(elt => elt.Identifiant == medecin.Identifiant).First();
-            //Medecin medecinbdd = VoirMedecin(medecin.Identifiant);
-            string MotDePasse = ServiceSecurite.HashMotDePass(medecin.MotDePass);
-            int retour = new CompteDAO().ChangementInformation(medecin.ID, null, MotDePasse, null, null, null, null, 0, null, ServiceSecurite.GenererToken(medecin.Identifiant, MotDePasse, DateTime.UtcNow.Ticks)); //on transmet l'information de d'Id du compte et on transmet a CompteDAO l'ordre de changer le mot de passe. puis on récupère l'information que l'opération c'est bien passé
-            if (retour != -1) throw new CompteModificationException(medecin, "Le changement de mot de passe n'a pus être effectué");
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
 
-            //Rafraichir();
-            //Medecin RetourMedecin = _ListMedecin.Where(elt => elt.IDMedecin == medecin.IDMedecin).SingleOrDefault();
+                //Medecin medecinbdd = _ListMedecin.Where(elt => elt.Identifiant == medecin.Identifiant).First();
+                //Medecin medecinbdd = VoirMedecin(medecin.Identifiant);
+                string MotDePasse = ServiceSecurite.HashMotDePass(medecin.MotDePass);
+                int retour = new CompteDAO().ChangementInformation(entity.T_MEDECIN.FirstOrDefault(elt => elt.ID == medecin.IDMedecin).IdCompte, null, MotDePasse, null, null, null, null, 0, null, ServiceSecurite.GenererToken(medecin.Identifiant, MotDePasse, DateTime.UtcNow.Ticks)); //on transmet l'information de d'Id du compte et on transmet a CompteDAO l'ordre de changer le mot de passe. puis on récupère l'information que l'opération c'est bien passé
+                if (retour == -1) throw new CompteModificationException(medecin, "Le changement de mot de passe n'a pus être effectué");
 
-            //return RetourMedecin;
-            return VoirMedecin(medecin.IDMedecin);
+                //Rafraichir();
+                //Medecin RetourMedecin = _ListMedecin.Where(elt => elt.IDMedecin == medecin.IDMedecin).SingleOrDefault();
+
+                //return RetourMedecin;
+                return VoirMedecin(medecin.IDMedecin);
+            }
         }
 
         //private string HashPassword(string pass)

@@ -22,29 +22,29 @@ namespace MigraineCSMiddleware.DAO
         /// <returns>On retourne une valeur booléenne définissant si l'opération c'est bien passé</returns>
         public int ChangementInformation(int IdCompte, string Identifiant, string MotDePass, string Nom, string Prenom, string DateCreation, string DerniereModif, int CreePar, string AdressMail, string Token)
         {
-            using (DataClasses1DataContext entity = new DataClasses1DataContext())
-            {
-                T_COMPTE t_compte = entity.T_COMPTE.Single(c => c.ID == IdCompte);
+            //using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            //{
+            //    T_COMPTE t_compte = entity.T_COMPTE.Single(c => c.ID == IdCompte);
 
-                if (Identifiant != null) t_compte.Identifiant = Identifiant;
-                if (MotDePass != null) t_compte.MotDePass = t_compte.MotDePass;
-                if (Nom != null) t_compte.Nom = t_compte.Nom;
-                if (Prenom != null) t_compte.Prenom = t_compte.Prenom;
-                t_compte.DerniereModif = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
-                if (AdressMail != null) t_compte.AdressMail = t_compte.AdressMail;
-                t_compte.Token = Token;
-                entity.SubmitChanges();
-                return IdCompte;
-            }
+            //    if (Identifiant != null) t_compte.Identifiant = Identifiant;
+            //    if (MotDePass != null) t_compte.MotDePass = t_compte.MotDePass;
+            //    if (Nom != null) t_compte.Nom = t_compte.Nom;
+            //    if (Prenom != null) t_compte.Prenom = t_compte.Prenom;
+            //    t_compte.DerniereModif = ConvertionDate.ConvertionDateTimeVersString(DateTime.Now);
+            //    if (AdressMail != null) t_compte.AdressMail = t_compte.AdressMail;
+            //    t_compte.Token = Token;
+            //    entity.SubmitChanges();
+            //    return IdCompte;
+            //}
             //if (Identifiant.Count() > 20) throw new LoginTropLongException("Login trop long", IdCompte);
             //if (MotDePass.Count() > 20) throw new MDPTropLongException("Mot de passe trop long", IdCompte);
             //if (Nom.Count() > 30) throw new NomTropLongException("Nom trop long", IdCompte);
             //if (Prenom.Count() > 30) throw new PrenomTropLongException("Prénom trop long", IdCompte);
             //if (MotDePass == null | MotDePass == "") throw new MDPNullException("Le mot de passe est vide ou null", IdCompte);
-            //using (DataClasses1DataContext entity = new DataClasses1DataContext())
-            //{
-            //    return entity.ModifCompte(IdCompte, Identifiant, MotDePass, Nom, Prenom, DateCreation, DerniereModif, CreePar, AdressMail, Token);
-            //}
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                return entity.ModifCompte(IdCompte, Identifiant, MotDePass, Nom, Prenom, DateCreation, DerniereModif, CreePar, AdressMail, Token);
+            }
         }
         public Compte GetCompte(string Identifiant)
         {

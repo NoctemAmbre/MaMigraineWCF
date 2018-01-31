@@ -217,7 +217,16 @@ namespace MigraineCSMiddleware.Service.patient
             }
             else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
         }
+        public Patient SupprimerMigraineAPatient(int IDPatient, Migraine migraine)
+        {
+            if (IsPatient(IDPatient))
+            {
+                return new MigraineDAO().SupprimerMigraineAPatient(IDPatient, migraine);
+                //return new PatientDAO().VoirPatient(IDPatient);
 
+            }
+            else throw new PatientIncorrecteException("Ce compte n'est pas un compte Patient", new PatientDAO().VoirPatient(IDPatient));
+        }
         
     }
 }

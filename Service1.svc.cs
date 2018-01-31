@@ -279,8 +279,8 @@ namespace MigraineCSMiddleware
             catch (TokenExpireException Exp)
             {
                 //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
-                throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
-                //return new UtilisateurWeb() { Erreur = Exp.Message };
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return new UtilisateurWeb() { Erreur = Exp.Message };
             }
             catch (CompteException Exp)
             {
@@ -754,8 +754,34 @@ namespace MigraineCSMiddleware
                 return null;
             }
         }
-        
 
+
+        public UtilisateurWeb PatientSuppressionMigraineTel(string Value)
+        {
+            try
+            {
+                return new ServiceUtilisateursWeb().PatientSupprMigraineTel(Value);
+            }
+            catch (UtilisateurWebInexistantException Exp)
+            {
+                return null;
+            }
+            catch (TokenInvalidException Exp)
+            {
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (TokenExpireException Exp)
+            {
+                //throw new WebFaultException<string>("Votre Token a expiré", System.Net.HttpStatusCode.ServiceUnavailable);
+                //throw new WebFaultException<UtilisateurWeb>(Exp.Utilisateurweb, System.Net.HttpStatusCode.ServiceUnavailable);
+                return null;
+            }
+            catch (PatientIncorrecteException Exp)
+            {
+                return null;
+            }
+        }
 
 
         //public bool LoginPatient1(string Login)

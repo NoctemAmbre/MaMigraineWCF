@@ -426,6 +426,20 @@ namespace MigraineCSMiddleware.DAO
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMigraine, iDPatient, complet);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMigraineDuPatient")]
+		public int SupprMigraineDuPatient([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDMigraine", DbType="Int")] System.Nullable<int> iDMigraine, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IDPatient", DbType="Int")] System.Nullable<int> iDPatient)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iDMigraine, iDPatient);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SupprMigraine")]
+		public int SupprMigraine([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.T_MEDECIN")]

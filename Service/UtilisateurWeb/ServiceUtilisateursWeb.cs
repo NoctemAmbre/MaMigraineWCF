@@ -315,6 +315,15 @@ namespace MigraineCSMiddleware.Service.utilisateurweb
             return Conversion((new ServicePatient()).AjoutMigraine(UtilWeb.IDWeb, UtilWeb.MesMigraines[0], Complet));
         }
 
+        public UtilisateurWeb PatientSupprMigraineTel(string ValueJSON)
+        {
+            UtilisateurWeb UtilWeb = ServiceSecurite.UtilisateurWebDepuisValeur(ValueJSON);//convertion
+            ServiceSecurite.IsTokenTelephoneValid(UtilWeb.Identifiant, UtilWeb.Token); //teste du token long
+            return Conversion((new ServicePatient()).SupprimerMigraineAPatient(UtilWeb.IDWeb, UtilWeb.MesMigraines[0]));
+        }
+
+        
+
         public UtilisateurWeb Conversion(Patient patient)
             {
             if (patient == null) throw new CompteException("Une erreur est survenu sur le patient");

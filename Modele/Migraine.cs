@@ -17,6 +17,8 @@ namespace MigraineCSMiddleware.Modele
         public DateStructure DateFin { get; set; }
         public TimeStructure HeureDebut { get; set; }
         public TimeStructure HeureFin { get; set; }
+        public string DebutPresentation { get; set; }
+        public string FinPresentation { get; set; }
         public int Duree { get; set; }
         public string Moi { get; set; }
         public bool Complet { get; set; }

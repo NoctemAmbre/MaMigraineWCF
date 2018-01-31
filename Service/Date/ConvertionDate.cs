@@ -55,7 +55,7 @@ namespace MigraineCSMiddleware.Service.date
                 string[] date = Regex.Split(dateString, "-");
                 if (date.Length == 3) Retour = new DateTime(int.Parse(date[0]), int.Parse(date[1]), int.Parse(date[2]));
             }
-            return new DateTime();
+            return Retour;
         }
 
         public static int DureeEntreDateTime(string debut, string fin)
@@ -76,10 +76,44 @@ namespace MigraineCSMiddleware.Service.date
             return valeur.Year + "-" + valeur.Month + "-" + valeur.Day;
         }
 
+        public static string ConvertionDatePresentation(String valeur)
+        {
+            if (valeur.Contains("T"))
+            {
+                string dateString = Regex.Split(valeur, "T")[0];
+                string heureString = Regex.Split(valeur, "T")[1];
+                if (dateString.Contains("-"))
+                {
+                    string[] date = Regex.Split(dateString, "-");
+                    if (date.Length == 3)
+                    {
+                        dateString = AjoutDuZero(date[2]) + "/" + AjoutDuZero(date[1]) + "/" + AjoutDuZero(date[0]);
+                    }
+
+                }
+                if (heureString.Contains(":"))
+                {
+                    string[] heure = Regex.Split(heureString, ":");
+                    if (heure.Length == 2)
+                    {
+                        heureString = AjoutDuZero(heure[0]) + ":" + AjoutDuZero(heure[1]);
+                    }
+                }
+                return dateString + " à " + heureString;
+            }
+            else return "";
+        }
+
         public static string RechercheMoi(string debut)
         {
             DateTime DTDebut = ConvertionStringVersDateTime(debut);
             return Moi[DTDebut.Month -1]  + "-" + DTDebut.Year.ToString();
+        }
+
+        private static string AjoutDuZero(string valeur)
+        {
+            if (valeur.Length == 1) return "0" + valeur;
+            else return valeur;
         }
         public static string[] Semaine = { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche" };
         public static string[] Moi = { "Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre" };

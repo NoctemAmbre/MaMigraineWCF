@@ -72,9 +72,8 @@ namespace MigraineCSMiddleware.Service.securite
         /// <returns></returns>
         public static UtilisateurWeb UtilisateurWebDepuisValeur(string Token)
         {
-            //string key0 = Encoding.ASCII.GetString(Convert.FromBase64String(Token));
-            //string key1 = Encoding.ASCII.GetString(Convert.FromBase64String(Token));
-            string key = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
+            string key = Encoding.UTF7.GetString(Convert.FromBase64String(Token));
+            
             using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(key)))
             {
                 DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(UtilisateurWeb));

@@ -8,27 +8,27 @@ namespace MigraineCSMiddleware.DAO
 {
     public class HoraireDAO
     {
-        private List<Horaire> _ListHoraire = new List<Horaire>();
-        public List<Horaire> ListHoraire { get => _ListHoraire; set => _ListHoraire = value; }
+        //private List<Horaire> _ListHoraire = new List<Horaire>();
+        //public List<Horaire> ListHoraire { get => _ListHoraire; set => _ListHoraire = value; }
         public HoraireDAO()
         {
-            Rafraichir();
+            //Rafraichir();
         }
-        private void Rafraichir()
-        {
-            using (DataClasses1DataContext entity = new DataClasses1DataContext())
-            {
-                var ret = entity.T_HORAIRE.Join(entity.T_PLAGEHORAIRE,
-                    H => H.IDPlageHoraire,
-                    PH => PH.ID,
-                    (H, PH) => new { IDMedecin = H.IDMedecin, IdJour = H.IDJour, Matin = PH.HeureDebut, Soir = PH.HeureFin });
-                _ListHoraire.Clear();
-               foreach (var element in ret)
-               {
-                    _ListHoraire.Add(new Horaire() { IDMedecin = element.IDMedecin, IdJour = element.IdJour, Matin = element.Matin, Soir = element.Soir });
-               }
-            }
-        }
+        //private void Rafraichir()
+        //{
+        //    using (DataClasses1DataContext entity = new DataClasses1DataContext())
+        //    {
+        //        var ret = entity.T_HORAIRE.Join(entity.T_PLAGEHORAIRE,
+        //            H => H.IDPlageHoraire,
+        //            PH => PH.ID,
+        //            (H, PH) => new { IDMedecin = H.IDMedecin, IdJour = H.IDJour, Matin = PH.HeureDebut, Soir = PH.HeureFin });
+        //        _ListHoraire.Clear();
+        //       foreach (var element in ret)
+        //       {
+        //            _ListHoraire.Add(new Horaire() { IDMedecin = element.IDMedecin, IdJour = element.IdJour, Matin = element.Matin, Soir = element.Soir });
+        //       }
+        //    }
+        //}
         /// <summary>
         /// récupération de la liste des Horaire
         /// </summary>
@@ -47,7 +47,7 @@ namespace MigraineCSMiddleware.DAO
                     {
                         entity.AjoutHoraireOuvertureMedecin(IdMedecin, IdJour, ListAjoutHoraires[IdJour].Matin, ListAjoutHoraires[IdJour].Soir);
                     }
-                    Rafraichir();
+                    //Rafraichir();
                     return LectureHoraire(IdMedecin);
                 }
             }
@@ -79,15 +79,22 @@ namespace MigraineCSMiddleware.DAO
 
         public Horaire[] LectureHoraire(int IdMedecin)
         {
-            return _ListHoraire.Where(Id => Id.IDMedecin == IdMedecin).OrderBy(x => x.IdJour).ToArray();
-            //Horaire[] retourRequette = _ListHoraire.Where(Id => Id.IDMedecin == IdMedecin).OrderBy(x => x.IdJour).ToArray();
-            //Horaire[] Retour = new Horaire[retourRequette.Length];
-            //for (int i = 0; i < retourRequette.Length; i++)
-            //{
-            //    Horaire Element = retourRequette[i];
-            //    Retour[i] = new Horaire() { Jour = Element.Jour, Matin = Element.Matin, Soir = Element.Soir };
-            //}
-            //return Retour;
+
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                    var ret = entity.T_HORAIRE.Join(entity.T_PLAGEHORAIRE,
+                    H => H.IDPlageHoraire,
+                    PH => PH.ID,
+                    (H, PH) => new { IDMedecin = H.IDMedecin, IdJour = H.IDJour, Matin = PH.HeureDebut, Soir = PH.HeureFin })
+                    .Where(Id => Id.IDMedecin == IdMedecin).OrderBy(x => x.IdJour).ToArray();
+
+                Horaire[] retour = new Horaire[ret.Length];
+                for (int i = 0; i < ret.Length; i++)
+                {
+                    retour[i] = new Horaire() { IDMedecin = ret[i].IDMedecin, IdJour = ret[i].IdJour, Matin = ret[i].Matin, Soir = ret[i].Soir };
+                }
+                return retour;
+            }
         }
     }
 }

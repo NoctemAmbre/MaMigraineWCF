@@ -62,11 +62,14 @@ namespace MigraineCSMiddleware.DAO
                     C => C.ID,
                 (P, C) => new { IDPatient = P.ID, ID = C.ID, Identifiant = C.Identifiant, Nom = C.Nom, Prenom = C.Prenom, AdresseMail = C.AdressMail, Telephone = P.TelephoneFixe, TelephonePortable = P.TelephonePortable, DateNaissance = P.DateNaissance, Token = C.Token }).Where(elt => elt.IDPatient == IdPatient).FirstOrDefault();
 
+                if (ret == null) throw new CompteException("pas de patient");
+
                 List<Medecin> MesMedecins = new MedecinDAO().ListMedecinDuPatient((int)ret.IDPatient);
                 List<Migraine> MesMigraines = new MigraineDAO().ListeMigrainePatient((int)ret.IDPatient);
                 List<Medicament> MesMedicaments = new MedicamentDAO().ListeMesMedicaments((int)ret.IDPatient);
                 List<Facteur> MesFacteurs = new FacteurDAO().ListeFacteurPatient((int)ret.IDPatient);
                 return new Patient() { IDPatient = ret.IDPatient, ID = (int)ret.ID, Identifiant = ret.Identifiant, MotDePass = "", Nom = ret.Nom, Prenom = ret.Prenom, AdresseMail = ret.AdresseMail, Telephone = ret.Telephone, TelephonePortable = ret.TelephonePortable, DateNaissance = ConvertionDate.ConvertionStringVersDateTime(ret.DateNaissance), MesMedecin = MesMedecins, MesMigraines = MesMigraines, MesMedicaments = MesMedicaments, MesFacteurs = MesFacteurs, Adresse = new AdresseDAO().LectureAdresse(ret.ID), Token = ret.Token };
+
             }
         }
 
@@ -177,7 +180,7 @@ namespace MigraineCSMiddleware.DAO
 
                 //Patient RetourPatient = (from elt in _ListPatient where (elt.IDPatient == retour) select elt).SingleOrDefault();
                 //Patient RetourPatient = _ListPatient.SingleOrDefault(p => p.IDPatient == retour);
-                Patient RetourPatient = this.VoirPatient(patient.IDPatient);
+                Patient RetourPatient = this.VoirPatient(retour);
                 RetourPatient.Adresse = new AdresseDAO().AjoutAdresse(RetourPatient.ID, patient);
                 return RetourPatient;
             }
@@ -362,7 +365,7 @@ namespace MigraineCSMiddleware.DAO
 
                 //Patient patienbdd = _ListPatient.Where(elt => elt.Identifiant == patient.Identifiant).First();
                 string MotDePasse = ServiceSecurite.HashMotDePass(patient.MotDePass);
-                int retour = new CompteDAO().ChangementInformation(entity.T_PATIENT.FirstOrDefault(elt => elt.ID == patient.ID).IdCompte, patient.Identifiant, MotDePasse, null, null, null, null, 0, null, ServiceSecurite.GenererToken(patient.Identifiant, MotDePasse, DateTime.UtcNow.Ticks)); //on transmet l'information de d'Id du compte et on transmet a CompteDAO l'ordre de changer le mot de passe. puis on récupère l'information que l'opération c'est bien passé
+                int retour = new CompteDAO().ChangementInformation(entity.T_PATIENT.FirstOrDefault(elt => elt.ID == patient.IDPatient).IdCompte, patient.Identifiant, MotDePasse, null, null, null, null, 0, null, ServiceSecurite.GenererToken(patient.Identifiant, MotDePasse, DateTime.UtcNow.Ticks)); //on transmet l'information de d'Id du compte et on transmet a CompteDAO l'ordre de changer le mot de passe. puis on récupère l'information que l'opération c'est bien passé
                 if (retour == -1) throw new CompteModificationException(patient, "Le changement de mot de passe n'a pus être effectué");
 
                 //Rafraichir();

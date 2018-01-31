@@ -8,30 +8,29 @@ namespace MigraineCSMiddleware.DAO
 {
     public class AdresseDAO
     {
-        private List<Adresse> _ListAdresse = new List<Adresse>();
-        public List<Adresse> ListAdresse { get => _ListAdresse; set => _ListAdresse = value; }
+        //private List<Adresse> _ListAdresse = new List<Adresse>();
+        //public List<Adresse> ListAdresse { get => _ListAdresse; set => _ListAdresse = value; }
         public AdresseDAO()
         {
-            Rafraichir();
+            //Rafraichir();
         }
 
-        private void Rafraichir()
-        {
-            using (DataClasses1DataContext entity = new DataClasses1DataContext())
-            {
-                var ret = entity.T_ADRESSE.ToList();
-                _ListAdresse.Clear();
-                foreach (var element in ret)
-                {
-                    _ListAdresse.Add(new Adresse() { IdCompte = element.IdCompte, Numero = (int)element.Numero, NomRue = element.NomRue, CodePostal = (int)element.CodePostal, Ville = element.Ville });
-                }
-            }
-        }
+        //private void Rafraichir()
+        //{
+        //    using (DataClasses1DataContext entity = new DataClasses1DataContext())
+        //    {
+        //        var ret = entity.T_ADRESSE.ToList();
+        //        _ListAdresse.Clear();
+        //        foreach (var element in ret)
+        //        {
+        //            _ListAdresse.Add(new Adresse() { IdCompte = element.IdCompte, Numero = (int)element.Numero, NomRue = element.NomRue, CodePostal = (int)element.CodePostal, Ville = element.Ville });
+        //        }
+        //    }
+        //}
         public Adresse AjoutAdresse(int IdCompte, Patient patient)
         {
             Ajout(IdCompte, patient.Adresse.Numero, patient.Adresse.NomRue, patient.Adresse.CodePostal, patient.Adresse.Ville);
 
-            Rafraichir();
             return LectureAdresse(IdCompte);
 
         }
@@ -39,18 +38,17 @@ namespace MigraineCSMiddleware.DAO
         {
             Ajout(IdCompte, medecin.Adresse.Numero, medecin.Adresse.NomRue, medecin.Adresse.CodePostal, medecin.Adresse.Ville);
 
-            Rafraichir();
             return LectureAdresse(IdCompte);
         }
-        private void Ajout(int id, int numero, string nomrue, int codepostal, string ville)
+        private void Ajout(int IdCompte, int numero, string nomrue, int codepostal, string ville)
         {
             using (DataClasses1DataContext entity = new DataClasses1DataContext())
             {
-                T_ADRESSE RetourAdresse = entity.T_ADRESSE.SingleOrDefault(elt => elt.IdCompte == id);
+                T_ADRESSE RetourAdresse = entity.T_ADRESSE.FirstOrDefault(elt => elt.IdCompte == IdCompte);
 
                 if (RetourAdresse == null)
                 {
-                    entity.AjoutAdresse(id, numero, nomrue, codepostal, ville);
+                    entity.AjoutAdresse(IdCompte, numero, nomrue, codepostal, ville);
                 }
                 else
                 {
@@ -64,7 +62,12 @@ namespace MigraineCSMiddleware.DAO
         }
         public Adresse LectureAdresse(int IdCompte)
         {
-             return _ListAdresse.SingleOrDefault(Id => Id.IdCompte == IdCompte);
+            using (DataClasses1DataContext entity = new DataClasses1DataContext())
+            {
+                T_ADRESSE RetourAdresse = entity.T_ADRESSE.FirstOrDefault(elt => elt.IdCompte == IdCompte);
+                if (RetourAdresse == null) return null;
+                return new Adresse() { IdCompte = RetourAdresse.IdCompte, Numero = (int)RetourAdresse.Numero, NomRue = RetourAdresse.NomRue, CodePostal = (int)RetourAdresse.CodePostal, Ville = RetourAdresse.Ville };
+            }
         }
         //public Adresse LectureAdresse(Patient patient)
         //{
